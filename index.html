@@ -1,426 +1,841 @@
 <!DOCTYPE html>
-<html lang="en" class="dark scroll-smooth">
+<html lang="en" class="light scroll-smooth">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>yourPRstrategist — Web3, AI & Deep Tech PR Consultancy</title>
+    <title>yourPRstrategist | Web3 & AI PR Agency</title>
+
+    <!-- Fonts: Inter & Plus Jakarta Sans -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
     
-    <!-- Tailwind CSS CDN -->
+    <!-- Lucide Icons & Tailwind CSS -->
+    <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom Tailwind Config -->
     <script>
         tailwind.config = {
             darkMode: 'class',
             theme: {
                 extend: {
-                    colors: {
-                        apple: {
-                            bg: '#000000',
-                            card: 'rgba(255, 255, 255, 0.03)',
-                            cardHover: 'rgba(255, 255, 255, 0.07)',
-                            border: 'rgba(255, 255, 255, 0.08)',
-                            text: '#f5f5f7',
-                            subtext: '#86868b',
-                            accent: '#2997ff',
-                            glow: 'rgba(41, 151, 255, 0.15)'
-                        }
-                    },
                     fontFamily: {
-                        sans: ['-apple-system', 'BlinkMacSystemFont', 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', 'sans-serif']
+                        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+                        display: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
+                    },
+                    colors: {
+                        inkLight: '#FBFBFD',
+                        inkSurface: '#FFFFFF',
+                        inkTextPrimary: '#1D1D1F',
+                        inkTextSecondary: '#2C2C2E',
+                        inkSubtle: '#515154',
+                        inkBorder: 'rgba(0, 0, 0, 0.08)',
+                        
+                        // Vibrant Accents
+                        inkBlue: '#0066CC',
+                        inkPurple: '#8E24AA',
+                        inkPink: '#E91E63',
+                        inkCyan: '#00ACC1',
+                        inkTeal: '#00897B',
+                        inkAmber: '#F57C00'
+                    },
+                    boxShadow: {
+                        'ink-glow': '0 20px 40px -15px rgba(0, 102, 204, 0.12)',
+                        'ink-card': '0 12px 32px -8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1)',
+                        'ink-card-hover': '0 24px 48px -12px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.15)',
+                        'pill-glow': '0 4px 20px rgba(0, 102, 204, 0.15)'
                     }
                 }
             }
         }
     </script>
-    
-    <!-- Three.js for WebGL Canvas -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
-    
+
     <style>
-        body {
-            background-color: #000000;
-            color: #f5f5f7;
-            font-family: -apple-system, BlinkMacSystemFont, 'SF Pro Display', 'SF Pro Text', 'Helvetica Neue', sans-serif;
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
+        :root {
+            color-scheme: light;
         }
 
-        #canvas-container {
+        body {
+            background-color: #FBFBFD;
+            color: #1D1D1F;
+            overflow-x: hidden;
+            font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+        }
+
+        /* Canvas Backdrop for Liquid Ink */
+        #ink-canvas {
             position: fixed;
             top: 0;
             left: 0;
             width: 100vw;
             height: 100vh;
-            z-index: 0;
-            pointer-events: none;
+            z-index: -2;
+            pointer-events: auto;
         }
 
-        .glass-panel {
-            background: rgba(18, 18, 20, 0.6);
-            backdrop-filter: blur(25px);
-            -webkit-backdrop-filter: blur(25px);
-            border: 1px solid rgba(255, 255, 255, 0.08);
+        /* Frosted Glass Panels */
+        .ink-glass {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            border: 1px solid rgba(0, 0, 0, 0.08);
         }
 
-        .glass-nav {
-            background: rgba(0, 0, 0, 0.7);
-            backdrop-filter: blur(20px);
-            -webkit-backdrop-filter: blur(20px);
-            border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+        .ink-glass-card {
+            background: rgba(255, 255, 255, 0.88);
+            backdrop-filter: blur(28px) saturate(190%);
+            -webkit-backdrop-filter: blur(28px) saturate(190%);
+            border: 1px solid rgba(0, 0, 0, 0.09);
+            box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+            transition: all 0.4s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .text-gradient {
-            background: linear-gradient(180deg, #FFFFFF 0%, #A1A1A6 100%);
+        .ink-glass-card:hover {
+            transform: translateY(-4px);
+            background: rgba(255, 255, 255, 0.96);
+            border-color: rgba(0, 102, 204, 0.25);
+            box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 172, 193, 0.12);
+        }
+
+        /* Prismatic Text Gradient */
+        .text-prismatic {
+            background: linear-gradient(135deg, #1D1D1F 0%, #0066CC 35%, #8E24AA 70%, #E91E63 100%);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
         }
 
-        .text-accent-gradient {
-            background: linear-gradient(135deg, #2997ff 0%, #7000ff 100%);
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+        /* Action Buttons */
+        .ink-button-primary {
+            background: #1D1D1F;
+            color: #FFFFFF;
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+            box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
         }
 
-        /* Custom spacing for lead text */
-        .hero-lead-text {
-            max-width: 820px;
-            margin: 0 auto 3rem auto;
-            text-align: center;
+        .ink-button-primary:hover {
+            background: #0066CC;
+            transform: scale(1.02);
+            box-shadow: 0 8px 24px rgba(0, 102, 204, 0.28);
         }
 
-        .hero-lead-heading {
-            font-size: 1.35rem;
-            font-weight: 500;
-            line-height: 1.6;
-            color: #ffffff;
-            margin-bottom: 1.25rem;
-            letter-spacing: -0.01em;
+        .ink-button-secondary {
+            background: rgba(255, 255, 255, 0.92);
+            color: #1D1D1F;
+            border: 1px solid rgba(0, 0, 0, 0.15);
+            backdrop-filter: blur(12px);
+            transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
         }
 
-        .hero-lead-body {
-            font-size: 1.1rem;
-            line-height: 1.7;
-            color: #a1a1a6;
-            font-weight: 400;
+        .ink-button-secondary:hover {
+            background: #FFFFFF;
+            border-color: rgba(0, 102, 204, 0.5);
+            color: #0066CC;
+            transform: scale(1.02);
+            box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
         }
 
-        /* Compact spacing for media section */
-        .media-section {
-            padding-top: 2rem !important;
-            padding-bottom: 2rem !important;
+        /* Hide Scrollbar Utility */
+        .no-scrollbar::-webkit-scrollbar {
+            display: none;
+        }
+        .no-scrollbar {
+            -ms-overflow-style: none;
+            scrollbar-width: none;
         }
 
-        .media-logos-grid {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            gap: 2rem 3.5rem;
-            margin-top: 1.25rem;
+        /* Custom Scrollbar */
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: #FBFBFD;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #C2C2C7;
+            border-radius: 4px;
         }
     </style>
 </head>
-<body class="relative min-h-screen selection:bg-apple-accent selection:text-white">
+<body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue">
 
-    <!-- WebGL Background Canvas -->
-    <div id="canvas-container"></div>
+    <!-- Interactive Canvas Backdrop -->
+    <canvas id="ink-canvas"></canvas>
 
-    <!-- Main Navigation -->
-    <nav class="fixed top-0 left-0 w-full z-50 glass-nav transition-all duration-300">
-        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <a href="#" class="text-xl font-bold tracking-tight flex items-center gap-2">
-                <span class="text-white">your<span class="text-apple-accent">PR</span>strategist</span>
+    <header class="fixed top-0 left-0 w-full z-50 ink-glass border-b border-black/10 transition-all duration-300">
+        <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
+            <!-- Brand Logo -->
+            <a href="#" class="flex items-center gap-2.5 group">
+                <div class="w-8 h-8 rounded-full bg-gradient-to-tr from-inkBlue via-inkPurple to-inkPink p-[1.5px] transition-transform duration-300 group-hover:scale-105 shadow-sm">
+                    <div class="w-full h-full bg-white rounded-full flex items-center justify-center">
+                        <i data-lucide="droplet" class="w-4 h-4 text-inkBlue fill-inkBlue/10"></i>
+                    </div>
+                </div>
+                <span class="font-display font-bold text-base tracking-tight text-inkTextPrimary group-hover:text-inkBlue transition-colors">
+                    your<span class="text-prismatic">PR</span>strategist
+                </span>
             </a>
-            
-            <div class="hidden md:flex items-center space-x-8 text-sm font-medium text-apple-subtext">
-                <a href="#vetting" class="hover:text-white transition-colors">Vetting Mandate</a>
-                <a href="#pillars" class="hover:text-white transition-colors">Strategic Pillars</a>
-                <a href="#services" class="hover:text-white transition-colors">Services</a>
-                <a href="#accolades" class="hover:text-white transition-colors">Accolades</a>
-                <a href="#media" class="hover:text-white transition-colors">Media</a>
+
+            <!-- Desktop Nav Links -->
+            <nav class="hidden md:flex items-center gap-7 text-xs font-semibold text-inkTextSecondary tracking-wide">
+                <a href="#mandate" class="hover:text-inkBlue transition-colors">Vetting Mandate</a>
+                <a href="#pillars" class="hover:text-inkBlue transition-colors">Strategic Pillars</a>
+                <a href="#services" class="hover:text-inkBlue transition-colors">Services</a>
+                <a href="#awards" class="hover:text-inkBlue transition-colors">Awards</a>
+                <a href="#news" class="hover:text-inkBlue transition-colors">News & Articles</a>
+                <a href="#gallery" class="hover:text-inkBlue transition-colors">Gallery</a>
+                <a href="#events" class="hover:text-inkBlue transition-colors">Events</a>
+            </nav>
+
+            <!-- Nav Actions -->
+            <div class="flex items-center gap-3">
+                <a href="#contact" class="ink-button-primary px-5 py-2 rounded-full text-xs font-bold font-display">
+                    Pitch Your Purpose
+                </a>
+
+                <!-- Mobile Menu Button -->
+                <button id="mobile-menu-btn" class="md:hidden p-2 text-inkSubtle hover:text-inkTextPrimary">
+                    <i data-lucide="menu" class="w-5 h-5"></i>
+                </button>
             </div>
-
-            <a href="#onboarding" class="glass-panel hover:bg-white/10 text-white px-4 py-2 rounded-full text-xs font-semibold tracking-wide transition-all border border-white/10 hover:border-white/20">
-                Client Onboarding
-            </a>
         </div>
-    </nav>
 
-    <!-- Main Content Wrapper -->
-    <div class="relative z-10 pt-32 pb-20 px-6 max-w-7xl mx-auto space-y-32">
+        <!-- Mobile Menu -->
+        <div id="mobile-menu" class="hidden md:hidden ink-glass border-b border-black/10 px-6 py-4 flex-col gap-3 text-sm text-inkTextSecondary font-semibold">
+            <a href="#mandate" class="hover:text-inkBlue py-1">Vetting Mandate</a>
+            <a href="#pillars" class="hover:text-inkBlue py-1">Strategic Pillars</a>
+            <a href="#services" class="hover:text-inkBlue py-1">Services</a>
+            <a href="#awards" class="hover:text-inkBlue py-1">Awards</a>
+            <a href="#news" class="hover:text-inkBlue py-1">News & Articles</a>
+            <a href="#gallery" class="hover:text-inkBlue py-1">Gallery</a>
+            <a href="#events" class="hover:text-inkBlue py-1">Events</a>
+            <a href="#contact" class="hover:text-inkBlue py-1">Pitch Your Purpose</a>
+        </div>
+    </header>
+
+    <main class="relative z-10 pt-16">
 
         <!-- Hero Section -->
-        <section class="text-center pt-12 pb-8 max-w-4xl mx-auto">
-            <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full glass-panel text-xs font-medium text-apple-accent mb-8 border border-apple-accent/20">
-                <span class="w-2 h-2 rounded-full bg-apple-accent animate-pulse"></span>
-                Web3 & AI PR Consultancy
-            </div>
-            
-            <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-gradient mb-8 leading-tight">
-                Doing PR Right.<br/>For Projects That Matter.
-            </h1>
-
-            <!-- Aesthetically Spaced Lead Text -->
-            <div class="hero-lead-text">
-                <p class="hero-lead-heading">
-                    We are true believers in the transformative power of Web3 &amp; Artificial Intelligence.
-                </p>
-                <p class="hero-lead-body">
-                    As a veteran PR agency, we dedicate our media relations &amp; GTM strategies exclusively to high-integrity protocols being built to improve the communities of tomorrow.
-                </p>
-            </div>
-
-            <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
-                <a href="#onboarding" class="w-full sm:w-auto bg-white text-black font-semibold px-8 py-3.5 rounded-full hover:bg-neutral-200 transition-all text-sm">
-                    Initiate Engagement
-                </a>
-                <a href="#pillars" class="w-full sm:w-auto glass-panel text-white font-semibold px-8 py-3.5 rounded-full hover:bg-white/10 transition-all text-sm border border-white/10">
-                    Explore Strategy
-                </a>
-            </div>
-        </section>
-
-        <!-- Compact Media Section -->
-        <section id="media" class="media-section glass-panel rounded-3xl p-8 text-center">
-            <p class="text-xs font-semibold uppercase tracking-widest text-apple-subtext mb-4">Featured Media Relations &amp; Coverage Channels</p>
-            
-            <div class="media-logos-grid">
-                <span class="text-lg font-bold text-white/70 hover:text-white transition-colors">CoinDesk</span>
-                <span class="text-lg font-bold text-white/70 hover:text-white transition-colors">CoinTelegraph</span>
-                <span class="text-lg font-bold text-white/70 hover:text-white transition-colors">Bloomberg</span>
-                <span class="text-lg font-bold text-white/70 hover:text-white transition-colors">Forbes</span>
-                <span class="text-lg font-bold text-white/70 hover:text-white transition-colors">TechCrunch</span>
-                <span class="text-lg font-bold text-white/70 hover:text-white transition-colors">Decrypt</span>
-                <span class="text-lg font-bold text-white/70 hover:text-white transition-colors">The Block</span>
-                <span class="text-lg font-bold text-white/70 hover:text-white transition-colors">VentureBeat</span>
-            </div>
-        </section>
-
-        <!-- Vetting Mandate -->
-        <section id="vetting" class="glass-panel rounded-3xl p-10 md:p-16 border border-white/10 relative overflow-hidden">
-            <div class="max-w-3xl">
-                <h2 class="text-xs font-semibold uppercase tracking-widest text-apple-accent mb-4">Selectivity &amp; Integrity</h2>
-                <h3 class="text-3xl md:text-4xl font-bold text-white tracking-tight mb-6">Our Vetting Mandate</h3>
-                <p class="text-apple-subtext text-base leading-relaxed mb-6">
-                    We maintain strict client selection criteria to safeguard our media network reputation. We partner exclusively with projects backed by viable technology, transparent leadership, and authentic utility.
-                </p>
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm text-white/90">
-                    <div class="flex items-center gap-3">
-                        <span class="text-apple-accent">✓</span> Verified Team Credibility
+        <section id="hero-section" class="min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 relative">
+            <div class="max-w-4xl mx-auto text-center space-y-8">
+                
+                <!-- Pill Badges -->
+                <div class="flex flex-wrap items-center justify-center gap-2">
+                    <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full ink-glass border border-black/10 text-xs font-mono font-bold text-inkBlue tracking-wide shadow-pill-glow">
+                        <span class="w-2 h-2 rounded-full bg-inkCyan animate-pulse"></span>
+                        Award-Winning Web3 & Emerging Tech PR Consultancy
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-apple-accent">✓</span> Genuine Technological Innovation
+                    <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-mono font-bold text-amber-700">
+                        <i data-lucide="anchor" class="w-3.5 h-3.5 text-amber-600"></i>
+                        Established 2019
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-apple-accent">✓</span> Long-term Community Focus
+                </div>
+
+                <!-- Headline -->
+                <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] text-inkTextPrimary">
+                    Doing PR Right. <br class="hidden sm:inline"/>
+                    <span class="text-prismatic">For the Projects That Matter.</span>
+                </h1>
+
+                <!-- Subtitle -->
+                <p class="max-w-3xl mx-auto text-base sm:text-lg text-inkTextSecondary font-medium leading-relaxed bg-white/60 backdrop-blur-md p-5 rounded-2xl border border-black/5 shadow-sm">
+                    We are true believers in the transformative power of Web3 & Artificial Intelligence. As a veteran PR agency, we dedicate our media relations & GTM strategies exclusively to high-integrity protocols being built to improve the communities of tomorrow.
+                </p>
+
+                <!-- Action Buttons -->
+                <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
+                    <a href="#contact" class="w-full sm:w-auto ink-button-primary px-8 py-3.5 rounded-full font-display font-bold text-sm flex items-center justify-center gap-2">
+                        Pitch Your Purpose
+                        <i data-lucide="arrow-right" class="w-4 h-4"></i>
+                    </a>
+                    <a href="#mandate" class="w-full sm:w-auto ink-button-secondary px-8 py-3.5 rounded-full font-display font-bold text-sm flex items-center justify-center gap-2">
+                        Our Vetting Mandate
+                        <i data-lucide="chevron-down" class="w-4 h-4"></i>
+                    </a>
+                </div>
+
+                <!-- Metrics Bar -->
+                <div class="grid grid-cols-2 md:grid-cols-4 gap-4 pt-8 max-w-3xl mx-auto">
+                    <div class="ink-glass-card p-4 rounded-2xl text-center">
+                        <div class="font-display text-2xl font-extrabold text-inkTextPrimary">7+ Yrs</div>
+                        <div class="text-[11px] text-inkSubtle font-mono font-bold tracking-wider uppercase mt-0.5">Track Record</div>
                     </div>
-                    <div class="flex items-center gap-3">
-                        <span class="text-apple-accent">✓</span> Transparent Tokenomics &amp; Model
+                    <div class="ink-glass-card p-4 rounded-2xl text-center">
+                        <div class="font-display text-2xl font-extrabold text-inkBlue">8+</div>
+                        <div class="text-[11px] text-inkSubtle font-mono font-bold tracking-wider uppercase mt-0.5">Industry Awards</div>
+                    </div>
+                    <div class="ink-glass-card p-4 rounded-2xl text-center">
+                        <div class="font-display text-2xl font-extrabold text-inkPurple">Strict</div>
+                        <div class="text-[11px] text-inkSubtle font-mono font-bold tracking-wider uppercase mt-0.5">Integrity Filter</div>
+                    </div>
+                    <div class="ink-glass-card p-4 rounded-2xl text-center">
+                        <div class="font-display text-2xl font-extrabold text-inkTextPrimary">Web3 & AI</div>
+                        <div class="text-[11px] text-inkSubtle font-mono font-bold tracking-wider uppercase mt-0.5">Exclusivity</div>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Strategic Pillars -->
-        <section id="pillars" class="space-y-12">
-            <div class="text-center max-w-2xl mx-auto space-y-4">
-                <h2 class="text-xs font-semibold uppercase tracking-widest text-apple-accent">Core Philosophy</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-gradient">Getting PR Right</h3>
-                <p class="text-apple-subtext text-sm">Four essential coordinates for impactful tier-1 communications.</p>
+        <!-- Media Outlet Logos / As Featured In Trust Bar -->
+        <section id="media-logos" class="py-8 px-4 max-w-7xl mx-auto">
+            <div class="ink-glass rounded-2xl p-6 border border-black/10 shadow-sm space-y-4">
+                <div class="text-center">
+                    <span class="text-[11px] font-mono font-extrabold uppercase tracking-widest text-inkSubtle">
+                        Earned Coverage & Media Partnerships Across Tier-1 Outlets
+                    </span>
+                </div>
+                <div class="flex flex-wrap items-center justify-center gap-8 sm:gap-12 opacity-80 grayscale hover:grayscale-0 transition-all duration-500 pt-1">
+                    <div class="font-display font-black text-xl text-slate-800 tracking-tighter">CoinDesk</div>
+                    <div class="font-display font-extrabold text-xl text-slate-800 tracking-tight">Forbes</div>
+                    <div class="font-display font-bold text-xl text-slate-800 tracking-normal">DECRYPT</div>
+                    <div class="font-display font-black text-xl text-slate-800 tracking-tight">TechCrunch</div>
+                    <div class="font-display font-extrabold text-xl text-slate-800 tracking-wider">COINTELEGRAPH</div>
+                    <div class="font-display font-bold text-xl text-slate-800 tracking-tight">Bloomberg</div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dedicated Vetting Mandate Section -->
+        <section id="mandate" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-12">
+            <div class="ink-glass-card p-8 sm:p-12 rounded-3xl relative overflow-hidden border-2 border-inkBlue/20 bg-gradient-to-br from-white/95 via-blue-50/30 to-purple-50/20">
+                <div class="flex flex-col lg:flex-row items-start lg:items-center justify-between gap-8 mb-8">
+                    <div class="space-y-3 max-w-2xl">
+                        <div class="inline-flex items-center gap-2 text-inkBlue font-mono text-xs uppercase tracking-widest font-extrabold bg-blue-100/80 px-3.5 py-1.5 rounded-full border border-blue-200">
+                            <i data-lucide="shield-check" class="w-4 h-4 text-inkBlue"></i>
+                            Ethical Curation
+                        </div>
+                        <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-inkTextPrimary">
+                            Our Vetting Mandate
+                        </h2>
+                        <p class="text-inkTextSecondary font-medium text-sm sm:text-base leading-relaxed">
+                            To maintain the highest standard of media trust, we enforce a strict integrity filter across <strong>Web3 Protocols</strong>, <strong>Artificial Intelligence (DeAI & LLM Agents)</strong>, and <strong>Emerging Deep Tech</strong>. Every client must pass our 3-tier integrity evaluation before initiating media operations.
+                        </p>
+                    </div>
+
+                    <div class="shrink-0 bg-white/90 p-5 rounded-2xl border border-black/10 shadow-sm text-center max-w-xs w-full">
+                        <div class="font-display font-extrabold text-2xl text-emerald-800">100% Verified</div>
+                        <div class="text-xs font-mono font-semibold text-inkSubtle mt-1">Client Roster Compliance</div>
+                    </div>
+                </div>
+
+                <!-- Sector View Switcher Buttons -->
+                <div class="flex flex-wrap items-center gap-2 mb-8 bg-white/70 p-2 rounded-2xl border border-black/10 w-fit">
+                    <span class="text-xs font-mono font-bold text-inkSubtle px-3">Filter Standards by Domain:</span>
+                    <button onclick="setMandateTab('all')" id="tab-all" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-inkTextPrimary text-white shadow-sm">
+                        All Sectors
+                    </button>
+                    <button onclick="setMandateTab('web3')" id="tab-web3" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-white hover:bg-black/5 text-inkTextSecondary">
+                        Web3 & Crypto
+                    </button>
+                    <button onclick="setMandateTab('ai')" id="tab-ai" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-white hover:bg-black/5 text-inkTextSecondary">
+                        AI & Autonomous Agents
+                    </button>
+                    <button onclick="setMandateTab('deeptech')" id="tab-deeptech" class="px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-white hover:bg-black/5 text-inkTextSecondary">
+                        Deep Tech & RWA
+                    </button>
+                </div>
+
+                <!-- 3 Universal Pillars of Vetting -->
+                <div class="grid md:grid-cols-3 gap-6">
+                    <!-- Pillar 1 -->
+                    <div class="p-6 rounded-2xl bg-white/90 border border-black/10 space-y-4 flex flex-col justify-between shadow-sm">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-blue-100 text-inkBlue flex items-center justify-center font-bold">01</div>
+                                <span class="text-[10px] font-mono font-extrabold uppercase bg-blue-50 text-inkBlue px-2.5 py-1 rounded-md border border-blue-100">Architecture</span>
+                            </div>
+                            <h3 class="font-display font-bold text-base text-inkTextPrimary">Technological Authenticity</h3>
+                            <p id="mandate-p1-desc" class="text-xs font-medium text-inkTextSecondary leading-relaxed">
+                                Verification of proprietary tech stack, audited smart contracts, or authentic AI model architecture—filtering out copy-paste forks and surface-level wrappers.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-black/5 text-[11px] font-mono text-inkBlue font-semibold flex items-center gap-1">
+                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                            <span id="mandate-p1-tag">Smart Contracts & AI Models</span>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 2 -->
+                    <div class="p-6 rounded-2xl bg-white/90 border border-black/10 space-y-4 flex flex-col justify-between shadow-sm">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-purple-100 text-inkPurple flex items-center justify-center font-bold">02</div>
+                                <span class="text-[10px] font-mono font-extrabold uppercase bg-purple-50 text-inkPurple px-2.5 py-1 rounded-md border border-purple-100">Viability</span>
+                            </div>
+                            <h3 class="font-display font-bold text-base text-inkTextPrimary">Sustainable Model & Data Ethics</h3>
+                            <p id="mandate-p2-desc" class="text-xs font-medium text-inkTextSecondary leading-relaxed">
+                                Evaluation of economic design, fair tokenomics, or ethical AI training data provenance to ensure non-dilutive, sustainable long-term viability.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-black/5 text-[11px] font-mono text-inkPurple font-semibold flex items-center gap-1">
+                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                            <span id="mandate-p2-tag">Tokenomics & Data Provenance</span>
+                        </div>
+                    </div>
+
+                    <!-- Pillar 3 -->
+                    <div class="p-6 rounded-2xl bg-white/90 border border-black/10 space-y-4 flex flex-col justify-between shadow-sm">
+                        <div class="space-y-3">
+                            <div class="flex items-center justify-between">
+                                <div class="w-10 h-10 rounded-xl bg-pink-100 text-inkPink flex items-center justify-center font-bold">03</div>
+                                <span class="text-[10px] font-mono font-extrabold uppercase bg-pink-50 text-inkPink px-2.5 py-1 rounded-md border border-pink-100">Ethics</span>
+                            </div>
+                            <h3 class="font-display font-bold text-base text-inkTextPrimary">Leadership & Compliance</h3>
+                            <p id="mandate-p3-desc" class="text-xs font-medium text-inkTextSecondary leading-relaxed">
+                                Background verification of founders, regulatory mindfulness, transparent roadmap commitments, and authentic ecosystem impact goals.
+                            </p>
+                        </div>
+                        <div class="pt-3 border-t border-black/5 text-[11px] font-mono text-inkPink font-semibold flex items-center gap-1">
+                            <i data-lucide="check-circle" class="w-3.5 h-3.5"></i>
+                            <span id="mandate-p3-tag">Founder Provenance & Regulatory</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Distinct Strategic Capabilities -->
+        <section id="pillars" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-12">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-inkPurple font-mono text-xs uppercase tracking-widest font-extrabold bg-purple-50 px-3 py-1 rounded-full border border-purple-200">Agency Edge</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-prismatic">Strategic Pillars</h2>
+                <p class="text-inkTextSecondary font-medium max-w-2xl mx-auto text-sm sm:text-base">Why leading blockchain protocols and AI pioneers trust our PR architecture.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-                <div class="glass-panel p-8 rounded-3xl hover:border-white/20 transition-all space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-apple-accent font-bold group-hover:scale-110 transition-transform">01</div>
-                    <h4 class="text-xl font-bold text-white">Right Message</h4>
-                    <p class="text-apple-subtext text-xs leading-relaxed">Distilling complex blockchain/AI architecture into compelling narratives for media and users.</p>
+            <div class="grid md:grid-cols-3 gap-6">
+                <div class="ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-inkPurple/10 flex items-center justify-center text-inkPurple">
+                            <i data-lucide="newspaper" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-inkTextPrimary">High-Impact Tier-1 Media Reach</h3>
+                        <p class="text-inkTextSecondary font-medium text-sm leading-relaxed">
+                            Cultivating long-standing, earned relationships with tier-1 journalists, chief editors, and key research analysts across top technology and financial newsrooms worldwide.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-black/10 flex flex-wrap gap-2 text-[11px] font-mono font-bold text-inkTextPrimary">
+                        <span class="bg-black/5 px-2.5 py-1 rounded-md border border-black/5">CoinDesk</span>
+                        <span class="bg-black/5 px-2.5 py-1 rounded-md border border-black/5">Forbes</span>
+                        <span class="bg-black/5 px-2.5 py-1 rounded-md border border-black/5">Decrypt</span>
+                        <span class="bg-black/5 px-2.5 py-1 rounded-md border border-black/5">TechCrunch</span>
+                    </div>
                 </div>
 
-                <div class="glass-panel p-8 rounded-3xl hover:border-white/20 transition-all space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-apple-accent font-bold group-hover:scale-110 transition-transform">02</div>
-                    <h4 class="text-xl font-bold text-white">Right Community</h4>
-                    <p class="text-apple-subtext text-xs leading-relaxed">Targeting genuine enthusiasts, builders, and institutional backers rather than short-term noise.</p>
+                <div class="ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-inkCyan/10 flex items-center justify-center text-inkCyan">
+                            <i data-lucide="sparkles" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-inkTextPrimary">Authentic Narrative Architecture</h3>
+                        <p class="text-inkTextSecondary font-medium text-sm leading-relaxed">
+                            Translating complex zero-knowledge math, decentralized AI compute, and modular blockchain stacks into clear, compelling narratives that resonate with enterprise audiences.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-black/10 flex items-center gap-2 text-xs font-mono font-bold text-inkCyan">
+                        <span>Thought Leadership Focus</span>
+                        <i data-lucide="check" class="w-4 h-4"></i>
+                    </div>
                 </div>
 
-                <div class="glass-panel p-8 rounded-3xl hover:border-white/20 transition-all space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-apple-accent font-bold group-hover:scale-110 transition-transform">03</div>
-                    <h4 class="text-xl font-bold text-white">Right Moment</h4>
-                    <p class="text-apple-subtext text-xs leading-relaxed">Synchronizing announcement schedules with broader market cycles and technical milestones.</p>
-                </div>
-
-                <div class="glass-panel p-8 rounded-3xl hover:border-white/20 transition-all space-y-4 group">
-                    <div class="w-12 h-12 rounded-2xl bg-white/5 border border-white/10 flex items-center justify-center text-apple-accent font-bold group-hover:scale-110 transition-transform">04</div>
-                    <h4 class="text-xl font-bold text-white">Right Channel</h4>
-                    <p class="text-apple-subtext text-xs leading-relaxed">Deploying targeted outreach across tier-1 mainstream, crypto-native, and AI publications.</p>
+                <div class="ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-inkPink/10 flex items-center justify-center text-inkPink">
+                            <i data-lucide="globe" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-xl font-bold text-inkTextPrimary">Global Ecosystem Campaign Reach</h3>
+                        <p class="text-inkTextSecondary font-medium text-sm leading-relaxed">
+                            Executing synchronized international communications strategies across key Asian, European, North American, and MENA innovation hubs.
+                        </p>
+                    </div>
+                    <div class="pt-4 border-t border-black/10 flex items-center gap-2 text-xs font-mono font-bold text-inkPink">
+                        <span>Multilingual Media Blitz</span>
+                        <i data-lucide="globe" class="w-4 h-4"></i>
+                    </div>
                 </div>
             </div>
         </section>
 
         <!-- Services Section -->
-        <section id="services" class="space-y-12">
-            <div class="text-center max-w-2xl mx-auto space-y-4">
-                <h2 class="text-xs font-semibold uppercase tracking-widest text-apple-accent">Services</h2>
-                <h3 class="text-3xl md:text-5xl font-bold text-gradient">Bespoke Communications</h3>
+        <section id="services" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-12">
+            <div class="text-center space-y-3 mb-16">
+                <span class="text-inkPurple font-mono text-xs uppercase tracking-widest font-extrabold bg-purple-50 px-3 py-1 rounded-full border border-purple-200">Core Capabilities</span>
+                <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-prismatic">Services</h2>
+                <p class="text-inkTextSecondary font-medium max-w-xl mx-auto text-sm sm:text-base bg-white/60 p-3 rounded-xl border border-black/5">Tailored communications infrastructure engineered for Web3 protocols and AI pioneers.</p>
             </div>
 
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
-                <div class="glass-panel p-8 rounded-3xl space-y-4">
-                    <h4 class="text-xl font-bold text-white">Media Relations</h4>
-                    <p class="text-apple-subtext text-xs leading-relaxed">Direct placement in leading publications, editorial interviews, expert commentary positioning, and press release distribution.</p>
+            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-inkBlue/10 border border-inkBlue/20 flex items-center justify-center text-inkBlue group-hover:scale-110 transition-transform">
+                            <i data-lucide="megaphone" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-inkTextPrimary">Global Public Relations</h3>
+                        <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">
+                            Own the narrative with strategic announcements, earned media and founder thought leadership.
+                        </p>
+                    </div>
+                    <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkBlue hover:underline">
+                        PITCH YOUR PROJECT <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
                 </div>
-                <div class="glass-panel p-8 rounded-3xl space-y-4">
-                    <h4 class="text-xl font-bold text-white">GTM Launch Strategy</h4>
-                    <p class="text-apple-subtext text-xs leading-relaxed">End-to-end launch orchestration for mainnet debuts, token generation events (TGE), and funding announcements.</p>
+
+                <div class="ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-inkPurple/10 border border-inkPurple/20 flex items-center justify-center text-inkPurple group-hover:scale-110 transition-transform">
+                            <i data-lucide="users" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-inkTextPrimary">Community Management & Growth</h3>
+                        <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">
+                            Turn passive followers into a hyper-engaged army of Web3 project validators.
+                        </p>
+                    </div>
+                    <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkPurple hover:underline">
+                        PITCH YOUR PROJECT <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
                 </div>
-                <div class="glass-panel p-8 rounded-3xl space-y-4">
-                    <h4 class="text-xl font-bold text-white">Executive Thought Leadership</h4>
-                    <p class="text-apple-subtext text-xs leading-relaxed">Keynote conference positioning, podcast placements, and ghostwritten executive op-eds in top industry journals.</p>
+
+                <div class="ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-inkPink/10 border border-inkPink/20 flex items-center justify-center text-inkPink group-hover:scale-110 transition-transform">
+                            <i data-lucide="award" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-inkTextPrimary">Influencer & KOL Marketing</h3>
+                        <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">
+                            Deploy vetted, performance-driven influencer networks that capture retail liquidity.
+                        </p>
+                    </div>
+                    <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkPink hover:underline">
+                        PITCH YOUR PROJECT <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
+                </div>
+
+                <div class="ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
+                    <div class="space-y-4">
+                        <div class="w-12 h-12 rounded-2xl bg-inkCyan/10 border border-inkCyan/20 flex items-center justify-center text-inkCyan group-hover:scale-110 transition-transform">
+                            <i data-lucide="zap" class="w-6 h-6"></i>
+                        </div>
+                        <h3 class="font-display text-lg font-bold text-inkTextPrimary">GTM & Launch Strategy</h3>
+                        <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">
+                            Comprehensive launch tactics, token releases, and brand positioning engineered for maximal market footprint.
+                        </p>
+                    </div>
+                    <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkCyan hover:underline">
+                        PITCH YOUR PROJECT <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+                    </a>
                 </div>
             </div>
         </section>
 
-        <!-- Accolades & Reputation -->
-        <section id="accolades" class="glass-panel p-10 md:p-16 rounded-3xl border border-white/10 text-center space-y-6">
-            <h2 class="text-xs font-semibold uppercase tracking-widest text-apple-accent">Recognized Excellence</h2>
-            <h3 class="text-3xl font-bold text-white">Industry Accolades &amp; Standing</h3>
-            <p class="text-apple-subtext max-w-2xl mx-auto text-sm leading-relaxed">
-                Acknowledged across the Web3 and Deep Tech sectors for sustained excellence in media strategy, crisis management, and transparent agency practices.
-            </p>
+        <!-- Awards Section -->
+        <section id="awards" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-12">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-inkAmber font-mono text-xs uppercase tracking-widest font-extrabold bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Recognition</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-inkTextPrimary">Industry Awards</h2>
+            </div>
+            <div class="grid sm:grid-cols-2 lg:grid-cols-4 gap-6">
+                <div class="ink-glass-card p-6 rounded-2xl space-y-3 text-center">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
+                        <i data-lucide="trophy" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-base text-inkTextPrimary">Best Web3 PR Agency 2023</h3>
+                    <p class="text-xs text-inkSubtle">Crypto Marketing Awards</p>
+                </div>
+                <div class="ink-glass-card p-6 rounded-2xl space-y-3 text-center">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
+                        <i data-lucide="award" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-base text-inkTextPrimary">Top Tech PR Campaign 2024</h3>
+                    <p class="text-xs text-inkSubtle">Global PR Excellence</p>
+                </div>
+                <div class="ink-glass-card p-6 rounded-2xl space-y-3 text-center">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
+                        <i data-lucide="star" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-base text-inkTextPrimary">AI Communications Leadership</h3>
+                    <p class="text-xs text-inkSubtle">Tech Innovators Summit</p>
+                </div>
+                <div class="ink-glass-card p-6 rounded-2xl space-y-3 text-center">
+                    <div class="w-10 h-10 rounded-full bg-amber-100 text-amber-600 flex items-center justify-center mx-auto">
+                        <i data-lucide="shield-check" class="w-5 h-5"></i>
+                    </div>
+                    <h3 class="font-display font-bold text-base text-inkTextPrimary">Most Trusted Media Partner</h3>
+                    <p class="text-xs text-inkSubtle">Blockchain Media Guild</p>
+                </div>
+            </div>
         </section>
 
-        <!-- Client Onboarding Form -->
-        <section id="onboarding" class="glass-panel p-10 md:p-16 rounded-3xl border border-white/10 max-w-3xl mx-auto space-y-8">
-            <div class="text-center space-y-3">
-                <h2 class="text-xs font-semibold uppercase tracking-widest text-apple-accent">Client Onboarding</h2>
-                <h3 class="text-3xl font-bold text-white">Start the Vetting Process</h3>
-                <p class="text-apple-subtext text-xs">Complete the initial brief below to initiate a consultation.</p>
+        <!-- News & Articles Section -->
+        <section id="news" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-12">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-inkBlue font-mono text-xs uppercase tracking-widest font-extrabold bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Insights</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-inkTextPrimary">News & Articles</h2>
             </div>
+            <div class="grid md:grid-cols-3 gap-6">
+                <article class="ink-glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <span class="text-[10px] font-mono font-bold text-inkBlue uppercase bg-blue-50 px-2.5 py-1 rounded-md">Analysis</span>
+                        <h3 class="font-display font-bold text-base text-inkTextPrimary">Navigating Decentralized AI Narrative Design in 2026</h3>
+                        <p class="text-xs text-inkSubtle leading-relaxed">How DeAI protocols can effectively translate technical compute models for mainstream technology newsrooms.</p>
+                    </div>
+                    <div class="text-xs text-inkSubtle font-mono pt-2 border-t border-black/5">Oct 12, 2025</div>
+                </article>
+                <article class="ink-glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <span class="text-[10px] font-mono font-bold text-inkPurple uppercase bg-purple-50 px-2.5 py-1 rounded-md">Strategy</span>
+                        <h3 class="font-display font-bold text-base text-inkTextPrimary">The Evolution of Tier-1 Web3 Earned Media</h3>
+                        <p class="text-xs text-inkSubtle leading-relaxed">Why organic founder authority and audited project integrity outperform traditional press release wire drops.</p>
+                    </div>
+                    <div class="text-xs text-inkSubtle font-mono pt-2 border-t border-black/5">Nov 04, 2025</div>
+                </article>
+                <article class="ink-glass-card rounded-2xl p-6 space-y-4 flex flex-col justify-between">
+                    <div class="space-y-2">
+                        <span class="text-[10px] font-mono font-bold text-inkPink uppercase bg-pink-50 px-2.5 py-1 rounded-md">Case Study</span>
+                        <h3 class="font-display font-bold text-base text-inkTextPrimary">GTM Execution: Modular Layer-2 Launch Playbook</h3>
+                        <p class="text-xs text-inkSubtle leading-relaxed">A deep dive into orchestrating multi-region ecosystem PR blitzes across North America and Asia.</p>
+                    </div>
+                    <div class="text-xs text-inkSubtle font-mono pt-2 border-t border-black/5">Dec 18, 2025</div>
+                </article>
+            </div>
+        </section>
 
-            <form class="space-y-6" onsubmit="event.preventDefault(); alert('Thank you for submitting your onboarding brief. Our team will review and respond shortly.');">
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-                    <div>
-                        <label class="block text-xs text-apple-subtext mb-2">Project / Company Name</label>
-                        <input type="text" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-apple-accent transition-colors" placeholder="e.g. NextGen Protocol">
-                    </div>
-                    <div>
-                        <label class="block text-xs text-apple-subtext mb-2">Contact Email</label>
-                        <input type="email" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-apple-accent transition-colors" placeholder="name@domain.com">
-                    </div>
+        <!-- Gallery Section -->
+        <section id="gallery" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-12">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-inkCyan font-mono text-xs uppercase tracking-widest font-extrabold bg-cyan-50 px-3 py-1 rounded-full border border-cyan-200">Media</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-inkTextPrimary">Gallery</h2>
+            </div>
+            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+                <div class="ink-glass-card h-48 rounded-2xl flex items-center justify-center p-4 text-center border border-black/10">
+                    <span class="text-xs font-mono font-semibold text-inkSubtle">Web3 Summit Keynote 2025</span>
                 </div>
+                <div class="ink-glass-card h-48 rounded-2xl flex items-center justify-center p-4 text-center border border-black/10">
+                    <span class="text-xs font-mono font-semibold text-inkSubtle">Token2049 Panel Discussion</span>
+                </div>
+                <div class="ink-glass-card h-48 rounded-2xl flex items-center justify-center p-4 text-center border border-black/10">
+                    <span class="text-xs font-mono font-semibold text-inkSubtle">AI Ethics Roundtable</span>
+                </div>
+                <div class="ink-glass-card h-48 rounded-2xl flex items-center justify-center p-4 text-center border border-black/10">
+                    <span class="text-xs font-mono font-semibold text-inkSubtle">Global PR Strategy Workshop</span>
+                </div>
+            </div>
+        </section>
 
-                <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+        <!-- Events Section -->
+        <section id="events" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-12">
+            <div class="text-center space-y-3 mb-12">
+                <span class="text-inkTeal font-mono text-xs uppercase tracking-widest font-extrabold bg-teal-50 px-3 py-1 rounded-full border border-teal-200">Presence</span>
+                <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-inkTextPrimary">Upcoming Events</h2>
+            </div>
+            <div class="space-y-4 max-w-3xl mx-auto">
+                <div class="ink-glass-card p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
                     <div>
-                        <label class="block text-xs text-apple-subtext mb-2">Sector Focus</label>
-                        <select class="w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-apple-accent transition-colors">
-                            <option>Web3 / Blockchain</option>
-                            <option>Artificial Intelligence</option>
-                            <option>Deep Tech / Hardware</option>
-                            <option>Other Emerging Tech</option>
+                        <div class="text-xs font-mono text-inkTeal font-bold">April 15-17, 2026</div>
+                        <h3 class="font-display font-bold text-lg text-inkTextPrimary">Global Web3 Leadership Forum</h3>
+                        <p class="text-xs text-inkSubtle">Dubai, UAE • Official PR Partner Host</p>
+                    </div>
+                    <a href="#contact" class="ink-button-secondary px-4 py-2 rounded-full text-xs font-bold">Connect</a>
+                </div>
+                <div class="ink-glass-card p-6 rounded-2xl flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4">
+                    <div>
+                        <div class="text-xs font-mono text-inkTeal font-bold">June 22-24, 2026</div>
+                        <h3 class="font-display font-bold text-lg text-inkTextPrimary">DeAI & Autonomous Agents Summit</h3>
+                        <p class="text-xs text-inkSubtle">San Francisco, CA • Keynote Panel</p>
+                    </div>
+                    <a href="#contact" class="ink-button-secondary px-4 py-2 rounded-full text-xs font-bold">Connect</a>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact / Pitch Section -->
+        <section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-12">
+            <div class="ink-glass-card p-8 sm:p-12 rounded-3xl space-y-8 border-2 border-black/10">
+                <div class="text-center space-y-3">
+                    <span class="text-inkBlue font-mono text-xs uppercase tracking-widest font-extrabold bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Get In Touch</span>
+                    <h2 class="font-display text-3xl sm:text-4xl font-extrabold text-inkTextPrimary">Pitch Your Purpose</h2>
+                    <p class="text-xs sm:text-sm text-inkTextSecondary font-medium max-w-md mx-auto">Ready to scale your Web3 or AI protocol? Submit your details to begin our vetting evaluation.</p>
+                </div>
+                <form class="space-y-4" onsubmit="event.preventDefault(); alert('Thank you for pitching your purpose. Our team will review your submission against our Vetting Mandate and get back to you shorty.');">
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Your Name" required class="w-full px-4 py-3 rounded-xl bg-white/80 border border-black/10 text-xs focus:outline-none focus:border-inkBlue transition-colors">
+                        <input type="email" placeholder="Work Email" required class="w-full px-4 py-3 rounded-xl bg-white/80 border border-black/10 text-xs focus:outline-none focus:border-inkBlue transition-colors">
+                    </div>
+                    <div class="grid sm:grid-cols-2 gap-4">
+                        <input type="text" placeholder="Project / Organization Name" required class="w-full px-4 py-3 rounded-xl bg-white/80 border border-black/10 text-xs focus:outline-none focus:border-inkBlue transition-colors">
+                        <select required class="w-full px-4 py-3 rounded-xl bg-white/80 border border-black/10 text-xs focus:outline-none focus:border-inkBlue transition-colors text-inkTextSecondary">
+                            <option value="" disabled selected>Select Primary Sector</option>
+                            <option value="web3">Web3 & Crypto Protocol</option>
+                            <option value="ai">AI & Autonomous Agents</option>
+                            <option value="deeptech">Deep Tech & RWA</option>
                         </select>
                     </div>
-                    <div>
-                        <label class="block text-xs text-apple-subtext mb-2">Project Stage</label>
-                        <select class="w-full bg-neutral-900 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-apple-accent transition-colors">
-                            <option>Pre-Launch / Stealth</option>
-                            <option>Testnet / Beta</option>
-                            <option>Mainnet Live</option>
-                            <option>Established Protocol</option>
-                        </select>
-                    </div>
-                </div>
-
-                <div>
-                    <label class="block text-xs text-apple-subtext mb-2">Project Overview &amp; PR Objectives</label>
-                    <textarea rows="4" required class="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-3 text-sm text-white focus:outline-none focus:border-apple-accent transition-colors" placeholder="Briefly describe your project, timeline, and primary PR goals..."></textarea>
-                </div>
-
-                <button type="submit" class="w-full bg-apple-accent hover:bg-blue-600 text-white font-semibold py-4 rounded-xl transition-colors text-sm">
-                    Submit Onboarding Brief
-                </button>
-            </form>
+                    <textarea placeholder="Tell us about your project, technology stack, and communication goals..." rows="4" required class="w-full px-4 py-3 rounded-xl bg-white/80 border border-black/10 text-xs focus:outline-none focus:border-inkBlue transition-colors"></textarea>
+                    <button type="submit" class="w-full ink-button-primary py-3.5 rounded-xl font-display font-bold text-sm">Submit Project Pitch</button>
+                </form>
+            </div>
         </section>
 
-    </div>
+    </main>
 
-    <!-- Footer -->
-    <footer class="relative z-10 border-t border-white/10 py-12 text-center text-xs text-apple-subtext glass-panel mt-20">
-        <div class="max-w-7xl mx-auto px-6 space-y-4">
-            <p class="font-semibold text-white">yourPRstrategist</p>
-            <p>Doing PR Right. For Projects That Matter.</p>
-            <p class="text-white/40">&copy; 2026 yourPRstrategist. All rights reserved.</p>
+    <footer class="border-t border-black/10 py-12 px-4 sm:px-6 lg:px-8 bg-white/60 relative z-10">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-6 text-xs text-inkSubtle font-medium">
+            <div class="flex items-center gap-2">
+                <span class="font-display font-bold text-inkTextPrimary">yourPRstrategist</span>
+                <span>© 2026. All rights reserved.</span>
+            </div>
+            <div class="flex gap-6 font-semibold">
+                <a href="#mandate" class="hover:text-inkBlue transition-colors">Vetting Mandate</a>
+                <a href="#pillars" class="hover:text-inkBlue transition-colors">Strategic Pillars</a>
+                <a href="#services" class="hover:text-inkBlue transition-colors">Services</a>
+                <a href="#contact" class="hover:text-inkBlue transition-colors">Contact</a>
+            </div>
         </div>
     </footer>
 
-    <!-- WebGL Ink-in-Water Shader Animation -->
+    <!-- Interactive Script -->
     <script>
-        const container = document.getElementById('canvas-container');
-        const scene = new THREE.Scene();
-        const camera = new THREE.OrthographicCamera(-1, 1, 1, -1, 0, 1);
-        const renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
-        
-        renderer.setSize(window.innerWidth, window.innerHeight);
-        renderer.setPixelRatio(Math.min(window.devicePixelRatio, 2));
-        container.appendChild(renderer.domElement);
+        // Lucide Icons initialization
+        lucide.createIcons();
 
-        const fragmentShader = `
-            uniform float iTime;
-            uniform vec2 iResolution;
+        // Mobile Menu Toggle
+        const mobileMenuBtn = document.getElementById('mobile-menu-btn');
+        const mobileMenu = document.getElementById('mobile-menu');
+        if (mobileMenuBtn && mobileMenu) {
+            mobileMenuBtn.addEventListener('click', () => {
+                mobileMenu.classList.toggle('hidden');
+                mobileMenu.classList.toggle('flex');
+            });
+        }
 
-            void main() {
-                vec2 uv = gl_FragCoord.xy / iResolution.xy;
-                vec2 p = (gl_FragCoord.xy * 2.0 - iResolution.xy) / min(iResolution.x, iResolution.y);
-                
-                float t = iTime * 0.15;
-                
-                for(int i = 1; i < 6; i++) {
-                    float fi = float(i);
-                    p.x += 0.3 / fi * sin(fi * 2.0 * p.y + t + float(i) * 120.0);
-                    p.y += 0.3 / fi * cos(fi * 2.0 * p.x + t + float(i) * 90.0);
-                }
-                
-                float ink = length(p);
-                vec3 color1 = vec3(0.0, 0.0, 0.0); // Pure Black Background
-                vec3 color2 = vec3(0.08, 0.15, 0.3); // Deep Apple Blue Accent
-                vec3 color3 = vec3(0.12, 0.05, 0.25); // Subtle Purple Ink
-                
-                vec3 finalColor = mix(color1, color2, smoothstep(0.2, 1.8, ink * 0.8));
-                finalColor = mix(finalColor, color3, sin(iTime * 0.2) * 0.5 + 0.5);
-                
-                gl_FragColor = vec4(finalColor * 0.6, 1.0);
+        // Vetting Mandate Sector Switcher Data
+        const mandateData = {
+            all: {
+                p1Desc: "Verification of proprietary tech stack, audited smart contracts, or authentic AI model architecture—filtering out copy-paste forks and surface-level wrappers.",
+                p1Tag: "Smart Contracts & AI Models",
+                p2Desc: "Evaluation of economic design, fair tokenomics, or ethical AI training data provenance to ensure non-dilutive, sustainable long-term viability.",
+                p2Tag: "Tokenomics & Data Provenance",
+                p3Desc: "Background verification of founders, regulatory mindfulness, transparent roadmap commitments, and authentic ecosystem impact goals.",
+                p3Tag: "Founder Provenance & Regulatory"
+            },
+            web3: {
+                p1Desc: "Rigorous inspection of open-source repositories, smart contract security audits, Layer-1/Layer-2 consensus mechanisms, and cryptographic novelty.",
+                p1Tag: "Smart Contract Audits & Codebase Integrity",
+                p2Desc: "Analysis of token utility, inflation schedules, liquidity lockups, and tokenomic models designed to prevent pump-and-dump dynamics.",
+                p2Tag: "Non-Dilutive Tokenomics & Liquidity",
+                p3Desc: "Verification of core team identities, treasury transparency, DAO governance frameworks, and global compliance adherence.",
+                p3Tag: "DOXXed Leadership & DAO Compliance"
+            },
+            ai: {
+                p1Desc: "Audit of foundational AI model architectures, decentralized compute networks (DeAI), zero-knowledge ML proofs, and verifiable inference mechanisms.",
+                p1Tag: "Proprietary AI Models & zkML Verification",
+                p2Desc: "Ensuring ethical training data collection, copyright compliance, decentralized data contributor rewards, and open algorithmic benchmarks.",
+                p2Tag: "Data Ethics & Open Benchmarks",
+                p3Desc: "Evaluation of AI alignment guardrails, autonomous agent safety parameters, human-in-the-loop governance, and bias mitigation.",
+                p3Tag: "AI Safety Guardrails & Alignment"
+            },
+            deeptech: {
+                p1Desc: "Validation of physical infrastructure networks (DePIN), Real-World Asset (RWA) tokenization protocols, and hardware integration standards.",
+                p1Tag: "DePIN Infrastructure & RWA Tech Stacks",
+                p2Desc: "Verification of underlying physical asset custodianship, yield sustainability, and institutional-grade proof-of-reserve mechanisms.",
+                p2Tag: "Proof-of-Reserve & Asset Backing",
+                p3Desc: "Strict adherence to international securities regulations, cross-border legal structuring, and real-world asset licensing requirements.",
+                p3Tag: "Regulatory Compliance & Legal Structuring"
             }
-        `;
-
-        const vertexShader = `
-            void main() {
-                gl_Position = vec4(position, 1.0);
-            }
-        `;
-
-        const uniforms = {
-            iTime: { value: 0 },
-            iResolution: { value: new THREE.Vector2(window.innerWidth, window.innerHeight) }
         };
 
-        const material = new THREE.ShaderMaterial({
-            vertexShader,
-            fragmentShader,
-            uniforms
-        });
+        function setMandateTab(tab) {
+            const tabs = ['all', 'web3', 'ai', 'deeptech'];
+            tabs.forEach(t => {
+                const btn = document.getElementById(`tab-${t}`);
+                if (btn) {
+                    if (t === tab) {
+                        btn.className = "px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-inkTextPrimary text-white shadow-sm";
+                    } else {
+                        btn.className = "px-3.5 py-1.5 rounded-xl text-xs font-mono font-bold transition-all bg-white hover:bg-black/5 text-inkTextSecondary";
+                    }
+                }
+            });
 
-        const geometry = new THREE.PlaneGeometry(2, 2);
-        const mesh = new THREE.Mesh(geometry, material);
-        scene.add(mesh);
-
-        function animate(time) {
-            uniforms.iTime.value = time * 0.001;
-            renderer.render(scene, camera);
-            requestAnimationFrame(animate);
+            const data = mandateData[tab] || mandateData.all;
+            document.getElementById('mandate-p1-desc').textContent = data.p1Desc;
+            document.getElementById('mandate-p1-tag').textContent = data.p1Tag;
+            document.getElementById('mandate-p2-desc').textContent = data.p2Desc;
+            document.getElementById('mandate-p2-tag').textContent = data.p2Tag;
+            document.getElementById('mandate-p3-desc').textContent = data.p3Desc;
+            document.getElementById('mandate-p3-tag').textContent = data.p3Tag;
         }
-        requestAnimationFrame(animate);
 
-        window.addEventListener('resize', () => {
-            renderer.setSize(window.innerWidth, window.innerHeight);
-            uniforms.iResolution.value.set(window.innerWidth, window.innerHeight);
-        });
+        // Interactive Fluid Ink Background Animation
+        const canvas = document.getElementById('ink-canvas');
+        if (canvas) {
+            const ctx = canvas.getContext('2d');
+            let width, height;
+            let particles = [];
+            const particleCount = 20;
+
+            function resize() {
+                width = canvas.width = window.innerWidth;
+                height = canvas.height = window.innerHeight;
+            }
+
+            window.addEventListener('resize', resize);
+            resize();
+
+            class InkBlob {
+                constructor() {
+                    this.reset();
+                }
+
+                reset() {
+                    this.x = Math.random() * width;
+                    this.y = Math.random() * height;
+                    this.radius = Math.random() * 200 + 150;
+                    this.vx = (Math.random() - 0.5) * 0.4;
+                    this.vy = (Math.random() - 0.5) * 0.4;
+                    const colors = [
+                        'rgba(0, 102, 204, 0.08)',   // Blue
+                        'rgba(142, 36, 170, 0.06)',  // Purple
+                        'rgba(233, 30, 99, 0.05)',   // Pink
+                        'rgba(0, 172, 193, 0.07)'    // Cyan
+                    ];
+                    this.color = colors[Math.floor(Math.random() * colors.length)];
+                }
+
+                update() {
+                    this.x += this.vx;
+                    this.y += this.vy;
+
+                    if (this.x < -this.radius || this.x > width + this.radius ||
+                        this.y < -this.radius || this.y > height + this.radius) {
+                        this.reset();
+                    }
+                }
+
+                draw() {
+                    ctx.beginPath();
+                    const gradient = ctx.createRadialGradient(this.x, this.y, 0, this.x, this.y, this.radius);
+                    gradient.addColorStop(0, this.color);
+                    gradient.addColorStop(1, 'rgba(255, 255, 255, 0)');
+                    ctx.fillStyle = gradient;
+                    ctx.arc(this.x, this.y, this.radius, 0, Math.PI * 2);
+                    ctx.fill();
+                }
+            }
+
+            for (let i = 0; i < particleCount; i++) {
+                particles.push(new InkBlob());
+            }
+
+            function animate() {
+                ctx.clearRect(0, 0, width, height);
+                particles.forEach(p => {
+                    p.update();
+                    p.draw();
+                });
+                requestAnimationFrame(animate);
+            }
+
+            animate();
+        }
     </script>
 </body>
 </html>
