@@ -52,17 +52,9 @@ tailwind.config = {
   inherits: false;
 }
 
-@keyframes magicalBorderGlow {
-  0% { background-position: 0% 50%; }
-  50% { background-position: 100% 50%; }
-  100% { background-position: 0% 50%; }
-}
-
-.magical-border {
-  /* Increased duration to 14s and added an ease-in-out transition for a smooth flow */
-  animation: magicalBorderGlow 14s ease-in-out infinite;
-  background-size: 300% 300%;
-}
+@keyframes rotateBorder {
+  0% { --angle: 0deg; }
+  100% { --angle: 360deg; }
 }
 
 :root {
@@ -117,7 +109,7 @@ body {
 }
 
 .light-card::before {
-  content: '';
+  content: "";
   position: absolute;
   inset: -1.5px;
   border-radius: inherit;
@@ -201,7 +193,6 @@ body {
 </style>
 </head>
 <body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue">
-
 <canvas id="ink-canvas"></canvas>
 
 <header class="fixed top-0 left-0 w-full z-50 ink-glass border-b border-black/10 transition-all duration-300">
@@ -216,7 +207,6 @@ body {
         your<span class="text-prismatic">PR</span>strategist
       </span>
     </a>
-
     <nav class="hidden md:flex items-center gap-7 text-xs font-semibold text-inkTextSecondary tracking-wide">
       <a href="#mandate" class="hover:text-inkBlue transition-colors">Vetting Mandate</a>
       <a href="#pillars" class="hover:text-inkBlue transition-colors">Strategic Pillars</a>
@@ -226,7 +216,6 @@ body {
       <a href="#gallery" class="hover:text-inkBlue transition-colors">Gallery</a>
       <a href="#events" class="hover:text-inkBlue transition-colors">Events</a>
     </nav>
-
     <div class="flex items-center gap-3">
       <a href="#contact" class="ink-button-primary px-5 py-2 rounded-full text-xs font-bold font-display">
         Pitch Your Purpose
@@ -236,7 +225,6 @@ body {
       </button>
     </div>
   </div>
-
   <div id="mobile-menu" class="hidden md:hidden ink-glass border-b border-black/10 px-6 py-4 flex-col gap-3 text-sm text-inkTextSecondary font-semibold">
     <a href="#mandate" class="hover:text-inkBlue py-1">Vetting Mandate</a>
     <a href="#pillars" class="hover:text-inkBlue py-1">Strategic Pillars</a>
@@ -263,12 +251,10 @@ body {
           Established 2019
         </div>
       </div>
-
       <h1 class="font-display text-4xl sm:text-6xl md:text-7xl font-extrabold tracking-tight leading-[1.08] text-inkTextPrimary">
         Doing PR Right. <br class="hidden sm:inline"/>
         <span class="text-prismatic">For the Projects That Matter.</span>
       </h1>
-
       <div class="max-w-3xl mx-auto light-card bg-white/70 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-sm text-center space-y-3 transition-all duration-300 hover:-translate-y-1 hover:shadow-md">
         <p class="text-lg sm:text-xl md:text-2xl font-semibold text-inkTextPrimary leading-snug tracking-tight">
           We are true believers in the transformative power of <span class="text-inkBlue font-bold">Web3</span> &amp; <span class="text-inkPurple font-bold">Artificial Intelligence</span>.
@@ -277,7 +263,6 @@ body {
           As a veteran boutique PR agency, we dedicate our media relations &amp; GTM strategies exclusively to high-integrity protocols being built to improve the communities of tomorrow.
         </p>
       </div>
-
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
         <a href="#contact" class="w-full sm:w-auto ink-button-primary px-8 py-3.5 rounded-full font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
           Pitch Your Purpose
@@ -302,7 +287,6 @@ body {
         Earned Coverage &amp; Media Partnerships Across Tier-1 Outlets
       </h2>
     </div>
-
     <div class="light-card bg-white/70 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-3xl shadow-sm transition-all duration-300">
       <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 font-bold text-inkTextPrimary text-xs sm:text-sm md:text-base tracking-tight">
         <div class="flex-1 min-w-[120px] px-4 py-3 sm:py-4 bg-white/60 rounded-2xl border border-black/5 text-center whitespace-nowrap transition-all duration-300 hover:-translate-y-1 hover:border-inkBlue/40 hover:text-inkBlue hover:shadow-md hover:bg-white/90 cursor-default">CoinDesk</div>
@@ -328,71 +312,47 @@ body {
         Before initiating PR momentum, our research team evaluates founder track records, security, and project architecture to guarantee authentic substance.
       </p>
     </div>
-
     <div class="grid grid-cols-1 md:grid-cols-3 gap-6 lg:gap-8">
-      <!-- Card 01 -->
       <div class="light-card ink-glass-card p-7 sm:p-8 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold text-inkBlue bg-inkBlue/10 px-3 py-1 rounded-full border border-inkBlue/20">
-              01/INTEGRITY
-            </span>
+            <span class="text-xs font-mono font-bold text-inkBlue bg-inkBlue/10 px-3 py-1 rounded-full border border-inkBlue/20">01/INTEGRITY</span>
             <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center text-inkBlue group-hover:scale-110 transition-transform duration-300">
               <i data-lucide="user-check" class="w-5 h-5"></i>
             </div>
           </div>
-          <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">
-            Founder Track Record
-          </h3>
-          <p class="text-xs sm:text-sm text-inkTextSecondary leading-relaxed">
-            Background checks on founder histories, team execution capability, and commitment to long-term value creation.
-          </p>
+          <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">Founder Track Record</h3>
+          <p class="text-xs sm:text-sm text-inkTextSecondary leading-relaxed">Background checks on founder histories, team execution capability, and commitment to long-term value creation.</p>
         </div>
         <div class="pt-6 mt-6 border-t border-black/5 flex items-center gap-2 text-xs font-mono text-inkTextSecondary">
           <span class="w-1.5 h-1.5 rounded-full bg-inkBlue"></span> Team &amp; Execution
         </div>
       </div>
-
-      <!-- Card 02 -->
       <div class="light-card ink-glass-card p-7 sm:p-8 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold text-inkPurple bg-inkPurple/10 px-3 py-1 rounded-full border border-inkPurple/20">
-              02/SUBSTANCE
-            </span>
+            <span class="text-xs font-mono font-bold text-inkPurple bg-inkPurple/10 px-3 py-1 rounded-full border border-inkPurple/20">02/SUBSTANCE</span>
             <div class="w-10 h-10 rounded-2xl bg-purple-50 flex items-center justify-center text-inkPurple group-hover:scale-110 transition-transform duration-300">
               <i data-lucide="shield-code" class="w-5 h-5"></i>
             </div>
           </div>
-          <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">
-            Architecture &amp; Code Audit
-          </h3>
-          <p class="text-xs sm:text-sm text-inkTextSecondary leading-relaxed">
-            Evaluation of smart contract security for Web3 protocols or model integrity, data privacy, and architecture for AI ventures.
-          </p>
+          <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">Architecture &amp; Code Audit</h3>
+          <p class="text-xs sm:text-sm text-inkTextSecondary leading-relaxed">Evaluation of smart contract security for Web3 protocols or model integrity, data privacy, and architecture for AI ventures.</p>
         </div>
         <div class="pt-6 mt-6 border-t border-black/5 flex items-center gap-2 text-xs font-mono text-inkTextSecondary">
           <span class="w-1.5 h-1.5 rounded-full bg-inkPurple"></span> Security &amp; Privacy
         </div>
       </div>
-
-      <!-- Card 03 -->
       <div class="light-card ink-glass-card p-7 sm:p-8 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="flex items-center justify-between">
-            <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">
-              03/FEASIBILITY
-            </span>
+            <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">03/FEASIBILITY</span>
             <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform duration-300">
               <i data-lucide="trending-up" class="w-5 h-5"></i>
             </div>
           </div>
-          <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">
-            Model &amp; Market Realism
-          </h3>
-          <p class="text-xs sm:text-sm text-inkTextSecondary leading-relaxed">
-            Evaluating economic viability, realistic tokenomics, or real-world application utility without penalizing early-stage innovation.
-          </p>
+          <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">Model &amp; Market Realism</h3>
+          <p class="text-xs sm:text-sm text-inkTextSecondary leading-relaxed">Evaluating economic viability, realistic tokenomics, or real-world application utility without penalizing early-stage innovation.</p>
         </div>
         <div class="pt-6 mt-6 border-t border-black/5 flex items-center gap-2 text-xs font-mono text-inkTextSecondary">
           <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span> Growth Potential
@@ -408,7 +368,6 @@ body {
       <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-prismatic">Strategic Pillars</h2>
       <p class="text-inkTextSecondary font-medium max-w-2xl mx-auto text-xs sm:text-sm">Why leading blockchain protocols and AI pioneers trust our PR architecture.</p>
     </div>
-
     <div class="grid md:grid-cols-3 gap-6">
       <div class="light-card ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
         <div class="space-y-4">
@@ -416,9 +375,7 @@ body {
             <i data-lucide="newspaper" class="w-6 h-6"></i>
           </div>
           <h3 class="font-display text-xl font-bold text-inkTextPrimary">High-Impact Tier-1 Media Reach</h3>
-          <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">
-            Cultivating long-standing, earned relationships with tier-1 journalists, chief editors and key research analysts across top technology and financial newsrooms.
-          </p>
+          <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">Cultivating long-standing, earned relationships with tier-1 journalists, chief editors and key research analysts across top technology and financial newsrooms.</p>
         </div>
         <div class="pt-4 border-t border-black/10 flex flex-wrap gap-2 text-xs font-mono font-bold text-inkTextPrimary">
           <span class="bg-black/5 px-2.5 py-1 rounded-md border border-black/5">CoinDesk</span>
@@ -427,32 +384,26 @@ body {
           <span class="bg-black/5 px-2.5 py-1 rounded-md border border-black/5">Decrypt</span>
         </div>
       </div>
-
       <div class="light-card ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkCyan/10 flex items-center justify-center text-inkCyan">
             <i data-lucide="sparkles" class="w-6 h-6"></i>
           </div>
           <h3 class="font-display text-xl font-bold text-inkTextPrimary">Authentic Narrative Architecture</h3>
-          <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">
-            Translating complex zero-knowledge math, decentralized AI compute and modular blockchain stacks into clear, compelling narratives that resonate with enterprise audiences.
-          </p>
+          <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">Translating complex zero-knowledge math, decentralized AI compute and modular blockchain stacks into clear, compelling narratives that resonate with enterprise audiences.</p>
         </div>
         <div class="pt-4 border-t border-black/10 flex items-center gap-2 text-xs font-mono font-bold text-inkCyan">
           <span>Thought Leadership Focus</span>
           <i data-lucide="check" class="w-4 h-4"></i>
         </div>
       </div>
-
       <div class="light-card ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkPink/10 flex items-center justify-center text-inkPink">
             <i data-lucide="globe" class="w-6 h-6"></i>
           </div>
           <h3 class="font-display text-xl font-bold text-inkTextPrimary">Global Ecosystem Campaign Reach</h3>
-          <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">
-            Executing synchronized international communications strategies across key Asian, North American, European and MENA innovation hubs.
-          </p>
+          <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">Executing synchronized international communications strategies across key Asian, North American, European and MENA innovation hubs.</p>
         </div>
         <div class="pt-4 border-t border-black/10 flex items-center gap-2 text-xs font-mono font-bold text-inkPink">
           <span>Strategic Media Blitz</span>
@@ -469,7 +420,6 @@ body {
       <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-prismatic">Services</h2>
       <p class="text-inkTextSecondary font-medium max-w-xl mx-auto text-xs sm:text-sm bg-white/60 p-3 rounded-xl border border-black/5">Tailored communications infrastructure engineered for Web3 protocols and AI pioneers.</p>
     </div>
-
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       <div class="light-card ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
@@ -477,54 +427,43 @@ body {
             <i data-lucide="megaphone" class="w-6 h-6"></i>
           </div>
           <h3 class="font-display text-lg font-bold text-inkTextPrimary">Global Public Relations</h3>
-          <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">
-            Own the narrative with strategic announcements, earned media and founder thought leadership.
-          </p>
+          <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">Own the narrative with strategic announcements, earned media and founder thought leadership.</p>
         </div>
         <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkBlue hover:underline">
           PITCH YOUR PROJECT <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
-
       <div class="light-card ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkPurple/10 border border-inkPurple/20 flex items-center justify-center text-inkPurple group-hover:scale-110 transition-transform">
             <i data-lucide="users" class="w-6 h-6"></i>
           </div>
           <h3 class="font-display text-lg font-bold text-inkTextPrimary">Community Management & Growth</h3>
-          <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">
-            Turn passive followers into a hyper-engaged army of Web3 project validators.
-          </p>
+          <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">Turn passive followers into a hyper-engaged army of Web3 project validators.</p>
         </div>
         <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkPurple hover:underline">
           PITCH YOUR PROJECT <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
-
       <div class="light-card ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkPink/10 border border-inkPink/20 flex items-center justify-center text-inkPink group-hover:scale-110 transition-transform">
             <i data-lucide="award" class="w-6 h-6"></i>
           </div>
           <h3 class="font-display text-lg font-bold text-inkTextPrimary">Influencer & KOL Marketing</h3>
-          <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">
-            Deploy vetted, performance-driven influencer networks that capture retail liquidity.
-          </p>
+          <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">Deploy vetted, performance-driven influencer networks that capture retail liquidity.</p>
         </div>
         <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkPink hover:underline">
           PITCH YOUR PROJECT <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
         </a>
       </div>
-
       <div class="light-card ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkCyan/10 border border-inkCyan/20 flex items-center justify-center text-inkCyan group-hover:scale-110 transition-transform">
             <i data-lucide="rocket" class="w-6 h-6"></i>
           </div>
           <h3 class="font-display text-lg font-bold text-inkTextPrimary">Go-to-Market & Advisory</h3>
-          <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">
-            Architect your launch strategy with data-backed tokenomics, native ads and venture networks.
-          </p>
+          <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">Architect your launch strategy with data-backed tokenomics, native ads and venture networks.</p>
         </div>
         <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkCyan hover:underline">
           PITCH YOUR PROJECT <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
@@ -539,21 +478,16 @@ body {
       <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 pb-8">
         <div class="max-w-2xl space-y-2">
           <span class="text-amber-700 font-mono text-xs uppercase tracking-widest font-extrabold bg-amber-50 px-3 py-1 rounded-full border border-amber-200">Excellence Benchmark</span>
-          <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-inkTextPrimary">
-            Awards & Recognition
-          </h2>
-          <p class="text-inkTextSecondary text-xs sm:text-sm font-medium leading-relaxed">
-            Consistently recognized by international tech, finance and business bodies for public relations & communications excellence.
-          </p>
+          <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-inkTextPrimary">Awards & Recognition</h2>
+          <p class="text-inkTextSecondary text-xs sm:text-sm font-medium leading-relaxed">Consistently recognized by international tech, finance and business bodies for public relations & communications excellence.</p>
         </div>
         <div class="flex items-center gap-3 shrink-0">
           <div class="px-4 py-2 bg-amber-50 rounded-xl border border-amber-200 text-center">
             <div class="font-display font-extrabold text-xl text-amber-800">8 Industry Honors</div>
-            <div class="text-[10px] font-mono text-amber-700 uppercase font-bold">2020 – 2026</div>
+            <div class="text-[10px] font-mono text-amber-700 uppercase font-bold">2020 - 2026</div>
           </div>
         </div>
       </div>
-
       <div class="grid md:grid-cols-2 gap-4">
         <!-- Honors Column 1 -->
         <div class="space-y-3">
@@ -564,7 +498,6 @@ body {
             </div>
             <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-md bg-amber-100 text-amber-800 shrink-0">2026</span>
           </div>
-
           <div class="ink-glass p-4 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-inkBlue hover:bg-white transition-colors">
             <div>
               <div class="text-xs font-display font-bold text-inkTextPrimary">Global Tech Insider Award</div>
@@ -572,7 +505,6 @@ body {
             </div>
             <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-md bg-blue-100 text-inkBlue shrink-0">2025</span>
           </div>
-
           <div class="ink-glass p-4 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-inkPurple hover:bg-white transition-colors">
             <div>
               <div class="text-xs font-display font-bold text-inkTextPrimary">Global Business and Finance</div>
@@ -580,7 +512,6 @@ body {
             </div>
             <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-md bg-purple-100 text-inkPurple shrink-0">2025</span>
           </div>
-
           <div class="ink-glass p-4 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-inkPink hover:bg-white transition-colors">
             <div>
               <div class="text-xs font-display font-bold text-inkTextPrimary">APAC CEO of the Year</div>
@@ -589,7 +520,6 @@ body {
             <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-md bg-pink-100 text-inkPink shrink-0">2024</span>
           </div>
         </div>
-
         <!-- Honors Column 2 -->
         <div class="space-y-3">
           <div class="ink-glass p-4 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-inkCyan hover:bg-white transition-colors">
@@ -599,7 +529,6 @@ body {
             </div>
             <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-md bg-cyan-100 text-inkCyan shrink-0">2024</span>
           </div>
-
           <div class="ink-glass p-4 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-emerald-600 hover:bg-white transition-colors">
             <div>
               <div class="text-xs font-display font-bold text-inkTextPrimary">FiNext Conference Dubai</div>
@@ -607,7 +536,6 @@ body {
             </div>
             <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-md bg-emerald-100 text-emerald-800 shrink-0">2023</span>
           </div>
-
           <div class="ink-glass p-4 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-indigo-600 hover:bg-white transition-colors">
             <div>
               <div class="text-xs font-display font-bold text-inkTextPrimary">World Business Outlook</div>
@@ -615,7 +543,6 @@ body {
             </div>
             <span class="font-mono text-xs font-extrabold px-2.5 py-1 rounded-md bg-indigo-100 text-indigo-800 shrink-0">2022</span>
           </div>
-
           <div class="ink-glass p-4 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-slate-600 hover:bg-white transition-colors">
             <div>
               <div class="text-xs font-display font-bold text-inkTextPrimary">Technology Innovator Awards</div>
@@ -633,12 +560,10 @@ body {
     <div class="light-card relative overflow-hidden bg-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] p-8 sm:p-12 shadow-md transition-all duration-300 ease-out hover:-translate-y-2 hover:shadow-2xl hover:bg-white/80 text-center">
       <div class="absolute -top-24 -left-24 w-64 h-64 bg-inkBlue/10 rounded-full blur-3xl pointer-events-none transition-transform duration-500 ease-out group-hover/banner:scale-125 group-hover/banner:bg-inkBlue/20"></div>
       <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-inkPurple/10 rounded-full blur-3xl pointer-events-none transition-transform duration-500 ease-out group-hover/banner:scale-125 group-hover/banner:bg-inkPurple/20"></div>
-
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold bg-gradient-to-r from-inkBlue/10 to-inkPurple/10 text-inkTextPrimary border border-black/10 mb-6 shadow-xs">
         <span class="w-2 h-2 rounded-full bg-inkBlue animate-pulse"></span>
         YPRS CORE PHILOSOPHY
       </div>
-
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold font-display tracking-tight text-inkTextPrimary leading-snug max-w-3xl mx-auto">
         Getting PR Right: <br />
         <span class="bg-clip-text text-transparent bg-gradient-to-r from-inkBlue via-inkPurple to-inkBlue">
@@ -664,7 +589,6 @@ body {
         </a>
       </div>
     </div>
-
     <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
       <a href="https://yourprstrategist.medium.com" target="_blank" class="light-card ink-glass-card rounded-3xl overflow-hidden flex flex-col justify-between group">
         <div>
@@ -679,12 +603,8 @@ body {
               <span>Official Wire</span>
               <span>2026</span>
             </div>
-            <h3 class="font-display font-bold text-base text-inkTextPrimary group-hover:text-inkBlue transition-colors line-clamp-2">
-              Next-Gen L2 Architecture Selects yourPRstrategist for Global Campaign
-            </h3>
-            <p class="text-xs font-medium text-inkTextSecondary line-clamp-3">
-              Expanding decentralized scaling communications across major international tech and crypto newsrooms.
-            </p>
+            <h3 class="font-display font-bold text-base text-inkTextPrimary group-hover:text-inkBlue transition-colors line-clamp-2">Next-Gen L2 Architecture Selects yourPRstrategist for Global Campaign</h3>
+            <p class="text-xs font-medium text-inkTextSecondary line-clamp-3">Expanding decentralized scaling communications across major international tech and crypto newsrooms.</p>
           </div>
         </div>
         <div class="px-6 pb-6 pt-2 flex items-center justify-between text-xs font-mono font-bold text-inkBlue">
@@ -692,7 +612,6 @@ body {
           <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
         </div>
       </a>
-
       <a href="https://yourprstrategist.medium.com" target="_blank" class="light-card ink-glass-card rounded-3xl overflow-hidden flex flex-col justify-between group">
         <div>
           <div class="relative aspect-video bg-gradient-to-tr from-slate-900 via-blue-950 to-indigo-900 overflow-hidden flex items-center justify-center p-4">
@@ -706,12 +625,8 @@ body {
               <span>Official Wire</span>
               <span>2025</span>
             </div>
-            <h3 class="font-display font-bold text-base text-inkTextPrimary group-hover:text-inkBlue transition-colors line-clamp-2">
-              Decentralized AI Compute Protocol Announces Strategic PR Retainer
-            </h3>
-            <p class="text-xs font-medium text-inkTextSecondary line-clamp-3">
-              Positioning open-source compute frameworks across mainstream enterprise tech media.
-            </p>
+            <h3 class="font-display font-bold text-base text-inkTextPrimary group-hover:text-inkBlue transition-colors line-clamp-2">Decentralized AI Compute Protocol Announces Strategic PR Retainer</h3>
+            <p class="text-xs font-medium text-inkTextSecondary line-clamp-3">Positioning open-source compute frameworks across mainstream enterprise tech media.</p>
           </div>
         </div>
         <div class="px-6 pb-6 pt-2 flex items-center justify-between text-xs font-mono font-bold text-inkBlue">
@@ -719,7 +634,6 @@ body {
           <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
         </div>
       </a>
-
       <a href="https://yourprstrategist.medium.com" target="_blank" class="light-card ink-glass-card rounded-3xl overflow-hidden flex flex-col justify-between group">
         <div>
           <div class="relative aspect-video bg-gradient-to-tr from-purple-900 via-indigo-900 to-pink-900 overflow-hidden flex items-center justify-center p-4">
@@ -733,12 +647,8 @@ body {
               <span>Medium Editorial</span>
               <span>Strategy</span>
             </div>
-            <h3 class="font-display font-bold text-base text-inkTextPrimary group-hover:text-inkPurple transition-colors line-clamp-2">
-              The Blueprint for Sustainable Public Relations in Web3 &amp; AI
-            </h3>
-            <p class="text-xs font-medium text-inkTextSecondary line-clamp-3">
-              Why long-term narrative integrity outperforms short-term hype cycles in emerging tech ecosystems.
-            </p>
+            <h3 class="font-display font-bold text-base text-inkTextPrimary group-hover:text-inkPurple transition-colors line-clamp-2">The Blueprint for Sustainable Public Relations in Web3 &amp; AI</h3>
+            <p class="text-xs font-medium text-inkTextSecondary line-clamp-3">Why long-term narrative integrity outperforms short-term hype cycles in emerging tech ecosystems.</p>
           </div>
         </div>
         <div class="px-6 pb-6 pt-2 flex items-center justify-between text-xs font-mono font-bold text-inkPurple">
@@ -746,7 +656,6 @@ body {
           <i data-lucide="arrow-right" class="w-4 h-4 group-hover:translate-x-1 transition-transform"></i>
         </div>
       </a>
-
       <a href="https://yourprstrategist.medium.com" target="_blank" class="light-card ink-glass-card rounded-3xl overflow-hidden flex flex-col justify-between group">
         <div>
           <div class="relative aspect-video bg-gradient-to-tr from-pink-950 via-purple-900 to-indigo-900 overflow-hidden flex items-center justify-center p-4">
@@ -760,12 +669,8 @@ body {
               <span>Medium Editorial</span>
               <span>Messaging</span>
             </div>
-            <h3 class="font-display font-bold text-base text-inkTextPrimary group-hover:text-inkPurple transition-colors line-clamp-2">
-              Navigating AI &amp; Blockchain Messaging for Institutional Audiences
-            </h3>
-            <p class="text-xs font-medium text-inkTextSecondary line-clamp-3">
-              How founders can bridge zero-knowledge cryptography into mainstream business press coverage.
-            </p>
+            <h3 class="font-display font-bold text-base text-inkTextPrimary group-hover:text-inkPurple transition-colors line-clamp-2">Navigating AI &amp; Blockchain Messaging for Institutional Audiences</h3>
+            <p class="text-xs font-medium text-inkTextSecondary line-clamp-3">How founders can bridge zero-knowledge cryptography into mainstream business press coverage.</p>
           </div>
         </div>
         <div class="px-6 pb-6 pt-2 flex items-center justify-between text-xs font-mono font-bold text-inkPurple">
@@ -785,11 +690,9 @@ body {
         <p class="text-inkTextSecondary font-medium text-xs sm:text-sm mt-1">Click any item below to view or play in full-resolution Lightbox view.</p>
       </div>
       <button onclick="openArchiveModal()" class="ink-button-secondary px-5 py-2.5 rounded-full text-xs font-bold inline-flex items-center gap-2">
-        <i data-lucide="film" class="w-4 h-4 text-inkPink"></i>
-        Full Media Archive
+        <i data-lucide="film" class="w-4 h-4 text-inkPink"></i> Full Media Archive
       </button>
     </div>
-
     <div class="grid md:grid-cols-3 gap-6">
       <div onclick="openLightbox('video', 'videos/paint-splash.mp4', 'Brand Identity Reveal', 'Brand Identity', 'Cinematic liquid ink-splash animation representing agency signature assets and visual identity.')" class="light-card ink-glass-card rounded-3xl overflow-hidden group cursor-pointer flex flex-col justify-between">
         <div class="relative bg-black aspect-video flex items-center justify-center overflow-hidden">
@@ -799,9 +702,7 @@ body {
               <i data-lucide="play" class="w-5 h-5 fill-current"></i>
             </div>
           </div>
-          <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono font-bold text-white">
-            CLICK TO ZOOM
-          </div>
+          <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono font-bold text-white">CLICK TO ZOOM</div>
         </div>
         <div class="p-6 space-y-2">
           <div class="flex items-center justify-between text-xs font-mono font-bold text-inkSubtle">
@@ -821,9 +722,7 @@ body {
               <i data-lucide="maximize-2" class="w-5 h-5"></i>
             </div>
           </div>
-          <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono font-bold text-white">
-            HIGH-RES VIEW
-          </div>
+          <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono font-bold text-white">HIGH-RES VIEW</div>
         </div>
         <div class="p-6 space-y-2">
           <div class="flex items-center justify-between text-xs font-mono font-bold text-inkSubtle">
@@ -843,9 +742,7 @@ body {
               <i data-lucide="maximize-2" class="w-5 h-5"></i>
             </div>
           </div>
-          <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono font-bold text-white">
-            HIGH-RES VIEW
-          </div>
+          <div class="absolute bottom-3 right-3 bg-black/70 backdrop-blur-md px-2.5 py-1 rounded-md text-[10px] font-mono font-bold text-white">HIGH-RES VIEW</div>
         </div>
         <div class="p-6 space-y-2">
           <div class="flex items-center justify-between text-xs font-mono font-bold text-inkSubtle">
@@ -882,7 +779,6 @@ body {
           </button>
         </div>
       </div>
-
       <div class="relative">
         <div id="events-carousel" class="flex gap-5 overflow-x-auto scroll-smooth snap-x snap-mandatory no-scrollbar pb-2 pt-1">
           <!-- Slide 1 -->
@@ -890,9 +786,7 @@ body {
             <div class="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1540575467063-178a50c2df87?auto=format&fit=crop&w=800&q=80" alt="TOKEN2049 Official Partner Banner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"/>
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-inkBlue shadow-sm">
-                SINGAPORE &amp; DUBAI
-              </div>
+              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-inkBlue shadow-sm">SINGAPORE &amp; DUBAI</div>
               <div class="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white">
                 <span class="font-display font-extrabold text-base tracking-tight drop-shadow-sm">TOKEN2049</span>
                 <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"></i>
@@ -906,15 +800,12 @@ body {
               </div>
             </div>
           </div>
-
           <!-- Slide 2 -->
           <div onclick="openLightbox('image', 'https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=1200&q=80', 'ETH Global & Devcon Official Partner Banner', 'Developer Summit Banner', 'Official partner banner for ETH Global ecosystem workshops and developer relations masterclasses.')" class="snap-start shrink-0 w-[280px] sm:w-[320px] light-card ink-glass-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col transition-all duration-300">
             <div class="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1528605248644-14dd04022da1?auto=format&fit=crop&w=800&q=80" alt="ETH Global Official Partner Banner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"/>
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-inkPurple shadow-sm">
-                WORLDWIDE DEV SUMMITS
-              </div>
+              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-inkPurple shadow-sm">WORLDWIDE DEV SUMMITS</div>
               <div class="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white">
                 <span class="font-display font-extrabold text-base tracking-tight drop-shadow-sm">ETH Global / Devcon</span>
                 <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"></i>
@@ -928,15 +819,12 @@ body {
               </div>
             </div>
           </div>
-
           <!-- Slide 3 -->
           <div onclick="openLightbox('image', 'https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=1200&q=80', 'FiNext Conference Official Partner Banner', 'Fintech Summit Banner', 'Official partner banner for FiNext Dubai & international financial technology summit series.')" class="snap-start shrink-0 w-[280px] sm:w-[320px] light-card ink-glass-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col transition-all duration-300">
             <div class="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1511578314322-379afb476865?auto=format&fit=crop&w=800&q=80" alt="FiNext Conference Partner Banner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"/>
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-inkPink shadow-sm">
-                DUBAI &amp; GLOBAL
-              </div>
+              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-inkPink shadow-sm">DUBAI &amp; GLOBAL</div>
               <div class="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white">
                 <span class="font-display font-extrabold text-base tracking-tight drop-shadow-sm">FiNext Conference</span>
                 <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"></i>
@@ -950,15 +838,12 @@ body {
               </div>
             </div>
           </div>
-
           <!-- Slide 4 -->
           <div onclick="openLightbox('image', 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=1200&q=80', 'Web3 Leadership Forum Official Partner Banner', 'Executive Forum Banner', 'Official partner banner for Web3 Leadership Forum uniting founders and institutional executives.')" class="snap-start shrink-0 w-[280px] sm:w-[320px] light-card ink-glass-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col transition-all duration-300">
             <div class="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1505373877841-8d25f7d46678?auto=format&fit=crop&w=800&q=80" alt="Web3 Leadership Forum Partner Banner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"/>
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-inkCyan shadow-sm">
-                EXECUTIVE SUMMIT
-              </div>
+              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-inkCyan shadow-sm">EXECUTIVE SUMMIT</div>
               <div class="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white">
                 <span class="font-display font-extrabold text-base tracking-tight drop-shadow-sm">Web3 Leadership Forum</span>
                 <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"></i>
@@ -972,15 +857,12 @@ body {
               </div>
             </div>
           </div>
-
           <!-- Slide 5 -->
           <div onclick="openLightbox('image', 'https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80', 'DeAI Horizon World Expo Partner Banner', 'AI & Web3 Expo Banner', 'Official partner banner for DeAI Horizon World Expo showcasing decentralized intelligence and compute networks.')" class="snap-start shrink-0 w-[280px] sm:w-[320px] light-card ink-glass-card rounded-2xl overflow-hidden cursor-pointer group flex flex-col transition-all duration-300">
             <div class="relative aspect-[16/9] w-full bg-slate-900 overflow-hidden">
               <img src="https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=800&q=80" alt="DeAI Horizon Expo Banner" class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-500 opacity-85"/>
               <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent"></div>
-              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-amber-700 shadow-sm">
-                DECENTRALIZED AI EXPO
-              </div>
+              <div class="absolute top-2.5 left-2.5 bg-white/90 backdrop-blur-md px-2 py-0.5 rounded text-[10px] font-mono font-bold text-amber-700 shadow-sm">DECENTRALIZED AI EXPO</div>
               <div class="absolute bottom-2.5 left-2.5 right-2.5 flex items-center justify-between text-white">
                 <span class="font-display font-extrabold text-base tracking-tight drop-shadow-sm">DeAI Horizon World Expo</span>
                 <i data-lucide="arrow-up-right" class="w-4 h-4 opacity-80 group-hover:opacity-100 group-hover:translate-x-0.5 transition-all"></i>
@@ -996,11 +878,8 @@ body {
           </div>
         </div>
       </div>
-
       <div class="space-y-3 pt-4 border-t border-black/10">
-        <div class="text-xs font-mono font-bold text-inkSubtle uppercase tracking-wider">
-          Confirmed Keynote &amp; Panel Schedule
-        </div>
+        <div class="text-xs font-mono font-bold text-inkSubtle uppercase tracking-wider">Confirmed Keynote &amp; Panel Schedule</div>
         <div class="grid sm:grid-cols-2 gap-4">
           <div class="ink-glass p-5 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-inkBlue shadow-sm">
             <div class="flex items-center gap-4">
@@ -1013,11 +892,8 @@ body {
                 <p class="text-xs font-medium text-inkTextSecondary">Singapore • Panel Keynote</p>
               </div>
             </div>
-            <button onclick="openBookingModal('Web3 & AI Media Leadership Forum')" class="ink-button-secondary px-3.5 py-2 rounded-full text-xs font-bold shrink-0">
-              Book
-            </button>
+            <button onclick="openBookingModal('Web3 & AI Media Leadership Forum')" class="ink-button-secondary px-3.5 py-2 rounded-full text-xs font-bold shrink-0">Book</button>
           </div>
-
           <div class="ink-glass p-5 rounded-2xl flex items-center justify-between gap-4 border-l-4 border-l-inkPurple shadow-sm">
             <div class="flex items-center gap-4">
               <div class="font-mono text-center px-3 py-1.5 bg-white rounded-xl border border-black/10 shadow-sm">
@@ -1029,9 +905,7 @@ body {
                 <p class="text-xs font-medium text-inkTextSecondary">Token2049 Network Main Stage</p>
               </div>
             </div>
-            <button onclick="openBookingModal('Emerging Tech Strategy Summit')" class="ink-button-secondary px-3.5 py-2 rounded-full text-xs font-bold shrink-0">
-              Book
-            </button>
+            <button onclick="openBookingModal('Emerging Tech Strategy Summit')" class="ink-button-secondary px-3.5 py-2 rounded-full text-xs font-bold shrink-0">Book</button>
           </div>
         </div>
       </div>
@@ -1046,7 +920,6 @@ body {
         <h2 class="font-display text-3xl sm:text-5xl font-extrabold tracking-tight text-prismatic">Pitch Your Purpose</h2>
         <p class="text-inkTextSecondary font-medium text-xs sm:text-sm max-w-lg mx-auto bg-white/60 p-3 rounded-xl border border-black/5">Share your breakthrough innovation. We review all applications against our Vetting Mandate.</p>
       </div>
-
       <div class="mb-8 p-4 rounded-2xl bg-blue-50/80 border border-blue-200 text-xs font-medium text-inkTextSecondary space-y-2">
         <div class="font-mono font-extrabold text-inkBlue uppercase text-[11px]">Universal Integrity Pre-Checklist:</div>
         <div class="grid sm:grid-cols-2 gap-2 text-[11px]">
@@ -1068,7 +941,6 @@ body {
           </label>
         </div>
       </div>
-
       <form id="pitch-form" onsubmit="handleFormSubmit(event)" class="space-y-5 max-w-xl mx-auto">
         <div class="grid sm:grid-cols-2 gap-5">
           <div class="space-y-1.5">
@@ -1080,7 +952,6 @@ body {
             <input type="email" required placeholder="founder@project.io" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
           </div>
         </div>
-
         <div class="grid sm:grid-cols-2 gap-5">
           <div class="space-y-1.5">
             <label class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Project Name / URL</label>
@@ -1097,12 +968,10 @@ body {
             </select>
           </div>
         </div>
-
         <div class="space-y-1.5">
           <label class="text-[11px] font-mono text-inkSubtle uppercase font-bold">What makes your technology unique?</label>
           <textarea rows="4" required placeholder="Briefly describe your tech innovation, verified milestones, and PR/GTM goals..." class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors"></textarea>
         </div>
-
         <button type="submit" class="w-full ink-button-primary py-3.5 rounded-xl font-display font-bold text-xs flex items-center justify-center gap-2">
           Submit Pitch Application
           <i data-lucide="send" class="w-4 h-4"></i>
@@ -1120,9 +989,7 @@ body {
     </div>
     <h3 class="font-display font-bold text-xl text-inkTextPrimary" id="modal-title">Application Received</h3>
     <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed" id="modal-desc">Thank you for pitching your project. Our research team will review your submission against our Vetting Mandate within 24 hours.</p>
-    <button onclick="closeModal()" class="w-full ink-button-primary py-2.5 rounded-xl font-display font-bold text-xs">
-      Close Window
-    </button>
+    <button onclick="closeModal()" class="w-full ink-button-primary py-2.5 rounded-xl font-display font-bold text-xs">Close Window</button>
   </div>
 </div>
 
@@ -1194,7 +1061,6 @@ function openLightbox(type, src, title, category, description) {
   } else {
     container.innerHTML = `<img src="${src}" alt="${title}" class="w-full h-full object-contain"/>`;
   }
-  
   modal.classList.remove('hidden');
   lucide.createIcons();
 }
@@ -1250,11 +1116,6 @@ const journeyPalettes = [
   { c1: [0.0, 0.67, 0.85], c2: [0.0, 0.35, 0.82], c3: [0.55, 0.15, 0.70], c4: [0.95, 0.20, 0.50] }
 ];
 
-let activeC1 = [...journeyPalettes[0].c1];
-let activeC2 = [...journeyPalettes[0].c2];
-let activeC3 = [...journeyPalettes[0].c3];
-let activeC4 = [...journeyPalettes[0].c4];
-
 if (!gl) {
   console.warn('WebGL not supported; disabling dynamic canvas.');
   canvas.style.display = 'none';
@@ -1263,15 +1124,15 @@ if (!gl) {
     attribute vec2 a_position;
     void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
   `;
-  
+
   const fsSource = `
     precision highp float;
     uniform vec2 u_resolution;
     uniform vec2 u_mouse;
     uniform float u_time;
-    uniform vec3 u_color1; 
-    uniform vec3 u_color2; 
-    uniform vec3 u_color3; 
+    uniform vec3 u_color1;
+    uniform vec3 u_color2;
+    uniform vec3 u_color3;
     uniform vec3 u_color4;
 
     vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
@@ -1280,23 +1141,23 @@ if (!gl) {
 
     float snoise(vec2 v) {
       const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
-      vec2 i  = floor(v + dot(v, C.yy));
+      vec2 i  = floor(v + dot(v, C.yy) );
       vec2 x0 = v - i + dot(i, C.xx);
       vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
       vec4 x12 = x0.xyxy + C.xxww;
       x12.xy -= i1;
       i = mod289(i);
-      vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+      vec3 p = permute( permute( i.y + vec3(0.0, i1.y, 1.0 )) + i.x + vec3(0.0, i1.x, 1.0 ));
       vec3 m = max(0.5 - vec3(dot(x0,x0), dot(x12.xy,x12.xy), dot(x12.zw,x12.zw)), 0.0);
-      m = m*m;
-      m = m*m;
+      m = m*m ;
+      m = m*m ;
       vec3 x = 2.0 * fract(p * C.www) - 1.0;
       vec3 h = abs(x) - 0.5;
       vec3 ox = floor(x + 0.5);
       vec3 a0 = x - ox;
-      m *= 1.79284291400159 - 0.85373472095314 * (a0*a0 + h*h);
+      m *= 1.79284291400159 - 0.85373472095314 * ( a0*a0 + h*h );
       vec3 g;
-      g.x  = a0.x * x0.x + h.x * x0.y;
+      g.x  = a0.x  * x0.x  + h.x  * x0.y;
       g.yz = a0.yz * x12.xz + h.yz * x12.yw;
       return 130.0 * dot(m, g);
     }
@@ -1320,31 +1181,24 @@ if (!gl) {
       float slowTime = u_time * 0.08;
       float mouseDist = distance(st, mouse);
       float mouseRipple = smoothstep(0.45, 0.0, mouseDist) * 0.35;
-      
       vec2 q = vec2(
         fbm(st + vec2(slowTime * 0.1, slowTime * 0.05)),
         fbm(st + vec2(slowTime * 0.08, -slowTime * 0.12))
       );
-      
       vec2 r = vec2(
         fbm(st + 1.8 * q + vec2(0.1, 0.2) + mouseRipple),
         fbm(st + 1.8 * q + vec2(0.3, 0.1) - mouseRipple)
       );
-      
       float inkDensity = fbm(st + 2.2 * r);
       vec3 waterBase = vec3(0.985, 0.985, 0.995);
-      
       float t1 = smoothstep(-0.2, 0.5, inkDensity);
       float t2 = smoothstep(0.1, 0.7, r.x);
       float t3 = smoothstep(0.0, 0.8, r.y);
-      
       vec3 inkMix = mix(u_color1, u_color2, t1);
       inkMix = mix(inkMix, u_color3, t2);
       inkMix = mix(inkMix, u_color4, t3 * 0.6);
-      
       float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.22;
       inkAlpha = clamp(inkAlpha, 0.0, 0.54);
-      
       vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
       gl_FragColor = vec4(finalColor, 1.0);
     }
@@ -1423,7 +1277,6 @@ if (!gl) {
         const baseIdx = Math.floor(rawIndex);
         const nextIdx = Math.min(baseIdx + 1, journeyPalettes.length - 1);
         const blend = rawIndex - baseIdx;
-
         const pBase = journeyPalettes[baseIdx];
         const pNext = journeyPalettes[nextIdx];
 
@@ -1436,7 +1289,6 @@ if (!gl) {
         gl.uniform2f(resUniform, canvas.width, canvas.height);
         gl.uniform2f(mouseUniform, mouseX, mouseY);
         gl.uniform1f(timeUniform, time);
-
         gl.uniform3fv(uColor1Loc, targetC1);
         gl.uniform3fv(uColor2Loc, pBase.c2);
         gl.uniform3fv(uColor3Loc, pBase.c3);
@@ -1445,8 +1297,8 @@ if (!gl) {
         gl.enableVertexAttribArray(positionAttr);
         gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
         gl.vertexAttribPointer(positionAttr, 2, gl.FLOAT, false, 0, 0);
-
         gl.drawArrays(gl.TRIANGLES, 0, 6);
+
         requestAnimationFrame(render);
       }
       requestAnimationFrame(render);
