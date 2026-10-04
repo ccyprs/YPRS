@@ -7,206 +7,204 @@
 <!-- Fonts: Inter & Plus Jakarta Sans -->
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
 <!-- Lucide Icons & Tailwind CSS -->
 <script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <!-- Custom Tailwind Config -->
 <script>
 tailwind.config = {
-  darkMode: 'class',
-  theme: {
-    extend: {
-      fontFamily: {
-        sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
-        display: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
-      },
-      colors: {
-        inkLight: '#FBFBFD',
-        inkSurface: '#FFFFFF',
-        inkTextPrimary: '#1D1D1F',
-        inkTextSecondary: '#2C2C2E',
-        inkSubtle: '#515154',
-        inkBorder: 'rgba(0, 0, 0, 0.08)',
-        inkBlue: '#0066CC',
-        inkPurple: '#8E24AA',
-        inkPink: '#E91E63',
-        inkCyan: '#00ACC1',
-        inkTeal: '#00897B',
-        inkAmber: '#F57C00'
-      },
-      boxShadow: {
-        'ink-glow': '0 20px 40px -15px rgba(0, 102, 204, 0.12)',
-        'ink-card': '0 12px 32px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1)',
-        'ink-card-hover': '0 24px 48px -12px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.15)',
-        'pill-glow': '0 4px 20px rgba(0, 102, 204, 0.15)'
-      }
-    }
-  }
+darkMode: 'class',
+theme: {
+extend: {
+fontFamily: {
+sans: ['Inter', '-apple-system', 'BlinkMacSystemFont', 'sans-serif'],
+display: ['Plus Jakarta Sans', '-apple-system', 'sans-serif'],
+},
+colors: {
+inkLight: '#FBFBFD',
+inkSurface: '#FFFFFF',
+inkTextPrimary: '#1D1D1F',
+inkTextSecondary: '#2C2C2E',
+inkSubtle: '#515154',
+inkBorder: 'rgba(0, 0, 0, 0.08)',
+inkBlue: '#0066CC',
+inkPurple: '#8E24AA',
+inkPink: '#E91E63',
+inkCyan: '#00ACC1',
+inkTeal: '#00897B',
+inkAmber: '#F57C00'
+},
+boxShadow: {
+'ink-glow': '0 20px 40px -15px rgba(0, 102, 204, 0.12)',
+'ink-card': '0 12px 32px 8px rgba(0, 0, 0, 0.06), 0 0 1px rgba(0, 0, 0, 0.1)',
+'ink-card-hover': '0 24px 48px -12px rgba(0, 0, 0, 0.12), 0 0 1px rgba(0, 0, 0, 0.15)',
+'pill-glow': '0 4px 20px rgba(0, 102, 204, 0.15)'
+}
+}
+}
 }
 </script>
 <style>
 @property --angle {
-  syntax: '<angle>';
-  initial-value: 0deg;
-  inherits: false;
+syntax: '<angle>';
+initial-value: 0deg;
+inherits: false;
 }
 @keyframes rotateBorder {
-  0% { --angle: 0deg; }
-  100% { --angle: 360deg; }
+0% { --angle: 0deg; }
+100% { --angle: 360deg; }
 }
 @keyframes floatSplash {
-  0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-  50% { transform: translateY(-15px) rotate(3deg) scale(1.03); }
+0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
+50% { transform: translateY(-15px) rotate(3deg) scale(1.03); }
 }
 :root {
-  color-scheme: light;
+color-scheme: light;
 }
 body {
-  background-color: #FBFBFD;
-  color: #1D1D1F;
-  overflow-x: hidden;
-  font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+background-color: #FBFBFD;
+color: #1D1D1F;
+overflow-x: hidden;
+font-feature-settings: "cv02", "cv03", "cv04", "cv11";
 }
 #ink-canvas {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100vw;
-  height: 100vh;
-  z-index: -2;
-  pointer-events: none;
+position: fixed;
+top: 0;
+left: 0;
+width: 100vw;
+height: 100vh;
+z-index: -2;
+pointer-events: none;
 }
 .ink-splash-bg {
-  position: absolute;
-  pointer-events: none;
-  z-index: -1;
-  opacity: 0.45;
-  filter: blur(12px);
-  animation: floatSplash 12s ease-in-out infinite;
+position: absolute;
+pointer-events: none;
+z-index: -1;
+opacity: 0.45;
+filter: blur(12px);
+animation: floatSplash 12s ease-in-out infinite;
 }
 .ink-glass {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(0, 0, 0, 0.08);
+background: rgba(255, 255, 255, 0.88);
+backdrop-filter: blur(28px) saturate(190%);
+-webkit-backdrop-filter: blur(28px) saturate(190%);
+border: 1px solid rgba(0, 0, 0, 0.08);
 }
 /* Base Card Glass Class */
 .ink-glass-card {
-  background: rgba(255, 255, 255, 0.88);
-  backdrop-filter: blur(28px) saturate(190%);
-  -webkit-backdrop-filter: blur(28px) saturate(190%);
-  border: 1px solid rgba(0, 0, 0, 0.09);
-  box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
-  transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
+background: rgba(255, 255, 255, 0.88);
+backdrop-filter: blur(28px) saturate(190%);
+-webkit-backdrop-filter: blur(28px) saturate(190%);
+border: 1px solid rgba(0, 0, 0, 0.09);
+box-shadow: 0 10px 30px -10px rgba(0, 0, 0, 0.05), 0 1px 2px rgba(0, 0, 0, 0.04);
+transition: transform 0.4s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.4s cubic-bezier(0.16, 1, 0.3, 1), background 0.4s ease;
 }
 .ink-glass-card:hover {
-  transform: translateY(-4px);
-  background: rgba(255, 255, 255, 0.96);
-  box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 172, 193, 0.12);
+transform: translateY(-4px);
+background: rgba(255, 255, 255, 0.96);
+box-shadow: 0 24px 48px -12px rgba(0, 0, 0, 0.12), 0 0 20px rgba(0, 172, 193, 0.12);
 }
 /* Magical Line of Light Border Effect */
 .light-card {
-  position: relative;
-  border: 1px solid transparent !important;
-  background-clip: padding-box !important;
+position: relative;
+border: 1px solid transparent !important;
+background-clip: padding-box !important;
 }
 .light-card::before {
-  content: "";
-  position: absolute;
-  inset: -1.5px;
-  border-radius: inherit;
-  padding: 1.5px;
-  background: conic-gradient(
-    from var(--angle),
-    transparent 0%,
-    transparent 70%,
-    rgba(0, 102, 204, 0.7) 85%,
-    rgba(142, 36, 170, 0.9) 92%,
-    rgba(233, 30, 99, 0.9) 97%,
-    transparent 100%
-  );
-  -webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
-  -webkit-mask-composite: xor;
-  mask-composite: exclude;
-  pointer-events: none;
-  animation: rotateBorder 14s linear infinite;
-  opacity: 0.6;
-  transition: opacity 0.3s ease;
+content: "";
+position: absolute;
+inset: -1.5px;
+border-radius: inherit;
+padding: 1.5px;
+background: conic-gradient(
+from var(--angle),
+transparent 0%,
+transparent 70%,
+rgba(0, 102, 204, 0.7) 85%,
+rgba(142, 36, 170, 0.9) 92%,
+rgba(233, 30, 99, 0.9) 97%,
+transparent 100%
+);
+-webkit-mask: linear-gradient(#fff 0 0) content-box, linear-gradient(#fff 0 0);
+-webkit-mask-composite: xor;
+mask-composite: exclude;
+pointer-events: none;
+animation: rotateBorder 14s linear infinite;
+opacity: 0.6;
+transition: opacity 0.3s ease;
 }
 .light-card:hover::before {
-  opacity: 1;
-  animation-duration: 4s;
+opacity: 1;
+animation-duration: 4s;
 }
 .text-prismatic {
-  background: linear-gradient(135deg, #1D1D1F 0%, #0066CC 35%, #8E24AA 70%, #E91E63 100%);
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
+background: linear-gradient(135deg, #1D1D1F 0%, #0066CC 35%, #8E24AA 70%, #E91E63 100%);
+-webkit-background-clip: text;
+-webkit-text-fill-color: transparent;
 }
 .ink-button-primary {
-  background: #1D1D1F;
-  color: #FFFFFF;
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
+background: #1D1D1F;
+color: #FFFFFF;
+transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+box-shadow: 0 4px 14px rgba(0, 0, 0, 0.15);
 }
 .ink-button-primary:hover {
-  background: #0066CC;
-  transform: scale(1.02);
-  box-shadow: 0 8px 24px rgba(0, 102, 204, 0.28);
+background: #0066CC;
+transform: scale(1.02);
+box-shadow: 0 8px 24px rgba(0, 102, 204, 0.28);
 }
 .ink-button-secondary {
-  background: rgba(255, 255, 255, 0.92);
-  color: #1D1D1F;
-  border: 1px solid rgba(0, 0, 0, 0.15);
-  backdrop-filter: blur(12px);
-  transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
+background: rgba(255, 255, 255, 0.92);
+color: #1D1D1F;
+border: 1px solid rgba(0, 0, 0, 0.15);
+backdrop-filter: blur(12px);
+transition: all 0.3s cubic-bezier(0.16, 1, 0.3, 1);
 }
 .ink-button-secondary:hover {
-  background: #FFFFFF;
-  border-color: rgba(0, 102, 204, 0.5);
-  color: #0066CC;
-  transform: scale(1.02);
-  box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
+background: #FFFFFF;
+border-color: rgba(0, 102, 204, 0.5);
+color: #0066CC;
+transform: scale(1.02);
+box-shadow: 0 6px 20px rgba(0, 0, 0, 0.08);
 }
 .no-scrollbar::-webkit-scrollbar {
-  display: none;
+display: none;
 }
 .no-scrollbar {
-  -ms-overflow-style: none;
-  scrollbar-width: none;
+-ms-overflow-style: none;
+scrollbar-width: none;
 }
 ::-webkit-scrollbar {
-  width: 8px;
+width: 8px;
 }
 ::-webkit-scrollbar-track {
-  background: #FBFBFD;
+background: #FBFBFD;
 }
 ::-webkit-scrollbar-thumb {
-  background: #C2C2C7;
-  border-radius: 4px;
+background: #C2C2C7;
+border-radius: 4px;
 }
 </style>
 </head>
 <body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative">
 <canvas id="ink-canvas"></canvas>
-
-<!-- Background Ink Splashes (Restored Dynamic Splashes) -->
+<!-- Background Ink Splashes -->
 <div class="ink-splash-bg top-20 left-[-10%] w-[500px] h-[500px] text-inkBlue/20">
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
-    <path d="M44.7,-59.1C56.8,-49.4,64.8,-34.5,68.2,-18.8C71.6,-3.1,70.5,13.4,63.9,27.3C57.3,41.2,45.3,52.5,31.2,59.8C17.1,67.1,0.9,70.4,-15.7,67.5C-32.3,64.6,-49.3,55.5,-60.1,41.5C-70.9,27.5,-75.5,8.6,-73.2,-9.3C-70.9,-27.2,-61.7,-44.1,-48,-54.2C-34.3,-64.3,-17.1,-67.6,0.3,-68C17.7,-68.4,32.6,-68.8,44.7,-59.1Z" transform="translate(100 100)" />
-  </svg>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
+<path d="M44.7,-59.1C56.8,-49.4,64.8,-34.5,68.2,-18.8C71.6,-3.1,70.5,13.4,63.9,27.3C57.3,41.2,45.3,52.5,31.2,59.8C17.1,67.1,0.9,70.4,-15.7,67.5C-32.3,64.6,-49.3,55.5,-60.1,41.5C-70.9,27.5,-75.5,8.6,-73.2,-9.3C-70.9,-27.2,-61.7,-44.1,-48,-54.2C-34.3,-64.3,-17.1,-67.6,0.3,-68C17.7,-68.4,32.6,-68.8,44.7,-59.1Z" transform="translate(100 100)" />
+</svg>
 </div>
 <div class="ink-splash-bg top-[35%] right-[-12%] w-[600px] h-[600px] text-inkPurple/15" style="animation-delay: -4s;">
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
-    <path d="M38.1,-52.3C48.8,-42.6,56.5,-30.1,60.8,-16.1C65.1,-2.1,66,13.4,60.2,26.7C54.4,40,41.9,51.1,27.7,57.8C13.5,64.5,-2.4,66.8,-18.2,63.5C-34,60.2,-49.7,51.3,-58.3,37.8C-66.9,24.3,-68.4,6.2,-65.2,-10.4C-62,-27,-54.1,-42.1,-42.2,-52.1C-30.3,-62.1,-15.1,-67,0.3,-67.4C15.7,-67.8,27.4,-62,38.1,-52.3Z" transform="translate(100 100)" />
-  </svg>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
+<path d="M38.1,-52.3C48.8,-42.6,56.5,-30.1,60.8,-16.1C65.1,-2.1,66,13.4,60.2,26.7C54.4,40,41.9,51.1,27.7,57.8C13.5,64.5,-2.4,66.8,-18.2,63.5C-34,60.2,-49.7,51.3,-58.3,37.8C-66.9,24.3,-68.4,6.2,-65.2,-10.4C-62,-27,-54.1,-42.1,-42.2,-52.1C-30.3,-62.1,-15.1,-67,0.3,-67.4C15.7,-67.8,27.4,-62,38.1,-52.3Z" transform="translate(100 100)" />
+</svg>
 </div>
 <div class="ink-splash-bg top-[65%] left-[-8%] w-[550px] h-[550px] text-inkPink/15" style="animation-delay: -7s;">
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
-    <path d="M47.7,-63.2C61.2,-54.3,71.1,-39.8,74.9,-23.7C78.7,-7.6,76.4,10.1,69.1,25.8C61.8,41.5,49.5,55.2,34.4,63.1C19.3,71,1.4,73.1,-15.8,70.2C-33,67.3,-49.5,59.4,-60.1,46.1C-70.7,32.8,-75.4,14.1,-73.4,-3.5C-71.4,-21.1,-62.7,-37.6,-49.8,-46.8C-36.9,-56,-18.5,-57.9,-0.6,-57.1C17.3,-56.3,34.2,-72.1,47.7,-63.2Z" transform="translate(100 100)" />
-  </svg>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
+<path d="M47.7,-63.2C61.2,-54.3,71.1,-39.8,74.9,-23.7C78.7,-7.6,76.4,10.1,69.1,25.8C61.8,41.5,49.5,55.2,34.4,63.1C19.3,71,1.4,73.1,-15.8,70.2C-33,67.3,-49.5,59.4,-60.1,46.1C-70.7,32.8,-75.4,14.1,-73.4,-3.5C-71.4,-21.1,-62.7,-37.6,-49.8,-46.8C-36.9,-56,-18.5,-57.9,-0.6,-57.1C17.3,-56.3,34.2,-72.1,47.7,-63.2Z" transform="translate(100 100)" />
+</svg>
 </div>
-
 <header class="fixed top-0 left-0 w-full z-50 ink-glass border-b border-black/10 transition-all duration-300">
 <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-16 flex items-center justify-between">
 <a href="#" class="flex items-center gap-2.5 group">
@@ -309,7 +307,7 @@ Earned Coverage &amp; Media Partnerships Across Tier-1 Outlets
 </div>
 </section>
 <!-- Ethical Curation / Vetting Mandate Section -->
-<section id="mandate" class="mt-16 sm:mt-24 mb-16 sm:mb-20 px-4 max-w-6xl mx-auto scroll-mt-28">
+<section id="mandate" class="mt-8 sm:mt-12 mb-16 sm:mb-20 px-4 max-w-6xl mx-auto scroll-mt-20">
 <div class="text-center space-y-3 max-w-3xl mx-auto mb-12 sm:mb-16">
 <span class="inline-flex items-center gap-2 px-3 py-1 rounded-full text-xs font-mono font-bold bg-inkPurple/10 text-inkPurple border border-inkPurple/20">
 ETHICAL CURATION
@@ -370,7 +368,7 @@ Before initiating PR momentum, our research team evaluates founder track records
 </div>
 </section>
 <!-- Strategic Pillars Section -->
-<section id="pillars" class="py-16 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28">
+<section id="pillars" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
 <div class="text-center space-y-3 mb-12">
 <span class="text-inkPurple font-mono text-xs uppercase tracking-widest font-extrabold bg-purple-50 px-3 py-1 rounded-full border border-purple-200">The Agency Edge</span>
 <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-prismatic">Strategic Pillars</h2>
@@ -383,7 +381,7 @@ Before initiating PR momentum, our research team evaluates founder track records
 <i data-lucide="newspaper" class="w-6 h-6"></i>
 </div>
 <h3 class="font-display text-xl font-bold text-inkTextPrimary">High-Impact Tier-1 Media Reach</h3>
-<p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">Cultivating long-standing, earned relationships with tier-1 journalists, editors & key research analysts across top tech & financial newsrooms. Integrated PESO model to maximize brand authority, reach & measurable ROI. </p>
+<p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">Cultivating long-standing, earned relationships with tier-1 journalists, editors & key research analysts across top tech & financial newsrooms. Integrated PESO model to maximize brand authority, reach & measurable ROI.</p>
 </div>
 <div class="pt-4 border-t border-black/10 flex flex-wrap gap-2 text-xs font-mono font-bold text-inkTextPrimary">
 <span class="bg-black/5 px-2.5 py-1 rounded-md border border-black/5">CoinDesk</span>
@@ -420,8 +418,8 @@ Before initiating PR momentum, our research team evaluates founder track records
 </div>
 </section>
 <!-- Services Section -->
-<section id="services" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28">
-<div class="text-center space-y-3 mb-16">
+<section id="services" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
+<div class="text-center space-y-3 mb-12">
 <span class="text-inkPurple font-mono text-xs uppercase tracking-widest font-extrabold bg-purple-50 px-3 py-1 rounded-full border border-purple-200">Core Capabilities</span>
 <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-prismatic">Services</h2>
 <p class="text-inkTextSecondary font-medium max-w-xl mx-auto text-xs sm:text-sm bg-white/60 p-3 rounded-xl border border-black/5">Tailored communications infrastructure engineered for Web3 protocols and AI pioneers.</p>
@@ -478,7 +476,7 @@ PITCH YOUR PURPOSE <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
 </div>
 </section>
 <!-- Awards Section -->
-<section id="awards" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28">
+<section id="awards" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
 <div class="light-card ink-glass-card p-8 sm:p-12 rounded-3xl space-y-10">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6 border-b border-black/10 pb-8">
 <div class="max-w-2xl space-y-2">
@@ -579,7 +577,7 @@ Right moment. Right channels.
 </div>
 </section>
 <!-- News & Articles Section -->
-<section id="news" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28">
+<section id="news" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
 <div class="text-center space-y-3 mb-12">
 <span class="text-inkBlue font-mono text-xs uppercase tracking-widest font-extrabold bg-blue-50 px-3 py-1 rounded-full border border-blue-200">
 Latest Insights
@@ -671,7 +669,7 @@ Maximizing ROI and media exposure during major global tech tours, side events, a
 </div>
 </section>
 <!-- Media Gallery Section -->
-<section id="gallery" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28">
+<section id="gallery" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
 <div class="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4">
 <div>
 <span class="text-inkPink font-mono text-xs uppercase tracking-widest font-extrabold bg-pink-50 px-3 py-1 rounded-full border border-pink-200">Media Vault</span>
@@ -743,7 +741,7 @@ Maximizing ROI and media exposure during major global tech tours, side events, a
 </div>
 </section>
 <!-- Events Section -->
-<section id="events" class="py-20 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-28">
+<section id="events" class="py-12 px-4 sm:px-6 lg:px-8 max-w-7xl mx-auto scroll-mt-20">
 <div class="light-card ink-glass-card p-8 sm:p-12 rounded-3xl space-y-10">
 <div class="flex flex-col md:flex-row md:items-end justify-between gap-6">
 <div class="max-w-2xl">
@@ -875,7 +873,7 @@ Full Calendar <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
 </div>
 <div>
 <h3 class="font-display font-bold text-sm text-inkTextPrimary">Web3 &amp; AI Media Leadership Forum</h3>
-<p class="text-xs font-medium text-inkTextSecondary">Singapore. Panel Keynote</p>
+<p class="text-xs font-medium text-inkTextSecondary">Singapore . Panel Keynote</p>
 </div>
 </div>
 <button onclick="openBookingModal('Web3 & AI Media Leadership Forum')" class="ink-button-secondary px-3.5 py-2 rounded-full text-xs font-bold shrink-0">Book</button>
@@ -898,7 +896,7 @@ Full Calendar <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
 </div>
 </section>
 <!-- Contact Section -->
-<section id="contact" class="py-20 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-28">
+<section id="contact" class="py-12 px-4 sm:px-6 lg:px-8 max-w-4xl mx-auto scroll-mt-20">
 <div class="light-card ink-glass-card p-8 sm:p-12 rounded-3xl">
 <div class="text-center space-y-3 mb-10">
 <span class="text-inkBlue font-mono text-xs uppercase tracking-widest font-extrabold bg-blue-50 px-3 py-1 rounded-full border border-blue-200">Connect With Us</span>
@@ -929,7 +927,7 @@ Full Calendar <i data-lucide="calendar" class="w-3.5 h-3.5"></i>
 <form id="pitch-form" action="https://api.web3forms.com/submit" method="POST" onsubmit="handleFormSubmit(event)" class="space-y-5 max-w-xl mx-auto">
 <!-- Web3Forms Access Key -->
 <input type="hidden" name="access_key" value="8daefb2e-31ee-4c47-9351-1ee768fcb249">
-<!-- Honeypot Spam Protection (Invisible to humans) -->
+<!-- Honeypot Spam Protection -->
 <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
 <div class="grid sm:grid-cols-2 gap-5">
 <div class="space-y-1.5">
@@ -1018,307 +1016,293 @@ lucide.createIcons();
 const menuBtn = document.getElementById('mobile-menu-btn');
 const mobileMenu = document.getElementById('mobile-menu');
 menuBtn.addEventListener('click', () => {
-  mobileMenu.classList.toggle('hidden');
-  mobileMenu.classList.toggle('flex');
+mobileMenu.classList.toggle('hidden');
+mobileMenu.classList.toggle('flex');
 });
 
 // Carousel Controls
 function scrollCarousel(direction) {
-  const container = document.getElementById('events-carousel');
-  const scrollAmount = 340;
-  if (direction === 'left') {
-    container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
-  } else {
-    container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
-  }
+const container = document.getElementById('events-carousel');
+const scrollAmount = 340;
+if (direction === 'left') {
+container.scrollBy({ left: -scrollAmount, behavior: 'smooth' });
+} else {
+container.scrollBy({ left: scrollAmount, behavior: 'smooth' });
+}
 }
 
 // Lightbox Zoom Modal Controls
 function openLightbox(type, src, title, category, description) {
-  const modal = document.getElementById('lightbox-modal');
-  const container = document.getElementById('lightbox-content');
-  document.getElementById('lightbox-title').innerText = title;
-  document.getElementById('lightbox-category').innerText = category.toUpperCase();
-  document.getElementById('lightbox-desc').innerText = description;
-  
-  if (type === 'video') {
-    container.innerHTML = `<video controls autoplay class="w-full h-full object-contain"><source src="${src}" type="video/mp4">Your browser does not support video.</video>`;
-  } else {
-    container.innerHTML = `<img src="${src}" alt="${title}" class="w-full h-full object-contain"/>`;
-  }
-  modal.classList.remove('hidden');
-  if (window.lucide) lucide.createIcons();
+const modal = document.getElementById('lightbox-modal');
+const container = document.getElementById('lightbox-content');
+document.getElementById('lightbox-title').innerText = title;
+document.getElementById('lightbox-category').innerText = category.toUpperCase();
+document.getElementById('lightbox-desc').innerText = description;
+if (type === 'video') {
+container.innerHTML = `<video controls autoplay class="w-full h-full object-contain"><source src="${src}" type="video/mp4">Your browser does not support video.</video>`;
+} else {
+container.innerHTML = `<img src="${src}" alt="${title}" class="w-full h-full object-contain"/>`;
+}
+modal.classList.remove('hidden');
+if (window.lucide) lucide.createIcons();
 }
 
 function closeLightbox() {
-  const modal = document.getElementById('lightbox-modal');
-  const container = document.getElementById('lightbox-content');
-  container.innerHTML = "";
-  modal.classList.add('hidden');
+const modal = document.getElementById('lightbox-modal');
+const container = document.getElementById('lightbox-content');
+container.innerHTML = "";
+modal.classList.add('hidden');
 }
 
 // Interactive Modals
 async function handleFormSubmit(e) {
-  e.preventDefault();
-  const form = e.target;
-  const submitButton = form.querySelector('button[type="submit"]');
-  submitButton.disabled = true;
-  submitButton.innerText = "Sending...";
-  try {
-    const response = await fetch(form.action, {
-      method: form.method,
-      body: new FormData(form),
-      headers: {
-        'Accept': 'application/json'
-      }
-    });
-    if (response.ok) {
-      document.getElementById('modal-title').innerText = "Submission Received";
-      document.getElementById('modal-desc').innerText = "Thank you for submitting! Our team will review your submission.";
-      document.getElementById('modal').classList.remove('hidden');
-      form.reset();
-    } else {
-      alert("Submission failed. Please check your Web3Forms access key or try again.");
-    }
-  } catch (error) {
-    alert("An error occurred while submitting. Please check your network connection.");
-  } finally {
-    submitButton.disabled = false;
-    submitButton.innerHTML = 'Submit Your Purpose <i data-lucide="send" class="w-4 h-4"></i>';
-    if (window.lucide) lucide.createIcons();
-  }
+e.preventDefault();
+const form = e.target;
+const submitButton = form.querySelector('button[type="submit"]');
+submitButton.disabled = true;
+submitButton.innerText = "Sending...";
+try {
+const response = await fetch(form.action, {
+method: form.method,
+body: new FormData(form),
+headers: {
+'Accept': 'application/json'
+}
+});
+if (response.ok) {
+document.getElementById('modal-title').innerText = "Submission Received";
+document.getElementById('modal-desc').innerText = "Thank you for submitting! Our team will review your submission.";
+document.getElementById('modal').classList.remove('hidden');
+form.reset();
+} else {
+alert("Submission failed. Please check your Web3Forms access key or try again.");
+}
+} catch (error) {
+alert("An error occurred while submitting. Please check your network connection.");
+} finally {
+submitButton.disabled = false;
+submitButton.innerHTML = 'Submit Your Purpose <i data-lucide="send" class="w-4 h-4"></i>';
+if (window.lucide) lucide.createIcons();
+}
 }
 
 function openBookingModal(eventTitle) {
-  document.getElementById('modal-title').innerText = "Book Summit Meeting";
-  document.getElementById('modal-desc').innerText = `Your request to connect with our leadership team at ${eventTitle} has been received. We will respond with calendar availability.`;
-  document.getElementById('modal').classList.remove('hidden');
+document.getElementById('modal-title').innerText = "Book Summit Meeting";
+document.getElementById('modal-desc').innerText = `Your request to connect with our leadership team at ${eventTitle} has been received. We will respond with calendar availability.`;
+document.getElementById('modal').classList.remove('hidden');
 }
 
 function openArchiveModal() {
-  document.getElementById('modal-title').innerText = "Media Archive";
-  document.getElementById('modal-desc').innerText = "Redirecting to full media gallery archive containing 120+ summit keynotes, brand assets, and press conference recordings.";
-  document.getElementById('modal').classList.remove('hidden');
+document.getElementById('modal-title').innerText = "Media Archive";
+document.getElementById('modal-desc').innerText = "Redirecting to full media gallery archive containing 120+ summit keynotes, brand assets, and press conference recordings.";
+document.getElementById('modal').classList.remove('hidden');
 }
 
 function openEventsDirectoryModal() {
-  document.getElementById('modal-title').innerText = "2026 Events Directory";
-  document.getElementById('modal-desc').innerText = "Accessing full curated calendar of premier Web3, AI, and Fintech global summits.";
-  document.getElementById('modal').classList.remove('hidden');
+document.getElementById('modal-title').innerText = "2026 Events Directory";
+document.getElementById('modal-desc').innerText = "Accessing full curated calendar of premier Web3, AI, and Fintech global summits.";
+document.getElementById('modal').classList.remove('hidden');
 }
 
 function closeModal() {
-  document.getElementById('modal').classList.add('hidden');
+document.getElementById('modal').classList.add('hidden');
 }
 
 /* Canvas WebGL Shader Engine */
 const canvas = document.getElementById('ink-canvas');
 const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
 const journeyPalettes = [
-  { c1: [0.0, 0.67, 0.85], c2: [0.0, 0.35, 0.82], c3: [0.55, 0.15, 0.70], c4: [0.95, 0.20, 0.50] },
-  { c1: [0.02, 0.70, 0.50], c2: [0.0, 0.50, 0.75], c3: [0.0, 0.30, 0.65], c4: [0.2, 0.85, 0.65] },
-  { c1: [0.50, 0.15, 0.90], c2: [0.90, 0.35, 0.15], c3: [0.85, 0.10, 0.55], c4: [0.0, 0.75, 0.85] },
-  { c1: [0.95, 0.60, 0.10], c2: [0.85, 0.20, 0.40], c3: [0.10, 0.50, 0.85], c4: [0.45, 0.15, 0.75] },
-  { c1: [0.10, 0.40, 0.95], c2: [0.0, 0.65, 0.75], c3: [0.15, 0.20, 0.75], c4: [0.35, 0.50, 0.90] },
-  { c1: [0.90, 0.15, 0.35], c2: [0.95, 0.45, 0.15], c3: [0.85, 0.65, 0.10], c4: [0.60, 0.15, 0.75] },
-  { c1: [0.0, 0.67, 0.85], c2: [0.0, 0.35, 0.82], c3: [0.55, 0.15, 0.70], c4: [0.95, 0.20, 0.50] }
+{ c1: [0.0, 0.67, 0.85], c2: [0.0, 0.35, 0.82], c3: [0.55, 0.15, 0.70], c4: [0.95, 0.20, 0.50] },
+{ c1: [0.02, 0.70, 0.50], c2: [0.0, 0.50, 0.75], c3: [0.0, 0.30, 0.65], c4: [0.2, 0.85, 0.65] },
+{ c1: [0.50, 0.15, 0.90], c2: [0.90, 0.35, 0.15], c3: [0.85, 0.10, 0.55], c4: [0.0, 0.75, 0.85] },
+{ c1: [0.95, 0.60, 0.10], c2: [0.85, 0.20, 0.40], c3: [0.10, 0.50, 0.85], c4: [0.45, 0.15, 0.75] },
+{ c1: [0.10, 0.40, 0.95], c2: [0.0, 0.65, 0.75], c3: [0.15, 0.20, 0.75], c4: [0.35, 0.50, 0.90] },
+{ c1: [0.90, 0.15, 0.35], c2: [0.95, 0.45, 0.15], c3: [0.85, 0.65, 0.10], c4: [0.60, 0.15, 0.75] },
+{ c1: [0.0, 0.67, 0.85], c2: [0.0, 0.35, 0.82], c3: [0.55, 0.15, 0.70], c4: [0.95, 0.20, 0.50] }
 ];
 
 if (!gl) {
-  console.warn('WebGL not supported; disabling dynamic canvas.');
-  canvas.style.display = 'none';
+console.warn('WebGL not supported; disabling dynamic canvas.');
+canvas.style.display = 'none';
 } else {
-  const vsSource = `
-    attribute vec2 a_position;
-    void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
-  `;
-  const fsSource = `
-    precision highp float;
-    uniform vec2 u_resolution;
-    uniform vec2 u_mouse;
-    uniform float u_time;
-    uniform vec3 u_color1;
-    uniform vec3 u_color2;
-    uniform vec3 u_color3;
-    uniform vec3 u_color4;
+const vsSource = `
+attribute vec2 a_position;
+void main() { gl_Position = vec4(a_position, 0.0, 1.0); }
+`;
+const fsSource = `
+precision highp float;
+uniform vec2 u_resolution;
+uniform vec2 u_mouse;
+uniform float u_time;
+uniform vec3 u_color1;
+uniform vec3 u_color2;
+uniform vec3 u_color3;
+uniform vec3 u_color4;
+vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
+float snoise(vec2 v) {
+const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+vec2 i = floor(v + dot(v, C.yy));
+vec2 x0 = v - i + dot(i, C.xx);
+vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+vec4 x12 = x0.xyxy + C.xxww;
+x12.xy -= i1;
+i = mod289(i);
+vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+m = m * m;
+m = m * m;
+vec3 x = 2.0 * fract(p * C.www) - 1.0;
+vec3 h = abs(x) - 0.5;
+vec3 ox = floor(x + 0.5);
+vec3 a0 = x - ox;
+m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+vec3 g;
+g.x = a0.x * x0.x + h.x * x0.y;
+g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+return 130.0 * dot(m, g);
+}
+float fbm(vec2 p) {
+float value = 0.0;
+float amplitude = 0.5;
+for (int i = 0; i < 4; i++) {
+value += amplitude * snoise(p);
+p *= 2.05;
+amplitude *= 0.5;
+}
+return value;
+}
+void main() {
+vec2 st = gl_FragCoord.xy / u_resolution.xy;
+st.x *= u_resolution.x / u_resolution.y;
+vec2 mouse = u_mouse / u_resolution.xy;
+mouse.x *= u_resolution.x / u_resolution.y;
+float slowTime = u_time * 0.08;
+float mouseDist = distance(st, mouse);
+float mouseRipple = smoothstep(0.45, 0.0, mouseDist) * 0.35;
+vec2 q = vec2(
+fbm(st + vec2(slowTime * 0.1, slowTime * 0.05)),
+fbm(st + vec2(slowTime * 0.08, -slowTime * 0.12))
+);
+vec2 r = vec2(
+fbm(st + 1.8 * q + vec2(0.1, 0.2) + mouseRipple),
+fbm(st + 1.8 * q + vec2(0.3, 0.1) - mouseRipple)
+);
+float inkDensity = fbm(st + 2.2 * r);
+vec3 waterBase = vec3(0.985, 0.985, 0.995);
+float t1 = smoothstep(-0.2, 0.5, inkDensity);
+float t2 = smoothstep(0.1, 0.7, r.x);
+float t3 = smoothstep(0.0, 0.8, r.y);
+vec3 inkMix = mix(u_color1, u_color2, t1);
+inkMix = mix(inkMix, u_color3, t2);
+inkMix = mix(inkMix, u_color4, t3 * 0.6);
+float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.22;
+inkAlpha = clamp(inkAlpha, 0.0, 0.54);
+vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
+gl_FragColor = vec4(finalColor, 1.0);
+}
+`;
 
-    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-    vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
-    vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
+function createShader(gl, type, source) {
+const shader = gl.createShader(type);
+gl.shaderSource(shader, source);
+gl.compileShader(shader);
+if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+console.error(gl.getShaderInfoLog(shader));
+gl.deleteShader(shader);
+return null;
+}
+return shader;
+}
 
-    float snoise(vec2 v) {
-      const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
-      vec2 i  = floor(v + dot(v, C.yy));
-      vec2 x0 = v - i + dot(i, C.xx);
-      vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
-      vec4 x12 = x0.xyxy + C.xxww;
-      x12.xy -= i1;
-      i = mod289(i);
-      vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
-      vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
-      m = m * m;
-      m = m * m;
-      vec3 x = 2.0 * fract(p * C.www) - 1.0;
-      vec3 h = abs(x) - 0.5;
-      vec3 ox = floor(x + 0.5);
-      vec3 a0 = x - ox;
-      m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
-      vec3 g;
-      g.x = a0.x * x0.x + h.x * x0.y;
-      g.yz = a0.yz * x12.xz + h.yz * x12.yw;
-      return 130.0 * dot(m, g);
-    }
+const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
 
-    float fbm(vec2 p) {
-      float value = 0.0;
-      float amplitude = 0.5;
-      for (int i = 0; i < 4; i++) {
-        value += amplitude * snoise(p);
-        p *= 2.05;
-        amplitude *= 0.5;
-      }
-      return value;
-    }
+if (vertexShader && fragmentShader) {
+const program = gl.createProgram();
+gl.attachShader(program, vertexShader);
+gl.attachShader(program, fragmentShader);
+gl.linkProgram(program);
 
-    void main() {
-      vec2 st = gl_FragCoord.xy / u_resolution.xy;
-      st.x *= u_resolution.x / u_resolution.y;
-      vec2 mouse = u_mouse / u_resolution.xy;
-      mouse.x *= u_resolution.x / u_resolution.y;
+if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
+gl.useProgram(program);
+const positionAttr = gl.getAttribLocation(program, "a_position");
+const resUniform = gl.getUniformLocation(program, "u_resolution");
+const mouseUniform = gl.getUniformLocation(program, "u_mouse");
+const timeUniform = gl.getUniformLocation(program, "u_time");
+const uColor1Loc = gl.getUniformLocation(program, "u_color1");
+const uColor2Loc = gl.getUniformLocation(program, "u_color2");
+const uColor3Loc = gl.getUniformLocation(program, "u_color3");
+const uColor4Loc = gl.getUniformLocation(program, "u_color4");
 
-      float slowTime = u_time * 0.08;
-      float mouseDist = distance(st, mouse);
-      float mouseRipple = smoothstep(0.45, 0.0, mouseDist) * 0.35;
+const buffer = gl.createBuffer();
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+-1, -1, 1, -1, -1, 1,
+-1, 1, 1, -1, 1, 1,
+]), gl.STATIC_DRAW);
 
-      vec2 q = vec2(
-        fbm(st + vec2(slowTime * 0.1, slowTime * 0.05)),
-        fbm(st + vec2(slowTime * 0.08, -slowTime * 0.12))
-      );
-      vec2 r = vec2(
-        fbm(st + 1.8 * q + vec2(0.1, 0.2) + mouseRipple),
-        fbm(st + 1.8 * q + vec2(0.3, 0.1) - mouseRipple)
-      );
+let mouseX = window.innerWidth / 2;
+let mouseY = window.innerHeight / 2;
+let targetMouseX = mouseX;
+let targetMouseY = mouseY;
 
-      float inkDensity = fbm(st + 2.2 * r);
-      vec3 waterBase = vec3(0.985, 0.985, 0.995);
+window.addEventListener('mousemove', (e) => {
+targetMouseX = e.clientX;
+targetMouseY = window.innerHeight - e.clientY;
+});
 
-      float t1 = smoothstep(-0.2, 0.5, inkDensity);
-      float t2 = smoothstep(0.1, 0.7, r.x);
-      float t3 = smoothstep(0.0, 0.8, r.y);
+function resize() {
+canvas.width = window.innerWidth;
+canvas.height = window.innerHeight;
+gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+}
+window.addEventListener('resize', resize);
+resize();
 
-      vec3 inkMix = mix(u_color1, u_color2, t1);
-      inkMix = mix(inkMix, u_color3, t2);
-      inkMix = mix(inkMix, u_color4, t3 * 0.6);
+function getScrollProgress() {
+const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+if (totalHeight <= 0) return 0;
+return Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
+}
 
-      float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.22;
-      inkAlpha = clamp(inkAlpha, 0.0, 0.54);
+function render(time) {
+time *= 0.001;
+mouseX += (targetMouseX - mouseX) * 0.03;
+mouseY += (targetMouseY - mouseY) * 0.03;
+const progress = getScrollProgress();
+const rawIndex = progress * (journeyPalettes.length - 1);
+const baseIdx = Math.floor(rawIndex);
+const nextIdx = Math.min(baseIdx + 1, journeyPalettes.length - 1);
+const blend = rawIndex - baseIdx;
+const pBase = journeyPalettes[baseIdx];
+const pNext = journeyPalettes[nextIdx];
 
-      vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
-      gl_FragColor = vec4(finalColor, 1.0);
-    }
-  `;
+const targetC1 = [
+pBase.c1[0] + (pNext.c1[0] - pBase.c1[0]) * blend,
+pBase.c1[1] + (pNext.c1[1] - pBase.c1[1]) * blend,
+pBase.c1[2] + (pNext.c1[2] - pBase.c1[2]) * blend
+];
 
-  function createShader(gl, type, source) {
-    const shader = gl.createShader(type);
-    gl.shaderSource(shader, source);
-    gl.compileShader(shader);
-    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
-      console.error(gl.getShaderInfoLog(shader));
-      gl.deleteShader(shader);
-      return null;
-    }
-    return shader;
-  }
+gl.uniform2f(resUniform, canvas.width, canvas.height);
+gl.uniform2f(mouseUniform, mouseX, mouseY);
+gl.uniform1f(timeUniform, time);
+gl.uniform3fv(uColor1Loc, targetC1);
+gl.uniform3fv(uColor2Loc, pBase.c2);
+gl.uniform3fv(uColor3Loc, pBase.c3);
+gl.uniform3fv(uColor4Loc, pBase.c4);
 
-  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
-  const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+gl.enableVertexAttribArray(positionAttr);
+gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+gl.vertexAttribPointer(positionAttr, 2, gl.FLOAT, false, 0, 0);
+gl.drawArrays(gl.TRIANGLES, 0, 6);
 
-  if (vertexShader && fragmentShader) {
-    const program = gl.createProgram();
-    gl.attachShader(program, vertexShader);
-    gl.attachShader(program, fragmentShader);
-    gl.linkProgram(program);
-
-    if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
-      gl.useProgram(program);
-      const positionAttr = gl.getAttribLocation(program, "a_position");
-      const resUniform = gl.getUniformLocation(program, "u_resolution");
-      const mouseUniform = gl.getUniformLocation(program, "u_mouse");
-      const timeUniform = gl.getUniformLocation(program, "u_time");
-      const uColor1Loc = gl.getUniformLocation(program, "u_color1");
-      const uColor2Loc = gl.getUniformLocation(program, "u_color2");
-      const uColor3Loc = gl.getUniformLocation(program, "u_color3");
-      const uColor4Loc = gl.getUniformLocation(program, "u_color4");
-
-      const buffer = gl.createBuffer();
-      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
-        -1, -1, 1, -1, -1, 1,
-        -1, 1, 1, -1, 1, 1,
-      ]), gl.STATIC_DRAW);
-
-      let mouseX = window.innerWidth / 2;
-      let mouseY = window.innerHeight / 2;
-      let targetMouseX = mouseX;
-      let targetMouseY = mouseY;
-
-      window.addEventListener('mousemove', (e) => {
-        targetMouseX = e.clientX;
-        targetMouseY = window.innerHeight - e.clientY;
-      });
-
-      function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-      }
-      window.addEventListener('resize', resize);
-      resize();
-
-      function getScrollProgress() {
-        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
-        if (totalHeight <= 0) return 0;
-        return Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
-      }
-
-      function render(time) {
-        time *= 0.001;
-        mouseX += (targetMouseX - mouseX) * 0.03;
-        mouseY += (targetMouseY - mouseY) * 0.03;
-
-        const progress = getScrollProgress();
-        const rawIndex = progress * (journeyPalettes.length - 1);
-        const baseIdx = Math.floor(rawIndex);
-        const nextIdx = Math.min(baseIdx + 1, journeyPalettes.length - 1);
-        const blend = rawIndex - baseIdx;
-
-        const pBase = journeyPalettes[baseIdx];
-        const pNext = journeyPalettes[nextIdx];
-
-        const targetC1 = [
-          pBase.c1[0] + (pNext.c1[0] - pBase.c1[0]) * blend,
-          pBase.c1[1] + (pNext.c1[1] - pBase.c1[1]) * blend,
-          pBase.c1[2] + (pNext.c1[2] - pBase.c1[2]) * blend
-        ];
-
-        gl.uniform2f(resUniform, canvas.width, canvas.height);
-        gl.uniform2f(mouseUniform, mouseX, mouseY);
-        gl.uniform1f(timeUniform, time);
-        gl.uniform3fv(uColor1Loc, targetC1);
-        gl.uniform3fv(uColor2Loc, pBase.c2);
-        gl.uniform3fv(uColor3Loc, pBase.c3);
-        gl.uniform3fv(uColor4Loc, pBase.c4);
-
-        gl.enableVertexAttribArray(positionAttr);
-        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
-        gl.vertexAttribPointer(positionAttr, 2, gl.FLOAT, false, 0, 0);
-        gl.drawArrays(gl.TRIANGLES, 0, 6);
-
-        requestAnimationFrame(render);
-      }
-      requestAnimationFrame(render);
-    }
-  }
+requestAnimationFrame(render);
+}
+requestAnimationFrame(render);
+}
+}
 }
 </script>
 </body>
