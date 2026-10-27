@@ -74,7 +74,7 @@ body {
   left: 0;
   width: 100vw;
   height: 100vh;
-  z-index: -2;
+  z-index: 0;
   pointer-events: none;
   background-color: #FBFBFD;
 }
@@ -188,8 +188,8 @@ body {
 }
 </style>
 </head>
-<body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative">
-<canvas id="ink-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-[-1]" style="background-color: #FBFBFD;"></canvas>
+<body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative bg-[#FBFBFD]">
+<canvas id="ink-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
 
 <!-- Background Ink Splashes -->
 <div class="ink-splash-bg top-20 left-[-10%] w-[500px] h-[500px] text-inkBlue/20">
