@@ -188,7 +188,7 @@ body {
 }
 </style>
 </head>
-<body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative bg-[#FBFBFD]">
+<body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative bg-transparent">
 <canvas id="ink-canvas" class="fixed inset-0 w-full h-full pointer-events-none z-0"></canvas>
 
 <!-- Background Ink Splashes -->
@@ -1000,6 +1000,214 @@ if (!gl) {
   }
 }
 </script>
+<script>
+/* Canvas WebGL Shader Engine */
+const canvas = document.getElementById('ink-canvas');
+const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+const journeyPalettes = [
+  { c1: [0.0, 0.67, 0.85], c2: [0.0, 0.35, 0.82], c3: [0.55, 0.15, 0.70], c4: [0.95, 0.20, 0.50] },
+  { c1: [0.02, 0.70, 0.50], c2: [0.0, 0.50, 0.75], c3: [0.0, 0.30, 0.65], c4: [0.2, 0.85, 0.65] },
+  { c1: [0.50, 0.15, 0.90], c2: [0.90, 0.35, 0.15], c3: [0.85, 0.10, 0.55], c4: [0.0, 0.75, 0.85] },
+  { c1: [0.95, 0.60, 0.10], c2: [0.85, 0.20, 0.40], c3: [0.10, 0.50, 0.85], c4: [0.45, 0.15, 0.75] },
+  { c1: [0.10, 0.40, 0.95], c2: [0.0, 0.65, 0.75], c3: [0.15, 0.20, 0.75], c4: [0.35, 0.50, 0.90] },
+  { c1: [0.90, 0.15, 0.35], c2: [0.95, 0.45, 0.15], c3: [0.85, 0.65, 0.10], c4: [0.60, 0.15, 0.75] },
+  { c1: [0.0, 0.67, 0.85], c2: [0.0, 0.35, 0.82], c3: [0.55, 0.15, 0.70], c4: [0.95, 0.20, 0.50] }
+];
+
+if (!gl) {
+  console.warn('WebGL not supported; disabling dynamic canvas.');
+  canvas.style.display = 'none';
+} else {
+  const vsSource = `
+    attribute vec2 a_position;
+    void main() { 
+      gl_Position = vec4(a_position, 0.0, 1.0); 
+    }
+  `;
+
+  const fsSource = `
+    precision highp float;
+    uniform vec2 u_resolution;
+    uniform vec2 u_mouse;
+    uniform float u_time;
+    uniform vec3 u_color1;
+    uniform vec3 u_color2;
+    uniform vec3 u_color3;
+    uniform vec3 u_color4;
+
+    vec3 mod289(vec3 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec2 mod289(vec2 x) { return x - floor(x * (1.0 / 289.0)) * 289.0; }
+    vec3 permute(vec3 x) { return mod289(((x * 34.0) + 1.0) * x); }
+
+    float snoise(vec2 v) {
+      const vec4 C = vec4(0.211324865405187, 0.366025403784439, -0.577350269189626, 0.024390243902439);
+      vec2 i  = floor(v + dot(v, C.yy));
+      vec2 x0 = v - i + dot(i, C.xx);
+      vec2 i1 = (x0.x > x0.y) ? vec2(1.0, 0.0) : vec2(0.0, 1.0);
+      vec4 x12 = x0.xyxy + C.xxww;
+      x12.xy -= i1;
+      i = mod289(i);
+      vec3 p = permute(permute(i.y + vec3(0.0, i1.y, 1.0)) + i.x + vec3(0.0, i1.x, 1.0));
+      vec3 m = max(0.5 - vec3(dot(x0, x0), dot(x12.xy, x12.xy), dot(x12.zw, x12.zw)), 0.0);
+      m = m * m;
+      m = m * m;
+      vec3 x = 2.0 * fract(p * C.www) - 1.0;
+      vec3 h = abs(x) - 0.5;
+      vec3 ox = floor(x + 0.5);
+      vec3 a0 = x - ox;
+      m *= 1.79284291400159 - 0.85373472095314 * (a0 * a0 + h * h);
+      vec3 g;
+      g.x = a0.x * x0.x + h.x * x0.y;
+      g.yz = a0.yz * x12.xz + h.yz * x12.yw;
+      return 130.0 * dot(m, g);
+    }
+
+    float fbm(vec2 p) {
+      float value = 0.0;
+      float amplitude = 0.5;
+      for (int i = 0; i < 4; i++) {
+        value += amplitude * snoise(p);
+        p *= 2.05;
+        amplitude *= 0.5;
+      }
+      return value;
+    }
+
+    void main() {
+      vec2 st = gl_FragCoord.xy / u_resolution.xy;
+      st.x *= u_resolution.x / u_resolution.y;
+      vec2 mouse = u_mouse / u_resolution.xy;
+      mouse.x *= u_resolution.x / u_resolution.y;
+      float slowTime = u_time * 0.08;
+      float mouseDist = distance(st, mouse);
+      float mouseRipple = smoothstep(0.45, 0.0, mouseDist) * 0.35;
+      vec2 q = vec2(
+        fbm(st + vec2(slowTime * 0.1, slowTime * 0.05)),
+        fbm(st + vec2(slowTime * 0.08, -slowTime * 0.12))
+      );
+      vec2 r = vec2(
+        fbm(st + 1.8 * q + vec2(0.1, 0.2) + mouseRipple),
+        fbm(st + 1.8 * q + vec2(0.3, 0.1) - mouseRipple)
+      );
+      float inkDensity = fbm(st + 2.2 * r);
+      vec3 waterBase = vec3(0.985, 0.985, 0.995);
+      float t1 = smoothstep(-0.2, 0.5, inkDensity);
+      float t2 = smoothstep(0.1, 0.7, r.x);
+      float t3 = smoothstep(0.0, 0.8, r.y);
+      vec3 inkMix = mix(u_color1, u_color2, t1);
+      inkMix = mix(inkMix, u_color3, t2);
+      inkMix = mix(inkMix, u_color4, t3 * 0.6);
+      float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.22;
+      inkAlpha = clamp(inkAlpha, 0.0, 0.54);
+      vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
+      gl_FragColor = vec4(finalColor, 1.0);
+    }
+  `;
+
+  function createShader(gl, type, source) {
+    const shader = gl.createShader(type);
+    gl.shaderSource(shader, source);
+    gl.compileShader(shader);
+    if (!gl.getShaderParameter(shader, gl.COMPILE_STATUS)) {
+      console.error(gl.getShaderInfoLog(shader));
+      gl.deleteShader(shader);
+      return null;
+    }
+    return shader;
+  }
+
+  const vertexShader = createShader(gl, gl.VERTEX_SHADER, vsSource);
+  const fragmentShader = createShader(gl, gl.FRAGMENT_SHADER, fsSource);
+
+  if (vertexShader && fragmentShader) {
+    const program = gl.createProgram();
+    gl.attachShader(program, vertexShader);
+    gl.attachShader(program, fragmentShader);
+    gl.linkProgram(program);
+
+    if (gl.getProgramParameter(program, gl.LINK_STATUS)) {
+      gl.useProgram(program);
+
+      const positionAttr = gl.getAttribLocation(program, "a_position");
+      const resUniform = gl.getUniformLocation(program, "u_resolution");
+      const mouseUniform = gl.getUniformLocation(program, "u_mouse");
+      const timeUniform = gl.getUniformLocation(program, "u_time");
+      const uColor1Loc = gl.getUniformLocation(program, "u_color1");
+      const uColor2Loc = gl.getUniformLocation(program, "u_color2");
+      const uColor3Loc = gl.getUniformLocation(program, "u_color3");
+      const uColor4Loc = gl.getUniformLocation(program, "u_color4");
+
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([
+        -1, -1,  1, -1, -1,  1,
+        -1,  1,  1, -1,  1,  1
+      ]), gl.STATIC_DRAW);
+
+      let mouseX = window.innerWidth / 2;
+      let mouseY = window.innerHeight / 2;
+      let targetMouseX = mouseX;
+      let targetMouseY = mouseY;
+
+      window.addEventListener('mousemove', (e) => {
+        targetMouseX = e.clientX;
+        targetMouseY = window.innerHeight - e.clientY;
+      });
+
+      function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+        gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+      }
+      window.addEventListener('resize', resize);
+      resize();
+
+      function getScrollProgress() {
+        const totalHeight = document.documentElement.scrollHeight - window.innerHeight;
+        if (totalHeight <= 0) return 0;
+        return Math.min(Math.max(window.scrollY / totalHeight, 0), 1);
+      }
+
+      function render(time) {
+        time *= 0.001;
+        mouseX += (targetMouseX - mouseX) * 0.03;
+        mouseY += (targetMouseY - mouseY) * 0.03;
+
+        const progress = getScrollProgress();
+        const rawIndex = progress * (journeyPalettes.length - 1);
+        const baseIdx = Math.floor(rawIndex);
+        const nextIdx = Math.min(baseIdx + 1, journeyPalettes.length - 1);
+        const blend = rawIndex - baseIdx;
+
+        const pBase = journeyPalettes[baseIdx];
+        const pNext = journeyPalettes[nextIdx];
+
+        const targetC1 = [
+          pBase.c1[0] + (pNext.c1[0] - pBase.c1[0]) * blend,
+          pBase.c1[1] + (pNext.c1[1] - pBase.c1[1]) * blend,
+          pBase.c1[2] + (pNext.c1[2] - pBase.c1[2]) * blend
+        ];
+
+        gl.uniform2f(resUniform, canvas.width, canvas.height);
+        gl.uniform2f(mouseUniform, mouseX, mouseY);
+        gl.uniform1f(timeUniform, time);
+        gl.uniform3fv(uColor1Loc, targetC1);
+        gl.uniform3fv(uColor2Loc, pBase.c2);
+        gl.uniform3fv(uColor3Loc, pBase.c3);
+        gl.uniform3fv(uColor4Loc, pBase.c4);
+
+        gl.enableVertexAttribArray(positionAttr);
+        gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+        gl.vertexAttribPointer(positionAttr, 2, gl.FLOAT, false, 0, 0);
+
+        gl.drawArrays(gl.TRIANGLES, 0, 6);
+        requestAnimationFrame(render);
+      }
+      requestAnimationFrame(render);
+    }
+  }
+}
+</script>  
 </body>
 </html>
 
