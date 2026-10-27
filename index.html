@@ -68,6 +68,9 @@ body {
   color: #1D1D1F;
   overflow-x: hidden;
   font-feature-settings: "cv02", "cv03", "cv04", "cv11";
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
 }
 #ink-canvas {
   position: fixed;
@@ -196,16 +199,11 @@ body {
 </div>
 
 <!-- Header -->
-<header class="fixed top-0 left-0 w-full z-50 bg-white/70 backdrop-blur-xl border-b border-black/5 shadow-xs">
+<header class="fixed top-0 left-0 w-full z-50 bg-white/45 backdrop-blur-2xl border-b-2 border-black/10 shadow-sm">
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
-    <!-- Mobile hamburger (left) -->
-    <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-800 hover:bg-black/5 z-10" aria-label="Open menu">
-      <i data-lucide="menu" class="w-6 h-6"></i>
-    </button>
-
-    <!-- Logo: centered on mobile, left on desktop -->
-    <a href="index.html" class="absolute left-1/2 -translate-x-1/2 md:static md:translate-x-0 flex items-center" aria-label="yourPRstrategist Home">
-      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" class="h-11 sm:h-10 w-auto max-w-[180px] sm:max-w-none object-contain" />
+    <!-- Logo: left-aligned everywhere, larger on mobile -->
+    <a href="index.html" class="flex items-center z-10" aria-label="yourPRstrategist Home">
+      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" class="h-20 md:h-10 w-auto max-w-[260px] md:max-w-none object-contain" />
     </a>
 
     <!-- Desktop nav -->
@@ -219,10 +217,15 @@ body {
       <a href="#events" class="hover:text-cyan-600 transition-colors">Events</a>
     </nav>
 
-    <!-- CTA -->
-    <a href="#contact" class="bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap z-10">
-      Pitch<span class="hidden sm:inline"> Your Purpose</span>
-    </a>
+    <!-- CTA + Mobile hamburger (right) -->
+    <div class="flex items-center gap-2 z-10">
+      <a href="#contact" class="bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap">
+        Pitch<span class="hidden sm:inline"> Your Purpose</span>
+      </a>
+      <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-800 hover:bg-black/5" aria-label="Open menu">
+        <i data-lucide="menu" class="w-6 h-6"></i>
+      </button>
+    </div>
   </div>
 </header>
 
@@ -238,7 +241,7 @@ body {
   <a href="#contact" class="block py-3 text-base font-medium text-cyan-600 font-semibold">Pitch Your Purpose</a>
 </div>
 
-<main class="relative z-10 pt-16">
+<main class="relative z-10 pt-16 flex-1">
   <!-- Hero Section -->
   <section id="hero-section" class="min-h-[85vh] flex items-center justify-center px-4 sm:px-6 lg:px-8 py-16 relative">
     <div class="max-w-4xl mx-auto text-center space-y-8">
@@ -256,7 +259,7 @@ body {
         Doing PR Right. <br class="hidden sm:inline"/>
         <span class="text-prismatic">For the Projects That Matter.</span>
       </h1>
-      <div class="max-w-3xl mx-auto light-card bg-white/70 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-sm text-center space-y-3">
+      <div class="max-w-3xl mx-auto light-card ink-glass-card bg-white/70 backdrop-blur-xl p-6 sm:p-8 rounded-3xl shadow-sm text-center space-y-3">
         <p class="text-lg sm:text-xl md:text-2xl font-semibold text-inkTextPrimary leading-snug tracking-tight">
           We are true believers in the transformative power of <span class="text-inkBlue font-bold">Web3</span> &amp; <span class="text-inkPurple font-bold">Artificial Intelligence</span>.
         </p>
@@ -288,7 +291,7 @@ body {
         Earned Coverage &amp; Media Partnerships Across Tier-1 Outlets
       </h2>
     </div>
-    <div class="light-card bg-white/70 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-3xl shadow-sm">
+    <div class="light-card ink-glass-card bg-white/70 backdrop-blur-xl p-4 sm:p-6 md:p-8 rounded-3xl shadow-sm">
       <div class="flex flex-wrap items-center justify-center gap-3 sm:gap-4 font-bold text-inkTextPrimary text-xs sm:text-sm md:text-base tracking-tight">
         <div class="flex-1 min-w-[120px] px-4 py-3 sm:py-4 bg-white/60 rounded-2xl border border-black/5 text-center">CoinDesk</div>
         <div class="flex-1 min-w-[150px] px-4 py-3 sm:py-4 bg-white/60 rounded-2xl border border-black/5 text-center">Cointelegraph</div>
@@ -555,7 +558,7 @@ body {
 
   <!-- Motto Banner -->
   <section class="py-12 sm:py-16 px-4 max-w-5xl mx-auto relative">
-    <div class="light-card relative overflow-hidden bg-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] p-8 sm:p-12 shadow-md text-center">
+    <div class="light-card ink-glass-card relative overflow-hidden bg-white/60 backdrop-blur-xl rounded-3xl sm:rounded-[2rem] p-8 sm:p-12 shadow-md text-center">
       <div class="absolute -top-24 -left-24 w-64 h-64 bg-inkBlue/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="absolute -bottom-24 -right-24 w-64 h-64 bg-inkPurple/10 rounded-full blur-3xl pointer-events-none"></div>
       <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-mono font-bold bg-gradient-to-r from-inkBlue/10 to-inkPurple/10 text-inkTextPrimary border border-black/10 mb-6">
@@ -675,17 +678,19 @@ body {
 </div>
 
 <!-- Footer -->
-<footer class="border-t border-black/10 py-10 ink-glass relative z-10">
-  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex flex-col md:flex-row items-center justify-between gap-4">
-    <div class="flex items-center gap-3">
-      <span class="font-display font-bold text-sm text-inkTextPrimary">your<span class="text-prismatic">PR</span>strategist</span>
-      <span class="text-xs font-medium text-inkSubtle">&copy; 2026. All rights reserved. ⚖ Important information: yourPRstrategist provides public relations, communications, go-to-market and advisory services. We do not provide legal, tax, accounting or investment advice and we are not a broker-dealer, investment adviser or licensed placement agent. Introductions to investors, exchanges or other service providers are not endorsements, recommendations or guarantees of any outcome.</span>
+<footer class="border-t border-black/10 py-12 ink-glass relative z-10 mt-auto">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-8">
+      <span class="font-display font-bold text-lg text-inkTextPrimary">your<span class="text-prismatic">PR</span>strategist</span>
+      <div class="flex gap-5 text-inkTextSecondary text-xs font-mono font-bold">
+        <a href="https://x.com/strategist_pr" target="_blank" class="hover:text-inkBlue transition-colors">X</a>
+        <a href="https://www.linkedin.com/company/yourPRstrategist" target="_blank" class="hover:text-inkBlue transition-colors">LinkedIn</a>
+        <a href="https://yourprstrategist.medium.com" target="_blank" class="hover:text-inkBlue transition-colors">Medium</a>
+      </div>
     </div>
-    <div class="flex gap-5 text-inkTextSecondary text-xs font-mono font-bold">
-      <a href="https://x.com/strategist_pr" target="_blank" class="hover:text-inkBlue transition-colors">X (Twitter)</a>
-      <a href="https://www.linkedin.com/company/yourPRstrategist" target="_blank" class="hover:text-inkBlue transition-colors">LinkedIn</a>
-      <a href="https://yourprstrategist.medium.com" target="_blank" class="hover:text-inkBlue transition-colors">Medium</a>
-    </div>
+    <p class="text-xs font-medium text-inkSubtle leading-relaxed max-w-5xl">
+      <span class="font-display font-bold text-inkTextPrimary">yourPRstrategist</span> © 2026. All rights reserved. ⚖ Important information: yourPRstrategist provides public relations, communications, go-to-market and advisory services. We do not provide legal, tax, accounting or investment advice and we are not a broker-dealer, investment adviser or licensed placement agent. Introductions to investors, exchanges or other service providers are not endorsements, recommendations or guarantees of any outcome.
+    </p>
   </div>
 </footer>
 
@@ -870,7 +875,7 @@ document.addEventListener('DOMContentLoaded', () => {
         mouse.x *= u_resolution.x / u_resolution.y;
         float slowTime = u_time * 0.08;
         float mouseDist = distance(st, mouse);
-        float mouseRipple = smoothstep(0.72, 0.0, mouseDist) * 0.48;
+        float mouseRipple = smoothstep(0.92, 0.0, mouseDist) * 0.72;
         vec2 q = vec2(
           fbm(st + vec2(slowTime * 0.1, slowTime * 0.05)),
           fbm(st + vec2(slowTime * 0.08, -slowTime * 0.12))
@@ -887,8 +892,8 @@ document.addEventListener('DOMContentLoaded', () => {
         vec3 inkMix = mix(u_color1, u_color2, t1);
         inkMix = mix(inkMix, u_color3, t2);
         inkMix = mix(inkMix, u_color4, t3 * 0.6);
-        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.28;
-        inkAlpha = clamp(inkAlpha, 0.0, 0.58);
+        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.35;
+        inkAlpha = clamp(inkAlpha, 0.0, 0.62);
         vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
         gl_FragColor = vec4(finalColor, 1.0);
       }
@@ -940,6 +945,7 @@ document.addEventListener('DOMContentLoaded', () => {
     let mouseY = window.innerHeight / 2;
     let targetMouseX = mouseX;
     let targetMouseY = mouseY;
+    let currentDpr = 1;
 
     window.addEventListener('mousemove', (e) => {
       targetMouseX = e.clientX;
@@ -948,9 +954,9 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resize() {
       const isMobile = window.innerWidth < 768;
-      const dpr = isMobile ? Math.min(window.devicePixelRatio || 1, 1.5) : (window.devicePixelRatio || 1);
-      canvas.width = window.innerWidth * dpr;
-      canvas.height = window.innerHeight * dpr;
+      currentDpr = isMobile ? Math.min(window.devicePixelRatio || 1, 1.5) : (window.devicePixelRatio || 1);
+      canvas.width = window.innerWidth * currentDpr;
+      canvas.height = window.innerHeight * currentDpr;
       gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
     }
     window.addEventListener('resize', resize);
@@ -983,7 +989,7 @@ document.addEventListener('DOMContentLoaded', () => {
       ];
 
       gl.uniform2f(resUniform, canvas.width, canvas.height);
-      gl.uniform2f(mouseUniform, mouseX, mouseY);
+      gl.uniform2f(mouseUniform, mouseX * currentDpr, mouseY * currentDpr);
       gl.uniform1f(timeUniform, time);
       gl.uniform3fv(uColor1Loc, targetC1);
       gl.uniform3fv(uColor2Loc, pBase.c2);
