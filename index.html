@@ -183,12 +183,7 @@ body {
 <body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative">
 <canvas id="ink-canvas"></canvas>
 
-<!-- Background Ink Splashes -->
-<div class="ink-splash-bg top-20 left-[-10%] w-[500px] h-[500px] text-inkBlue/20">
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
-    <path d="M44.7,-59.1C56.8,-49.4,64.8,-34.5,68.2,-18.8C71.6,-3.1,70.5,13.4,63.9,27.3C57.3,41.2,45.3,52.5,31.2,59.8C17.1,67.1,0.9,70.4,-15.7,67.5C-32.3,64.6,-49.3,55.5,-60.1,41.5C-70.9,27.5,-75.5,8.6,-73.2,-9.3C-70.9,-27.2,-61.7,-44.1,-48,-54.2C-34.3,-64.3,-17.1,-67.6,0.3,-68C17.7,-68.4,32.6,-68.8,44.7,-59.1Z" transform="translate(100 100)" />
-  </svg>
-</div>
+<!-- Background Ink Splashes (left blue splash removed to eliminate faint patch on hero) -->
 <div class="ink-splash-bg top-[35%] right-[-12%] w-[600px] h-[600px] text-inkPurple/15" style="animation-delay: -4s;">
   <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
     <path d="M38.1,-52.3C48.8,-42.6,56.5,-30.1,60.8,-16.1C65.1,-2.1,66,13.4,60.2,26.7C54.4,40,41.9,51.1,27.7,57.8C13.5,64.5,-2.4,66.8,-18.2,63.5C-34,60.2,-49.7,51.3,-58.3,37.8C-66.9,24.3,-68.4,6.2,-65.2,-10.4C-62,-27,-54.1,-42.1,-42.2,-52.1C-30.3,-62.1,-15.1,-67,0.3,-67.4C15.7,-67.8,27.4,-62,38.1,-52.3Z" transform="translate(100 100)" />
@@ -201,11 +196,11 @@ body {
 </div>
 
 <!-- Header -->
-<header class="fixed top-0 left-0 w-full z-50 bg-white/45 backdrop-blur-2xl border-b-2 border-black/10 shadow-sm">
+<header class="fixed top-0 left-0 w-full z-50 bg-white/45 backdrop-blur-2xl border-b border-black/10 shadow-sm">
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
-    <!-- Logo: left-aligned everywhere, larger on mobile -->
+    <!-- Logo: slightly larger on mobile -->
     <a href="index.html" class="flex items-center z-10" aria-label="yourPRstrategist Home">
-      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" class="h-20 md:h-10 w-auto max-w-[260px] md:max-w-none object-contain" />
+      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" class="h-24 md:h-10 w-auto max-w-[280px] md:max-w-none object-contain" />
     </a>
 
     <!-- Desktop nav -->
@@ -219,14 +214,14 @@ body {
       <a href="#events" class="hover:text-cyan-600 transition-colors">Events</a>
     </nav>
 
-    <!-- CTA + Mobile hamburger (right) -->
+    <!-- CTA + Mobile hamburger (hamburger now left of Pitch on mobile) -->
     <div class="flex items-center gap-2 z-10">
-      <a href="#contact" class="bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap">
-        Pitch<span class="hidden sm:inline"> Your Purpose</span>
-      </a>
       <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-800 hover:bg-black/5" aria-label="Open menu">
         <i data-lucide="menu" class="w-6 h-6"></i>
       </button>
+      <a href="#contact" class="bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap">
+        Pitch<span class="hidden sm:inline"> Your Purpose</span>
+      </a>
     </div>
   </div>
 </header>
@@ -314,7 +309,7 @@ body {
       <h2 class="text-2xl sm:text-3xl md:text-4xl font-extrabold font-display bg-clip-text text-transparent bg-gradient-to-r from-inkTextPrimary via-inkBlue to-inkPurple tracking-tight">
         Our Vetting Mandate
       </h2>
-      <p class="text-xs sm:text-sm text-inkTextSecondary font-medium leading-relaxed">
+      <p class="text-xs sm:text-sm text-inkTextSecondary font-medium leading-relaxed bg-white/60 p-3 rounded-xl border border-black/5">
         Most agencies take the brief and the retainer. We check the project first. Before we initiate any PR momentum, our team reviews three things:
       </p>
     </div>
@@ -372,7 +367,7 @@ body {
     <div class="text-center space-y-3 mb-12">
       <span class="text-inkPurple font-mono text-xs uppercase tracking-widest font-extrabold bg-purple-50 px-3 py-1 rounded-full border border-purple-200">The Agency Edge</span>
       <h2 class="font-display text-3xl sm:text-4xl font-extrabold tracking-tight text-prismatic">Why yourPRstrategist</h2>
-      <p class="text-inkTextSecondary font-medium max-w-2xl mx-auto text-xs sm:text-sm">Why Serious Teams Choose a Boutique That Vets First.</p>
+      <p class="text-inkTextSecondary font-medium max-w-2xl mx-auto text-xs sm:text-sm bg-white/60 p-3 rounded-xl border border-black/5">Why Serious Teams Choose a Boutique That Vets First.</p>
     </div>
     <div class="grid md:grid-cols-3 gap-6">
       <div class="light-card ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
@@ -679,15 +674,18 @@ body {
   </div>
 </div>
 
-<!-- Footer -->
-<footer class="border-t border-black/10 py-12 ink-glass relative z-10 mt-auto">
+<!-- Footer: glass aesthetic matching header, thinner border, tighter spacing, natural document flow -->
+<footer class="border-t border-black/10 py-8 ink-glass relative z-10 mt-auto">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 mb-8">
+    <div class="flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 mb-6">
       <span class="font-display font-bold text-lg text-inkTextPrimary">your<span class="text-prismatic">PR</span>strategist</span>
-      <div class="flex gap-5 text-inkTextSecondary text-xs font-mono font-bold">
+      <div class="flex flex-wrap gap-3 text-inkTextSecondary text-xs font-mono font-bold">
         <a href="https://x.com/strategist_pr" target="_blank" class="hover:text-inkBlue transition-colors">X</a>
         <a href="https://www.linkedin.com/company/yourPRstrategist" target="_blank" class="hover:text-inkBlue transition-colors">LinkedIn</a>
         <a href="https://yourprstrategist.medium.com" target="_blank" class="hover:text-inkBlue transition-colors">Medium</a>
+        <a href="https://www.instagram.com/yourprstrategist" target="_blank" class="hover:text-inkBlue transition-colors">Instagram</a>
+        <a href="https://linktr.ee/yourprstrategist" target="_blank" class="hover:text-inkBlue transition-colors">Linktree</a>
+        <a href="https://www.youtube.com/@yourPRstrategist" target="_blank" class="hover:text-inkBlue transition-colors">YouTube</a>
       </div>
     </div>
     <p class="text-xs font-medium text-inkSubtle leading-relaxed max-w-5xl">
