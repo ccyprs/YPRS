@@ -9,8 +9,8 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
-<script src="https://cdn.tailwindcss.com"></script>
+<script src="https://unpkg.com/lucide@latest" defer></script>
+<script src="https://cdn.tailwindcss.com" defer></script>
 <script>
 tailwind.config = {
   darkMode: 'class',
@@ -56,7 +56,7 @@ tailwind.config = {
 }
 @keyframes floatSplash {
   0%, 100% { transform: translateY(0px) rotate(0deg) scale(1); }
-  50% { transform: translateY(-15px) rotate(3deg) scale(1.03); }
+  50% { transform: translateY(-12px) rotate(2deg) scale(1.02); }
 }
 :root { color-scheme: light; }
 html, body {
@@ -88,9 +88,9 @@ body {
   position: absolute;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.45;
-  filter: blur(12px);
-  animation: floatSplash 12s ease-in-out infinite;
+  opacity: 0.35;
+  filter: blur(10px);
+  animation: floatSplash 16s ease-in-out infinite;
 }
 .ink-glass {
   background: rgba(255, 255, 255, 0.88);
@@ -183,7 +183,7 @@ body {
 <body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative">
 <canvas id="ink-canvas"></canvas>
 
-<!-- Background Ink Splashes (left blue splash removed) -->
+<!-- Background Ink Splashes (optimized intensity) -->
 <div class="ink-splash-bg top-[35%] right-[-12%] w-[600px] h-[600px] text-inkPurple/15" style="animation-delay: -4s;">
   <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
     <path d="M38.1,-52.3C48.8,-42.6,56.5,-30.1,60.8,-16.1C65.1,-2.1,66,13.4,60.2,26.7C54.4,40,41.9,51.1,27.7,57.8C13.5,64.5,-2.4,66.8,-18.2,63.5C-34,60.2,-49.7,51.3,-58.3,37.8C-66.9,24.3,-68.4,6.2,-65.2,-10.4C-62,-27,-54.1,-42.1,-42.2,-52.1C-30.3,-62.1,-15.1,-67,0.3,-67.4C15.7,-67.8,27.4,-62,38.1,-52.3Z" transform="translate(100 100)" />
@@ -198,12 +198,10 @@ body {
 <!-- Header -->
 <header class="fixed top-0 left-0 w-full z-50 bg-white/45 backdrop-blur-2xl border-b border-black/10 shadow-sm">
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
-    <!-- Logo: slightly larger on mobile -->
     <a href="index.html" class="flex items-center z-10" aria-label="yourPRstrategist Home">
       <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" class="h-24 md:h-10 w-auto max-w-[280px] md:max-w-none object-contain" />
     </a>
 
-    <!-- Desktop nav -->
     <nav class="hidden md:flex items-center space-x-7 text-sm font-medium text-slate-800">
       <a href="#mandate" class="hover:text-cyan-600 transition-colors">Vetting Mandate</a>
       <a href="#pillars" class="hover:text-cyan-600 transition-colors">Agency Edge</a>
@@ -214,7 +212,6 @@ body {
       <a href="#events" class="hover:text-cyan-600 transition-colors">Events</a>
     </nav>
 
-    <!-- CTA + Mobile hamburger (hamburger left of Pitch on mobile) -->
     <div class="flex items-center gap-2 z-10">
       <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-800 hover:bg-black/5" aria-label="Open menu">
         <i data-lucide="menu" class="w-6 h-6"></i>
@@ -793,11 +790,11 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modal').classList.add('hidden');
   }
 
-  // Canvas WebGL Shader Engine
+  // Optimized Canvas WebGL Shader Engine
   try {
     const canvas = document.getElementById('ink-canvas');
     if (!canvas) return;
-    const gl = canvas.getContext('webgl') || canvas.getContext('experimental-webgl');
+    const gl = canvas.getContext('webgl', { antialias: false, powerPreference: "low-power" }) || canvas.getContext('experimental-webgl');
     const journeyPalettes = [
       { c1: [0.0, 0.67, 0.85], c2: [0.0, 0.35, 0.82], c3: [0.55, 0.15, 0.70], c4: [0.95, 0.20, 0.50] },
       { c1: [0.02, 0.70, 0.50], c2: [0.0, 0.50, 0.75], c3: [0.0, 0.30, 0.65], c4: [0.2, 0.85, 0.65] },
@@ -821,7 +818,7 @@ document.addEventListener('DOMContentLoaded', () => {
     `;
 
     const fsSource = `
-      precision highp float;
+      precision mediump float;
       uniform vec2 u_resolution;
       uniform vec2 u_mouse;
       uniform float u_time;
@@ -860,7 +857,7 @@ document.addEventListener('DOMContentLoaded', () => {
       float fbm(vec2 p) {
         float value = 0.0;
         float amplitude = 0.5;
-        for (int i = 0; i < 4; i++) {
+        for (int i = 0; i < 3; i++) {
           value += amplitude * snoise(p);
           p *= 2.05;
           amplitude *= 0.5;
@@ -873,27 +870,27 @@ document.addEventListener('DOMContentLoaded', () => {
         st.x *= u_resolution.x / u_resolution.y;
         vec2 mouse = u_mouse / u_resolution.xy;
         mouse.x *= u_resolution.x / u_resolution.y;
-        float slowTime = u_time * 0.08;
+        float slowTime = u_time * 0.06;
         float mouseDist = distance(st, mouse);
-        float mouseRipple = smoothstep(0.92, 0.0, mouseDist) * 0.72;
+        float mouseRipple = smoothstep(0.92, 0.0, mouseDist) * 0.65;
         vec2 q = vec2(
           fbm(st + vec2(slowTime * 0.1, slowTime * 0.05)),
           fbm(st + vec2(slowTime * 0.08, -slowTime * 0.12))
         );
         vec2 r = vec2(
-          fbm(st + 1.8 * q + vec2(0.1, 0.2) + mouseRipple),
-          fbm(st + 1.8 * q + vec2(0.3, 0.1) - mouseRipple)
+          fbm(st + 1.6 * q + vec2(0.1, 0.2) + mouseRipple),
+          fbm(st + 1.6 * q + vec2(0.3, 0.1) - mouseRipple)
         );
-        float inkDensity = fbm(st + 2.2 * r);
+        float inkDensity = fbm(st + 2.0 * r);
         vec3 waterBase = vec3(0.985, 0.985, 0.995);
         float t1 = smoothstep(-0.2, 0.5, inkDensity);
         float t2 = smoothstep(0.1, 0.7, r.x);
         float t3 = smoothstep(0.0, 0.8, r.y);
         vec3 inkMix = mix(u_color1, u_color2, t1);
         inkMix = mix(inkMix, u_color3, t2);
-        inkMix = mix(inkMix, u_color4, t3 * 0.6);
-        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.35;
-        inkAlpha = clamp(inkAlpha, 0.0, 0.62);
+        inkMix = mix(inkMix, u_color4, t3 * 0.55);
+        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.32 + mouseRipple * 0.32;
+        inkAlpha = clamp(inkAlpha, 0.0, 0.58);
         vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
         gl_FragColor = vec4(finalColor, 1.0);
       }
@@ -946,6 +943,14 @@ document.addEventListener('DOMContentLoaded', () => {
     let targetMouseX = mouseX;
     let targetMouseY = mouseY;
     let currentDpr = 1;
+    let isVisible = true;
+    let lastFrame = 0;
+    const targetFPS = 30;
+    const frameInterval = 1000 / targetFPS;
+
+    document.addEventListener('visibilitychange', () => {
+      isVisible = !document.hidden;
+    });
 
     window.addEventListener('mousemove', (e) => {
       targetMouseX = e.clientX;
@@ -954,7 +959,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resize() {
       const isMobile = window.innerWidth < 768;
-      currentDpr = isMobile ? Math.min(window.devicePixelRatio || 1, 1.5) : (window.devicePixelRatio || 1);
+      currentDpr = isMobile ? Math.min(window.devicePixelRatio || 1, 1.25) : Math.min(window.devicePixelRatio || 1, 1.5);
       canvas.width = window.innerWidth * currentDpr;
       canvas.height = window.innerHeight * currentDpr;
       gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
@@ -969,9 +974,21 @@ document.addEventListener('DOMContentLoaded', () => {
     }
 
     function render(time) {
+      if (!isVisible) {
+        requestAnimationFrame(render);
+        return;
+      }
+
+      const elapsed = time - lastFrame;
+      if (elapsed < frameInterval) {
+        requestAnimationFrame(render);
+        return;
+      }
+      lastFrame = time - (elapsed % frameInterval);
+
       time *= 0.001;
-      mouseX += (targetMouseX - mouseX) * 0.03;
-      mouseY += (targetMouseY - mouseY) * 0.03;
+      mouseX += (targetMouseX - mouseX) * 0.04;
+      mouseY += (targetMouseY - mouseY) * 0.04;
 
       const progress = getScrollProgress();
       const rawIndex = progress * (journeyPalettes.length - 1);
