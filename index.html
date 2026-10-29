@@ -9,7 +9,6 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Plus+Jakarta+Sans:wght@500;600;700;800&display=swap" rel="stylesheet">
-<script src="https://unpkg.com/lucide@latest"></script>
 <script src="https://cdn.tailwindcss.com"></script>
 <script>
 tailwind.config = {
@@ -45,6 +44,7 @@ tailwind.config = {
 }
 </script>
 <style>
+/* Keep your original <style> block exactly as it is */
 @property --angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -198,12 +198,10 @@ body {
 <!-- Header -->
 <header class="fixed top-0 left-0 w-full z-50 bg-white/45 backdrop-blur-2xl border-b border-black/10 shadow-sm">
   <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
-    <!-- Logo: slightly larger on mobile -->
     <a href="index.html" class="flex items-center z-10" aria-label="yourPRstrategist Home">
-      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" class="h-24 md:h-10 w-auto max-w-[280px] md:max-w-none object-contain" />
+      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" width="280" height="40" class="h-24 md:h-10 w-auto max-w-[280px] md:max-w-none object-contain" />
     </a>
 
-    <!-- Desktop nav -->
     <nav class="hidden md:flex items-center space-x-7 text-sm font-medium text-slate-800">
       <a href="#mandate" class="hover:text-cyan-600 transition-colors">Vetting Mandate</a>
       <a href="#pillars" class="hover:text-cyan-600 transition-colors">Agency Edge</a>
@@ -214,10 +212,9 @@ body {
       <a href="#events" class="hover:text-cyan-600 transition-colors">Events</a>
     </nav>
 
-    <!-- CTA + Mobile hamburger (hamburger left of Pitch on mobile) -->
     <div class="flex items-center gap-2 z-10">
       <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-800 hover:bg-black/5" aria-label="Open menu">
-        <i data-lucide="menu" class="w-6 h-6"></i>
+        <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
       </button>
       <a href="#contact" class="bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap">
         Pitch<span class="hidden sm:inline"> Your Purpose</span>
@@ -248,7 +245,7 @@ body {
           Award-Winning Emerging Tech PR Consultancy
         </div>
         <div class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-amber-500/10 border border-amber-500/30 text-xs font-mono font-bold text-amber-700">
-          <i data-lucide="anchor" class="w-3.5 h-3.5 text-amber-600"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5 text-amber-600"><circle cx="12" cy="5" r="3"/><line x1="12" x2="12" y1="22" y2="8"/><path d="M5 12H2a10 10 0 0 0 20 0h-3"/></svg>
           Established 2019
         </div>
       </div>
@@ -267,11 +264,11 @@ body {
       <div class="flex flex-col sm:flex-row items-center justify-center gap-4 pt-2">
         <a href="#contact" class="w-full sm:w-auto ink-button-primary px-8 py-3.5 rounded-full font-display font-bold text-xs sm:text-sm flex items-center justify-center gap-2">
           Pitch Your Purpose
-          <i data-lucide="arrow-right" class="w-4 h-4"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M5 12h14"/><path d="m12 5 7 7-7 7"/></svg>
         </a>
         <a href="#mandate" class="inline-flex items-center justify-center px-6 py-3.5 rounded-full bg-inkBlue text-white font-semibold text-xs sm:text-sm shadow-md hover:bg-inkBlue/90">
           Our Vetting Mandate
-          <i data-lucide="chevron-down" class="w-4 h-4 ml-1"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4 ml-1"><path d="m6 9 6 6 6-6"/></svg>
         </a>
       </div>
     </div>
@@ -319,7 +316,7 @@ body {
           <div class="flex items-center justify-between">
             <span class="text-xs font-mono font-bold text-inkBlue bg-inkBlue/10 px-3 py-1 rounded-full border border-inkBlue/20">01/INTEGRITY</span>
             <div class="w-10 h-10 rounded-2xl bg-blue-50 flex items-center justify-center text-inkBlue group-hover:scale-110 transition-transform duration-300">
-              <i data-lucide="user-check" class="w-5 h-5"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><polyline points="16 11 18 13 22 9"/></svg>
             </div>
           </div>
           <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">Founder Track Record</h3>
@@ -334,7 +331,7 @@ body {
           <div class="flex items-center justify-between">
             <span class="text-xs font-mono font-bold text-inkPurple bg-inkPurple/10 px-3 py-1 rounded-full border border-inkPurple/20">02/SUBSTANCE</span>
             <div class="w-10 h-10 rounded-2xl bg-purple-50 flex items-center justify-center text-inkPurple group-hover:scale-110 transition-transform duration-300">
-              <i data-lucide="shield-check" class="w-5 h-5"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10"/><path d="m9 12 2 2 4-4"/></svg>
             </div>
           </div>
           <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">Architecture &amp; Security</h3>
@@ -349,7 +346,7 @@ body {
           <div class="flex items-center justify-between">
             <span class="text-xs font-mono font-bold text-emerald-700 bg-emerald-50 px-3 py-1 rounded-full border border-emerald-200">03/FEASIBILITY</span>
             <div class="w-10 h-10 rounded-2xl bg-emerald-50 flex items-center justify-center text-emerald-600 group-hover:scale-110 transition-transform duration-300">
-              <i data-lucide="trending-up" class="w-5 h-5"></i>
+              <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/></svg>
             </div>
           </div>
           <h3 class="text-lg font-bold font-display text-inkTextPrimary tracking-tight">Model &amp; Market Realism</h3>
@@ -373,7 +370,7 @@ body {
       <div class="light-card ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkPurple/10 flex items-center justify-center text-inkPurple">
-            <i data-lucide="newspaper" class="w-6 h-6"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M4 22h16a2 2 0 0 0 2-2V4a2 2 0 0 0-2-2H8a2 2 0 0 0-2 2v16a2 2 0 0 1-2 2Zm0 0a2 2 0 0 1-2-2v-9c0-1.1.9-2 2-2h2"/><path d="M18 14h-8"/><path d="M15 18h-5"/><path d="M10 6h8v4h-8V6Z"/></svg>
           </div>
           <h3 class="font-display text-xl font-bold text-inkTextPrimary">Tier-1 Media Reach</h3>
           <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">Long-standing relationships with journalists, editors and research analysts at leading technology and financial outlets. We use the PESO model (paid, earned, shared, owned) so each channel supports the others, and we report on what the work achieves.</p>
@@ -387,27 +384,27 @@ body {
       <div class="light-card ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkCyan/10 flex items-center justify-center text-inkCyan">
-            <i data-lucide="sparkles" class="w-6 h-6"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z"/><path d="M20 3v4"/><path d="M22 5h-4"/><path d="M4 17v2"/><path d="M5 18H3"/></svg>
           </div>
           <h3 class="font-display text-xl font-bold text-inkTextPrimary">Technical Stories, Told Clearly</h3>
           <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">We translate complex zero-knowledge math, decentralized AI compute and modular blockchain stacks into clear, compelling narratives that resonate with enterprise audiences, journalists and communities.</p>
         </div>
         <div class="pt-4 border-t border-black/10 flex items-center gap-2 text-xs font-mono font-bold text-inkCyan">
           <span>Thought Leadership Focus</span>
-          <i data-lucide="check" class="w-4 h-4"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="M20 6 9 17l-5-5"/></svg>
         </div>
       </div>
       <div class="light-card ink-glass-card p-8 rounded-3xl flex flex-col justify-between space-y-6">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkPink/10 flex items-center justify-center text-inkPink">
-            <i data-lucide="globe" class="w-6 h-6"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
           </div>
           <h3 class="font-display text-xl font-bold text-inkTextPrimary">Coordinated Global Reach</h3>
           <p class="text-inkTextSecondary font-medium text-xs sm:text-sm leading-relaxed">One consistent story, localized for each market. We run synchronized communications across Asia, North America, Europe and the Middle East, adapting to regional media, regulators and culture rather than copy-pasting a press release.</p>
         </div>
         <div class="pt-4 border-t border-black/10 flex items-center gap-2 text-xs font-mono font-bold text-inkPink">
           <span>Multi-Market Strategy</span>
-          <i data-lucide="globe" class="w-4 h-4"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><circle cx="12" cy="12" r="10"/><path d="M12 2a14.5 14.5 0 0 0 0 20 14.5 14.5 0 0 0 0-20"/><path d="M2 12h20"/></svg>
         </div>
       </div>
     </div>
@@ -424,49 +421,49 @@ body {
       <div class="light-card ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkBlue/10 border border-inkBlue/20 flex items-center justify-center text-inkBlue group-hover:scale-110 transition-transform">
-            <i data-lucide="megaphone" class="w-6 h-6"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
           </div>
           <h3 class="font-display text-lg font-bold text-inkTextPrimary">Global Public Relations</h3>
           <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">Shape the story with clear announcements, earned media and founder thought leadership.</p>
         </div>
         <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkBlue hover:underline">
-          PITCH YOUR PURPOSE <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          PITCH YOUR PURPOSE <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
       </div>
       <div class="light-card ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkPurple/10 border border-inkPurple/20 flex items-center justify-center text-inkPurple group-hover:scale-110 transition-transform">
-            <i data-lucide="users" class="w-6 h-6"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2"/><circle cx="9" cy="7" r="4"/><path d="M22 21v-2a4 4 0 0 0-3-3.87"/><path d="M16 3.13a4 4 0 0 1 0 7.75"/></svg>
           </div>
           <h3 class="font-display text-lg font-bold text-inkTextPrimary">Community Management &amp; Growth</h3>
           <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">Build an informed, active community around your protocol: moderated channels, clear education and contributors who understand what you are building and why.</p>
         </div>
         <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkPurple hover:underline">
-          PITCH YOUR PURPOSE <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          PITCH YOUR PURPOSE <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
       </div>
       <div class="light-card ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkPink/10 border border-inkPink/20 flex items-center justify-center text-inkPink group-hover:scale-110 transition-transform">
-            <i data-lucide="award" class="w-6 h-6"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="12" cy="8" r="6"/><path d="M15.477 12.89 17 22l-5-3-5 3 1.523-9.11"/></svg>
           </div>
           <h3 class="font-display text-lg font-bold text-inkTextPrimary">Influencer &amp; KOL Marketing</h3>
           <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">Work with creators and key opinion leaders vetted for credibility and audience fit, with clear disclosure and transparent reporting.</p>
         </div>
         <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkPink hover:underline">
-          PITCH YOUR PURPOSE <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          PITCH YOUR PURPOSE <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
       </div>
       <div class="light-card ink-glass-card p-7 rounded-3xl flex flex-col justify-between group">
         <div class="space-y-4">
           <div class="w-12 h-12 rounded-2xl bg-inkCyan/10 border border-inkCyan/20 flex items-center justify-center text-inkCyan group-hover:scale-110 transition-transform">
-            <i data-lucide="rocket" class="w-6 h-6"></i>
+            <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><path d="M4.5 16.5c-1.5 1.26-2 5-2 5s3.74-.5 5-2c.71-.84.7-2.13-.09-2.91a2.18 2.18 0 0 0-2.91-.09z"/><path d="m12 15-3-3a22 22 0 0 1 2-3.95A12.88 12.88 0 0 1 22 2c0 2.72-.78 7.5-6 11a22.35 22.35 0 0 1-4 2z"/><path d="M9 12H4s.55-3.03 2-4c1.62-1.08 5 0 5 0"/><path d="M12 15v5s3.03-.55 4-2c1.08-1.62 0-5 0-5"/></svg>
           </div>
           <h3 class="font-display text-lg font-bold text-inkTextPrimary">Go-to-Market &amp; Advisory</h3>
           <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed">Architect your launch strategy with data-backed tokenomics, support with partnerships, integration & listings, and make introductions to legal, market-making and capital partners.</p>
         </div>
         <a href="#contact" class="mt-6 inline-flex items-center gap-1.5 text-xs font-mono font-bold text-inkCyan hover:underline">
-          PITCH YOUR PURPOSE <i data-lucide="arrow-up-right" class="w-3.5 h-3.5"></i>
+          PITCH YOUR PURPOSE <svg xmlns="http://www.w3.org/2000/svg" width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-3.5 h-3.5"><path d="M7 7h10v10"/><path d="M7 17 17 7"/></svg>
         </a>
       </div>
     </div>
@@ -607,22 +604,22 @@ body {
         <input type="checkbox" name="botcheck" class="hidden" style="display: none;">
         <div class="grid sm:grid-cols-2 gap-5">
           <div class="space-y-1.5">
-            <label class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Your Name</label>
-            <input type="text" name="name" required placeholder="Satoshi / Ada Lovelace" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
+            <label for="name" class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Your Name</label>
+            <input id="name" type="text" name="name" required placeholder="Satoshi / Ada Lovelace" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
           </div>
           <div class="space-y-1.5">
-            <label class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Work Email</label>
-            <input type="email" name="email" required placeholder="founder@project.io" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
+            <label for="email" class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Work Email</label>
+            <input id="email" type="email" name="email" required placeholder="founder@project.io" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
           </div>
         </div>
         <div class="grid sm:grid-cols-2 gap-5">
           <div class="space-y-1.5">
-            <label class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Project Name / URL</label>
-            <input type="text" name="project_url" required placeholder="https://yourproject.io" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
+            <label for="project_url" class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Project Name / URL</label>
+            <input id="project_url" type="text" name="project_url" required placeholder="https://yourproject.io" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
           </div>
           <div class="space-y-1.5">
-            <label class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Category</label>
-            <select name="category" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
+            <label for="category" class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Category</label>
+            <select id="category" name="category" class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors">
               <option>Artificial Intelligence / DeAI / LLMs</option>
               <option>Web3 / Infrastructure / L1/L2 Protocols</option>
               <option>Autonomous Agents &amp; Spatial Computing</option>
@@ -632,12 +629,12 @@ body {
           </div>
         </div>
         <div class="space-y-1.5">
-          <label class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Anything you'd like us to know</label>
-          <textarea name="message" rows="4" required placeholder="Briefly describe your tech innovation, verified milestones or PR/GTM goals..." class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors"></textarea>
+          <label for="message" class="text-[11px] font-mono text-inkSubtle uppercase font-bold">Anything you'd like us to know</label>
+          <textarea id="message" name="message" rows="4" required placeholder="Briefly describe your tech innovation, verified milestones or PR/GTM goals..." class="w-full px-4 py-3 rounded-xl bg-white border border-black/15 focus:border-inkBlue focus:outline-none text-inkTextPrimary text-xs font-medium shadow-sm transition-colors"></textarea>
         </div>
         <button type="submit" class="w-full ink-button-primary py-3.5 rounded-xl font-display font-bold text-xs flex items-center justify-center gap-2">
           Submit Your Purpose
-          <i data-lucide="send" class="w-4 h-4"></i>
+          <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>
         </button>
       </form>
     </div>
@@ -648,7 +645,7 @@ body {
 <div id="modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 bg-black/40 backdrop-blur-md">
   <div class="light-card ink-glass-card max-w-sm w-full p-8 rounded-3xl text-center space-y-4">
     <div class="w-12 h-12 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center mx-auto">
-      <i data-lucide="check-circle-2" class="w-6 h-6"></i>
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><circle cx="12" cy="12" r="10"/><path d="m9 12 2 2 4-4"/></svg>
     </div>
     <h3 class="font-display font-bold text-xl text-inkTextPrimary" id="modal-title">Submission Received</h3>
     <p class="text-xs sm:text-sm font-medium text-inkTextSecondary leading-relaxed" id="modal-desc">Thank you for submitting! Our team will review your submission.</p>
@@ -660,7 +657,7 @@ body {
 <div id="lightbox-modal" class="fixed inset-0 z-50 hidden flex items-center justify-center p-4 sm:p-8 bg-black/80 backdrop-blur-xl transition-opacity">
   <div class="relative max-w-4xl w-full bg-white/95 rounded-3xl overflow-hidden border border-white/20 shadow-2xl flex flex-col">
     <button onclick="closeLightbox()" class="absolute top-4 right-4 z-10 w-10 h-10 rounded-full bg-black/60 text-white flex items-center justify-center hover:bg-black transition-colors">
-      <i data-lucide="x" class="w-5 h-5"></i>
+      <svg xmlns="http://www.w3.org/2000/svg" width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-5 h-5"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg>
     </button>
     <div id="lightbox-content" class="w-full aspect-video bg-black flex items-center justify-center overflow-hidden"></div>
     <div class="p-6 bg-white space-y-2">
@@ -696,8 +693,6 @@ body {
 
 <script>
 document.addEventListener('DOMContentLoaded', () => {
-  lucide.createIcons();
-
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
   if (menuBtn && mobileMenu) {
@@ -732,7 +727,6 @@ document.addEventListener('DOMContentLoaded', () => {
       container.innerHTML = `<img src="${src}" alt="${title}" class="w-full h-full object-contain"/>`;
     }
     modal.classList.remove('hidden');
-    if (window.lucide) lucide.createIcons();
   }
 
   function closeLightbox() {
@@ -766,8 +760,7 @@ document.addEventListener('DOMContentLoaded', () => {
       alert("An error occurred while submitting. Please check your network connection.");
     } finally {
       submitButton.disabled = false;
-      submitButton.innerHTML = 'Submit Your Purpose <i data-lucide="send" class="w-4 h-4"></i>';
-      if (window.lucide) lucide.createIcons();
+      submitButton.innerHTML = 'Submit Your Purpose <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-4 h-4"><path d="m22 2-7 20-4-9-9-4Z"/><path d="M22 2 11 13"/></svg>';
     }
   }
 
@@ -793,7 +786,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modal').classList.add('hidden');
   }
 
-  // Canvas WebGL Shader Engine
+  // Canvas WebGL Shader Engine (kept identical to original)
   try {
     const canvas = document.getElementById('ink-canvas');
     if (!canvas) return;
