@@ -65,6 +65,7 @@ html, body {
   padding: 0;
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
+  overscroll-behavior: none;
 }
 body {
   color: #1D1D1F;
@@ -88,7 +89,7 @@ body {
   position: absolute;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.45;
+  opacity: 0.32;
   filter: blur(12px);
   animation: floatSplash 12s ease-in-out infinite;
 }
@@ -216,7 +217,7 @@ body {
       <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-800 hover:bg-black/5" aria-label="Open menu">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
       </button>
-      <a href="#contact" class="bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap">
+      <a href="#contact" class="hidden md:inline-flex bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap">
         Pitch<span class="hidden sm:inline"> Your Purpose</span>
       </a>
     </div>
@@ -786,7 +787,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modal').classList.add('hidden');
   }
 
-  // Canvas WebGL Shader Engine (kept identical to original)
+  // Canvas WebGL Shader Engine (kept identical to original with slight faintness + lower res)
   try {
     const canvas = document.getElementById('ink-canvas');
     if (!canvas) return;
@@ -885,8 +886,8 @@ document.addEventListener('DOMContentLoaded', () => {
         vec3 inkMix = mix(u_color1, u_color2, t1);
         inkMix = mix(inkMix, u_color3, t2);
         inkMix = mix(inkMix, u_color4, t3 * 0.6);
-        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.35;
-        inkAlpha = clamp(inkAlpha, 0.0, 0.62);
+        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.26 + mouseRipple * 0.26;
+        inkAlpha = clamp(inkAlpha, 0.0, 0.50);
         vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
         gl_FragColor = vec4(finalColor, 1.0);
       }
@@ -947,7 +948,7 @@ document.addEventListener('DOMContentLoaded', () => {
 
     function resize() {
       const isMobile = window.innerWidth < 768;
-      currentDpr = isMobile ? Math.min(window.devicePixelRatio || 1, 1.5) : (window.devicePixelRatio || 1);
+      currentDpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.25);
       canvas.width = window.innerWidth * currentDpr;
       canvas.height = window.innerHeight * currentDpr;
       gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
