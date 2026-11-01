@@ -85,6 +85,8 @@ body {
   pointer-events: none;
   display: block;
   touch-action: pan-y;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
 }
 .ink-splash-bg {
   position: absolute;
@@ -190,9 +192,11 @@ body {
     max-width: 100%;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
+    background-color: #FBFBFD !important;
+    overscroll-behavior-y: none;
   }
   main {
-    /* transforms removed — they were locking vertical scroll on mobile WebKit */
+    /* no transform — keeps vertical scrolling free */
   }
   footer {
     position: relative !important;
@@ -201,8 +205,14 @@ body {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     box-shadow: 0 -1px 0 rgba(0,0,0,0.06);
-    /* transforms / will-change removed — same reason as main */
     padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
+    /* stable compositing layer — prevents temporary promotion/shift on touch */
+    transform: translate3d(0, 0, 0);
+    -webkit-transform: translate3d(0, 0, 0);
+    isolation: isolate;
+    contain: paint;
+    backface-visibility: hidden;
+    will-change: auto;
   }
   header {
     overflow: hidden;
