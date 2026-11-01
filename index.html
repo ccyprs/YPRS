@@ -66,6 +66,9 @@ html, body {
   -webkit-overflow-scrolling: touch;
   scroll-behavior: smooth;
   overscroll-behavior: none;
+  overflow-x: hidden;
+  width: 100%;
+  max-width: 100%;
 }
 body {
   color: #1D1D1F;
@@ -79,8 +82,8 @@ body {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: -1;
   pointer-events: none;
   display: block;
@@ -89,7 +92,7 @@ body {
   position: absolute;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.32;
+  opacity: 0.42;
   filter: blur(12px);
   animation: floatSplash 12s ease-in-out infinite;
 }
@@ -179,6 +182,23 @@ body {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #FBFBFD; }
 ::-webkit-scrollbar-thumb { background: #C2C2C7; border-radius: 4px; }
+
+/* Mobile footer + header fixes */
+@media (max-width: 767px) {
+  footer {
+    position: relative !important;
+    z-index: 30;
+    background: rgba(255, 255, 255, 0.96) !important;
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+  }
+  header {
+    overflow: hidden;
+  }
+  header .max-w-7xl {
+    overflow: hidden;
+  }
+}
 </style>
 </head>
 <body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative">
@@ -198,9 +218,9 @@ body {
 
 <!-- Header -->
 <header class="fixed top-0 left-0 w-full z-50 bg-white/45 backdrop-blur-2xl border-b border-black/10 shadow-sm">
-  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
-    <a href="index.html" class="flex items-center z-10" aria-label="yourPRstrategist Home">
-      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" width="280" height="40" class="h-24 md:h-10 w-auto max-w-[280px] md:max-w-none object-contain" />
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative w-full">
+    <a href="index.html" class="flex items-center z-10 min-w-0" aria-label="yourPRstrategist Home">
+      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" width="280" height="40" class="h-10 md:h-10 w-auto max-w-[150px] md:max-w-none object-contain" />
     </a>
 
     <nav class="hidden md:flex items-center space-x-7 text-sm font-medium text-slate-800">
@@ -213,7 +233,7 @@ body {
       <a href="#events" class="hover:text-cyan-600 transition-colors">Events</a>
     </nav>
 
-    <div class="flex items-center gap-2 z-10">
+    <div class="flex items-center gap-2 z-10 flex-shrink-0">
       <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-800 hover:bg-black/5" aria-label="Open menu">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
       </button>
@@ -787,7 +807,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modal').classList.add('hidden');
   }
 
-  // Canvas WebGL Shader Engine (kept identical to original with slight faintness + lower res)
+  // Canvas WebGL Shader Engine (slightly darker)
   try {
     const canvas = document.getElementById('ink-canvas');
     if (!canvas) return;
@@ -879,15 +899,15 @@ document.addEventListener('DOMContentLoaded', () => {
           fbm(st + 1.8 * q + vec2(0.3, 0.1) - mouseRipple)
         );
         float inkDensity = fbm(st + 2.2 * r);
-        vec3 waterBase = vec3(0.985, 0.985, 0.995);
+        vec3 waterBase = vec3(0.96, 0.96, 0.97);
         float t1 = smoothstep(-0.2, 0.5, inkDensity);
         float t2 = smoothstep(0.1, 0.7, r.x);
         float t3 = smoothstep(0.0, 0.8, r.y);
         vec3 inkMix = mix(u_color1, u_color2, t1);
         inkMix = mix(inkMix, u_color3, t2);
         inkMix = mix(inkMix, u_color4, t3 * 0.6);
-        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.26 + mouseRipple * 0.26;
-        inkAlpha = clamp(inkAlpha, 0.0, 0.50);
+        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.38 + mouseRipple * 0.32;
+        inkAlpha = clamp(inkAlpha, 0.0, 0.65);
         vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
         gl_FragColor = vec4(finalColor, 1.0);
       }
