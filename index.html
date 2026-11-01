@@ -188,16 +188,6 @@ body {
     overflow-x: hidden;
     width: 100%;
     max-width: 100%;
-    scrollbar-width: none;
-    -ms-overflow-style: none;
-  }
-  html::-webkit-scrollbar,
-  body::-webkit-scrollbar {
-    display: none;
-  }
-  body {
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
   }
   main {
     transform: translate3d(0, 0, 0);
@@ -926,7 +916,6 @@ document.addEventListener('DOMContentLoaded', () => {
         float inkDensity = fbm(st + 2.2 * r);
         vec3 waterBase = vec3(0.972, 0.972, 0.982);
         float t1 = smoothstep(-0.2, 0.5, inkDensity);
-        float t2 = smoothstep(0.1, 0.7, r.x);
         float t2 = smoothstep(0.1, 0.7, r.x);
         float t3 = smoothstep(0.0, 0.8, r.y);
         vec3 inkMix = mix(u_color1, u_color2, t1);
