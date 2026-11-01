@@ -84,6 +84,7 @@ body {
   z-index: -1;
   pointer-events: none;
   display: block;
+  touch-action: pan-y;
 }
 .ink-splash-bg {
   position: absolute;
@@ -183,15 +184,15 @@ body {
 /* Mobile-only footer + overscroll fixes (desktop mouse wheel remains normal) */
 @media (max-width: 767px) {
   html, body {
-    overscroll-behavior: none;
-    overscroll-behavior-y: none;
     overflow-x: hidden;
+    overflow-y: auto;
     width: 100%;
     max-width: 100%;
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-y;
   }
   main {
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
+    /* transforms removed — they were locking vertical scroll on mobile WebKit */
   }
   footer {
     position: relative !important;
@@ -200,10 +201,7 @@ body {
     backdrop-filter: none !important;
     -webkit-backdrop-filter: none !important;
     box-shadow: 0 -1px 0 rgba(0,0,0,0.06);
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
-    backface-visibility: hidden;
-    will-change: transform;
+    /* transforms / will-change removed — same reason as main */
     padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   }
   header {
