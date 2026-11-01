@@ -733,6 +733,28 @@ document.addEventListener('DOMContentLoaded', () => {
     });
   }
 
+  // Mobile footer visibility control – only show when near the real bottom
+  const footer = document.querySelector('footer');
+  function updateFooterVisibility() {
+    if (!footer) return;
+    const isMobile = window.innerWidth < 768;
+    if (!isMobile) {
+      footer.style.visibility = '';
+      footer.style.opacity = '';
+      return;
+    }
+    const distanceFromBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
+    const nearBottom = distanceFromBottom < 80;
+    footer.style.visibility = nearBottom ? 'visible' : 'hidden';
+    footer.style.opacity = nearBottom ? '1' : '0';
+    footer.style.pointerEvents = nearBottom ? 'auto' : 'none';
+  }
+  window.addEventListener('scroll', updateFooterVisibility, { passive: true });
+  window.addEventListener('touchstart', updateFooterVisibility, { passive: true });
+  window.addEventListener('touchend', updateFooterVisibility, { passive: true });
+  window.addEventListener('resize', updateFooterVisibility);
+  updateFooterVisibility();
+
   function scrollCarousel(direction) {
     const container = document.getElementById('events-carousel');
     if (!container) return;
@@ -811,7 +833,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modal').classList.add('hidden');
   }
 
-  // Canvas WebGL Shader Engine (balanced for mobile + desktop)
+  // Canvas WebGL Shader Engine (lighter on mobile, desktop unchanged)
   try {
     const canvas = document.getElementById('ink-canvas');
     if (!canvas) return;
@@ -843,6 +865,7 @@ document.addEventListener('DOMContentLoaded', () => {
       uniform vec2 u_resolution;
       uniform vec2 u_mouse;
       uniform float u_time;
+      uniform float u_intensity;
       uniform vec3 u_color1;
       uniform vec3 u_color2;
       uniform vec3 u_color3;
@@ -911,7 +934,7 @@ document.addEventListener('DOMContentLoaded', () => {
         inkMix = mix(inkMix, u_color3, t2);
         inkMix = mix(inkMix, u_color4, t3 * 0.6);
         float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.28;
-        inkAlpha = clamp(inkAlpha, 0.0, 0.58);
+        inkAlpha = clamp(inkAlpha, 0.0, 0.58) * u_intensity;
         vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
         gl_FragColor = vec4(finalColor, 1.0);
       }
@@ -947,6 +970,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resUniform = gl.getUniformLocation(program, "u_resolution");
     const mouseUniform = gl.getUniformLocation(program, "u_mouse");
     const timeUniform = gl.getUniformLocation(program, "u_time");
+    const intensityUniform = gl.getUniformLocation(program, "u_intensity");
     const uColor1Loc = gl.getUniformLocation(program, "u_color1");
     const uColor2Loc = gl.getUniformLocation(program, "u_color2");
     const uColor3Loc = gl.getUniformLocation(program, "u_color3");
@@ -991,6 +1015,9 @@ document.addEventListener('DOMContentLoaded', () => {
       mouseX += (targetMouseX - mouseX) * 0.03;
       mouseY += (targetMouseY - mouseY) * 0.03;
 
+      const isMobile = window.innerWidth < 768;
+      const intensity = isMobile ? 0.72 : 1.0;
+
       const progress = getScrollProgress();
       const rawIndex = progress * (journeyPalettes.length - 1);
       const baseIdx = Math.floor(rawIndex);
@@ -1009,6 +1036,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gl.uniform2f(resUniform, canvas.width, canvas.height);
       gl.uniform2f(mouseUniform, mouseX * currentDpr, mouseY * currentDpr);
       gl.uniform1f(timeUniform, time);
+      gl.uniform1f(intensityUniform, intensity);
       gl.uniform3fv(uColor1Loc, targetC1);
       gl.uniform3fv(uColor2Loc, pBase.c2);
       gl.uniform3fv(uColor3Loc, pBase.c3);
