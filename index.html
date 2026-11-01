@@ -73,6 +73,7 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 #ink-canvas {
   position: fixed;
@@ -192,9 +193,11 @@ body {
     position: relative !important;
     z-index: 50;
     background: #ffffff !important;
-    isolation: isolate;
-    contain: layout style paint;
     box-shadow: 0 -1px 0 rgba(0,0,0,0.06);
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
+    backface-visibility: hidden;
+    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
   }
   header {
     overflow: hidden;
@@ -732,28 +735,6 @@ document.addEventListener('DOMContentLoaded', () => {
       });
     });
   }
-
-  // Mobile footer visibility control – only show when near the real bottom
-  const footer = document.querySelector('footer');
-  function updateFooterVisibility() {
-    if (!footer) return;
-    const isMobile = window.innerWidth < 768;
-    if (!isMobile) {
-      footer.style.visibility = '';
-      footer.style.opacity = '';
-      return;
-    }
-    const distanceFromBottom = document.documentElement.scrollHeight - (window.scrollY + window.innerHeight);
-    const nearBottom = distanceFromBottom < 80;
-    footer.style.visibility = nearBottom ? 'visible' : 'hidden';
-    footer.style.opacity = nearBottom ? '1' : '0';
-    footer.style.pointerEvents = nearBottom ? 'auto' : 'none';
-  }
-  window.addEventListener('scroll', updateFooterVisibility, { passive: true });
-  window.addEventListener('touchstart', updateFooterVisibility, { passive: true });
-  window.addEventListener('touchend', updateFooterVisibility, { passive: true });
-  window.addEventListener('resize', updateFooterVisibility);
-  updateFooterVisibility();
 
   function scrollCarousel(direction) {
     const container = document.getElementById('events-carousel');
