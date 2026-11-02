@@ -946,16 +946,24 @@ mobileMenu.querySelectorAll('a').forEach(link => {
         mobileMenu.classList.add('hidden');
         mobileMenu.classList.remove('flex');
 
-        // Scroll the real scroll container (body) on mobile
         setTimeout(() => {
-          // Larger offset only for Vetting Mandate so the header doesn’t cover it
           const headerOffset = (href === '#mandate') ? 96 : 56;
-          const targetTop = target.getBoundingClientRect().top + document.body.scrollTop - headerOffset;
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-          document.body.scrollTo({
-            top: targetTop,
-            behavior: 'smooth'
-          });
+          // Use body when portrait mobile, window otherwise (landscape / desktop)
+          const isPortraitMobile = window.innerWidth < 768;
+          if (isPortraitMobile) {
+            document.body.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          } else {
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
         }, 100);
       }
     } else {
