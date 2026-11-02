@@ -988,24 +988,27 @@ mobileMenu.querySelectorAll('a').forEach(link => {
 
         setTimeout(() => {
           const headerOffset = (href === '#mandate') ? 96 : 56;
+
+          // Correct scroll position when body is the scroller
+          const scrollTop = document.body.scrollTop || document.documentElement.scrollTop || 0;
           const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          const offsetPosition = elementPosition + scrollTop - headerOffset;
 
           // Always scroll body on phones (portrait or landscape)
-const isPhone = (window.innerWidth < 1200 && window.matchMedia('(orientation: landscape)').matches)
-  || window.innerWidth < 768;
+          const isPhone = (window.innerWidth < 1200 && window.matchMedia('(orientation: landscape)').matches)
+            || window.innerWidth < 768;
 
-if (isPhone) {
-  document.body.scrollTo({
-    top: offsetPosition,
-    behavior: 'smooth'
-  });
-} else {
-  window.scrollTo({
-    top: offsetPosition,
-    behavior: 'smooth'
-  });
-}
+          if (isPhone) {
+            document.body.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          } else {
+            window.scrollTo({
+              top: offsetPosition,
+              behavior: 'smooth'
+            });
+          }
         }, 100);
       }
     } else {
