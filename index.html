@@ -891,7 +891,8 @@ mobileMenu.querySelectorAll('a').forEach(link => {
 
         // Scroll the real scroll container (body) on mobile
         setTimeout(() => {
-          const headerOffset = 56; // matches Vetting Mandate headroom
+          // Larger offset only for Vetting Mandate so the header doesn’t cover it
+          const headerOffset = (href === '#mandate') ? 96 : 56;
           const targetTop = target.getBoundingClientRect().top + document.body.scrollTop - headerOffset;
 
           document.body.scrollTo({
