@@ -885,13 +885,21 @@ document.addEventListener('DOMContentLoaded', () => {
       e.preventDefault();
       const target = document.querySelector(href);
       if (target) {
-        // Close menu first
+        // Close the menu immediately
         mobileMenu.classList.add('hidden');
         mobileMenu.classList.remove('flex');
-        // Scroll the body (the real scroll container on mobile)
+
+        // Scroll the body (the actual scroll container on mobile)
         setTimeout(() => {
-          target.scrollIntoView({ behavior: 'smooth', block: 'start' });
-        }, 50);
+          const headerOffset = 80; // account for fixed header
+          const elementPosition = target.getBoundingClientRect().top;
+          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+
+          window.scrollTo({
+            top: offsetPosition,
+            behavior: 'smooth'
+          });
+        }, 80);
       }
     } else {
       mobileMenu.classList.add('hidden');
