@@ -182,46 +182,9 @@ body {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #FBFBFD; }
 ::-webkit-scrollbar-thumb { background: #C2C2C7; border-radius: 4px; }
-
-/* Mobile-only footer + overscroll fixes (desktop mouse wheel remains normal) */
-@media (max-width: 767px) {
-  html, body {
-    overflow-x: hidden;
-    overflow-y: auto;
-    width: 100%;
-    max-width: 100%;
-    -webkit-overflow-scrolling: touch;
-    touch-action: pan-y;
-    background-color: #FBFBFD !important;
-    overscroll-behavior-y: none;
-  }
-  main {
-    /* no transform — keeps vertical scrolling free */
-  }
-  footer {
-    position: relative !important;
-    z-index: 50;
-    background: #ffffff !important;
-    backdrop-filter: none !important;
-    -webkit-backdrop-filter: none !important;
-    box-shadow: 0 -1px 0 rgba(0,0,0,0.06);
-    padding-bottom: calc(2rem + env(safe-area-inset-bottom, 0px));
-    /* stable compositing layer — prevents temporary promotion/shift on touch */
-    transform: translate3d(0, 0, 0);
-    -webkit-transform: translate3d(0, 0, 0);
-    isolation: isolate;
-    contain: paint;
-    backface-visibility: hidden;
-    will-change: auto;
-  }
-  header {
-    overflow: hidden;
-  }
-  header .max-w-7xl {
-    overflow: hidden;
   }
 }
-/* ===== STABLE MOBILE FIX — header, hamburger, full background, smooth scroll ===== */
+/* ===== STABLE MOBILE FIX — header + hamburger + full background + spacing ===== */
 @media (max-width: 767px) {
   html, body {
     overflow-x: hidden !important;
@@ -229,7 +192,7 @@ body {
     height: auto !important;
     min-height: 100% !important;
     max-height: none !important;
-    display: block !important;               /* disables flex column that locks scroll */
+    display: block !important;               /* turns off flex column lock */
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
     background-color: #FBFBFD !important;
@@ -262,6 +225,7 @@ body {
     backdrop-filter: blur(12px) !important;
     -webkit-backdrop-filter: blur(12px) !important;
     border-bottom: 1px solid rgba(0,0,0,0.08) !important;
+    overflow: visible !important;            /* prevents clipping the hamburger */
   }
 
   /* Force hamburger visible and above everything */
@@ -283,7 +247,7 @@ body {
     overflow: visible !important;
     height: auto !important;
     flex: none !important;
-    padding-top: 5.25rem !important;         /* ~84px — a little more space under the header */
+    padding-top: 5.5rem !important;          /* a little more space under the header */
     position: relative;
     z-index: 1;
     background: transparent !important;
@@ -292,11 +256,9 @@ body {
   #hero-section {
     min-height: auto !important;
     height: auto !important;
-    padding-top: 0.75rem !important;
+    padding-top: 0.5rem !important;
     padding-bottom: 2rem;
     background: transparent !important;
-  }
-}
   }
 }
 </style>
