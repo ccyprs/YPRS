@@ -410,10 +410,25 @@ footer p {
     display: none !important;
     background: linear-gradient(160deg, rgba(0,102,204,0.08) 0%, rgba(255,255,255,0.96) 45%, rgba(142,36,170,0.07) 100%) !important;
   }
-  #mobile-menu.flex {
+#mobile-menu.flex {
     display: flex !important;
   }
 }
+
+/* Press bar: 2 rows × 3 columns in landscape */
+@media (max-width: 1200px) and (orientation: landscape) {
+  section.pt-6 .flex.flex-wrap {
+    display: grid !important;
+    grid-template-columns: repeat(3, 1fr) !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+  }
+
+  section.pt-6 .flex.flex-wrap > div {
+    min-width: 0 !important;
+    flex: none !important;
+    width: 100% !important;
+  }
 }
 </style>
 </head>
