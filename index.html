@@ -878,28 +878,27 @@ document.addEventListener('DOMContentLoaded', () => {
       mobileMenu.classList.toggle('hidden');
       mobileMenu.classList.toggle('flex');
     });
-  mobileMenu.querySelectorAll('a').forEach(link => {
+mobileMenu.querySelectorAll('a').forEach(link => {
   link.addEventListener('click', (e) => {
     const href = link.getAttribute('href');
     if (href && href.startsWith('#')) {
       e.preventDefault();
       const target = document.querySelector(href);
       if (target) {
-        // Close the menu immediately
+        // Close menu
         mobileMenu.classList.add('hidden');
         mobileMenu.classList.remove('flex');
 
-        // Scroll the body (the actual scroll container on mobile)
+        // Scroll the real scroll container (body) on mobile
         setTimeout(() => {
-          const headerOffset = 80; // account for fixed header
-          const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
+          const headerOffset = 72;
+          const targetTop = target.getBoundingClientRect().top + document.body.scrollTop - headerOffset;
 
-          window.scrollTo({
-            top: offsetPosition,
+          document.body.scrollTo({
+            top: targetTop,
             behavior: 'smooth'
           });
-        }, 80);
+        }, 100);
       }
     } else {
       mobileMenu.classList.add('hidden');
