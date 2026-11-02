@@ -221,7 +221,7 @@ body {
     overflow: hidden;
   }
 }
-/* ===== Stronger mobile scroll fix ===== */
+/* ===== Clean mobile scroll + optional canvas ===== */
 @media (max-width: 767px) {
   html, body {
     overflow-x: hidden !important;
@@ -229,7 +229,7 @@ body {
     height: auto !important;
     min-height: 100% !important;
     max-height: none !important;
-    display: block !important;          /* turns off the flex column that can lock height */
+    display: block !important;
     -webkit-overflow-scrolling: touch;
     touch-action: pan-y;
     background-color: #FBFBFD !important;
@@ -238,7 +238,15 @@ body {
   }
 
   #ink-canvas {
-    display: none !important;
+    display: block !important;          /* restore canvas */
+    position: absolute !important;      /* safer than fixed on mobile */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none !important;
+    touch-action: pan-y !important;
+    z-index: 0;
   }
 
   header {
@@ -252,6 +260,8 @@ body {
     height: auto !important;
     flex: none !important;
     padding-top: 4.5rem;
+    position: relative;
+    z-index: 1;
   }
 
   #hero-section {
@@ -259,13 +269,6 @@ body {
     height: auto !important;
     padding-top: 2rem;
     padding-bottom: 2rem;
-  }
-
-  /* Force the page to be taller than the viewport so scrolling is required */
-  main::after {
-    content: "";
-    display: block;
-    height: 40vh;   /* temporary spacer — remove later if not needed */
   }
 }
 </style>
