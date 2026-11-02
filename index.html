@@ -44,7 +44,6 @@ tailwind.config = {
 }
 </script>
 <style>
-/* Keep your original <style> block exactly as it is */
 @property --angle {
   syntax: '<angle>';
   initial-value: 0deg;
@@ -73,22 +72,33 @@ body {
   display: flex;
   flex-direction: column;
   min-height: 100vh;
+  min-height: 100dvh;
 }
 #ink-canvas {
   position: fixed;
   top: 0;
   left: 0;
-  width: 100vw;
-  height: 100vh;
+  width: 100%;
+  height: 100%;
   z-index: -1;
   pointer-events: none;
   display: block;
+  touch-action: pan-y;
+  transform: translateZ(0);
+  -webkit-transform: translateZ(0);
+}
+.ink-splash-wrapper {
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: -1;
 }
 .ink-splash-bg {
   position: absolute;
   pointer-events: none;
   z-index: -1;
-  opacity: 0.45;
+  opacity: 0.38;
   filter: blur(12px);
   animation: floatSplash 12s ease-in-out infinite;
 }
@@ -178,28 +188,156 @@ body {
 ::-webkit-scrollbar { width: 8px; }
 ::-webkit-scrollbar-track { background: #FBFBFD; }
 ::-webkit-scrollbar-thumb { background: #C2C2C7; border-radius: 4px; }
+
+@media (max-width: 767px) {
+  html, body {
+    overflow-x: hidden !important;
+    overflow-x: clip !important;
+    overflow-y: auto !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    position: static !important;
+  }
+
+  #ink-canvas {
+    max-width: 100vw !important;
+  }
+
+  .ink-splash-wrapper {
+    position: fixed !important;
+    inset: 0 !important;
+    overflow: hidden !important;
+    width: 100vw !important;
+    max-width: 100vw !important;
+  }
+
+  .ink-splash-bg {
+    max-width: 90vw !important;
+    width: 90vw !important;
+    height: 90vw !important;
+  }
+  .ink-splash-bg:first-of-type {
+    right: -15vw !important;
+    left: auto !important;
+  }
+  .ink-splash-bg:last-of-type {
+    left: -12vw !important;
+    right: auto !important;
+  }
+
+  header {
+    position: fixed !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+    height: 4rem !important;
+    z-index: 100 !important;
+    box-sizing: border-box !important;
+    overflow: hidden !important;
+  }
+
+  header .max-w-7xl {
+    width: 100% !important;
+    max-width: 100% !important;
+    padding-left: 0.75rem !important;
+    padding-right: 0.75rem !important;
+    box-sizing: border-box !important;
+  }
+
+  #mobile-menu-btn {
+    margin-left: auto !important;
+    margin-right: 0 !important;
+    flex-shrink: 0 !important;
+    position: relative !important;
+    z-index: 101 !important;
+  }
+
+  main {
+    overflow: visible !important;
+    height: auto !important;
+    flex: none !important;
+    padding-top: 6.5rem !important; /* header is 4rem + ~1rem aesthetic gap */
+    position: relative;
+    z-index: 1;
+    background: transparent !important;
+    width: 100% !important;
+    max-width: 100vw !important;
+  }
+
+  #hero-section {
+    min-height: auto !important;
+    height: auto !important;
+    padding-top: 0.5rem !important; /* small additional buffer under the badge */
+    padding-bottom: 2rem;
+    background: transparent !important;    
+  }
+  
+  /* Press bar: 2 columns × 3 rows on mobile */
+  section.pt-6 .flex.flex-wrap {
+    display: grid !important;
+    grid-template-columns: 1fr 1fr !important;
+    gap: 0.75rem !important;
+    width: 100% !important;
+  }
+
+  section.pt-6 .flex.flex-wrap > div {
+    min-width: 0 !important;
+    flex: none !important;
+    width: 100% !important;
+  }
+}
+
+/* ======================================================= */
+/* DESKTOP-ONLY INTERACTION & GLASS COATING LAYER          */
+/* ======================================================= */
+@media (min-width: 768px) {
+  section.pt-6 .flex.flex-wrap > div,
+  section.pt-6 .grid > div {
+    background: rgba(255, 255, 255, 0.75) !important;
+    backdrop-filter: blur(28px) saturate(190%) !important;
+    -webkit-backdrop-filter: blur(28px) saturate(190%) !important;
+    border: 1px solid rgba(0, 0, 0, 0.08) !important;
+    border-radius: 12px;
+    cursor: default;
+    transition: transform 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                box-shadow 0.3s cubic-bezier(0.16, 1, 0.3, 1),
+                border-color 0.3s ease;
+  }
+
+  section.pt-6 .flex.flex-wrap > div:hover,
+  section.pt-6 .grid > div:hover {
+    transform: translateY(-4px);
+    border-color: rgba(0, 102, 204, 0.25) !important;
+    box-shadow: 0 12px 24px -8px rgba(0, 0, 0, 0.12),
+                0 4px 12px -2px rgba(0, 102, 204, 0.08);
+  }
+}
 </style>
+
 </head>
 <body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative">
 <canvas id="ink-canvas"></canvas>
 
-<!-- Background Ink Splashes (left blue splash removed) -->
-<div class="ink-splash-bg top-[35%] right-[-12%] w-[600px] h-[600px] text-inkPurple/15" style="animation-delay: -4s;">
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
-    <path d="M38.1,-52.3C48.8,-42.6,56.5,-30.1,60.8,-16.1C65.1,-2.1,66,13.4,60.2,26.7C54.4,40,41.9,51.1,27.7,57.8C13.5,64.5,-2.4,66.8,-18.2,63.5C-34,60.2,-49.7,51.3,-58.3,37.8C-66.9,24.3,-68.4,6.2,-65.2,-10.4C-62,-27,-54.1,-42.1,-42.2,-52.1C-30.3,-62.1,-15.1,-67,0.3,-67.4C15.7,-67.8,27.4,-62,38.1,-52.3Z" transform="translate(100 100)" />
-  </svg>
-</div>
-<div class="ink-splash-bg top-[65%] left-[-8%] w-[550px] h-[550px] text-inkPink/15" style="animation-delay: -7s;">
-  <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
-    <path d="M47.7,-63.2C61.2,-54.3,71.1,-39.8,74.9,-23.7C78.7,-7.6,76.4,10.1,69.1,25.8C61.8,41.5,49.5,55.2,34.4,63.1C19.3,71,1.4,73.1,-15.8,70.2C-33,67.3,-49.5,59.4,-60.1,46.1C-70.7,32.8,-75.4,14.1,-73.4,-3.5C-71.4,-21.1,-62.7,-37.6,-49.8,-46.8C-36.9,-56,-18.5,-57.9,-0.6,-57.1C17.3,-56.3,34.2,-72.1,47.7,-63.2Z" transform="translate(100 100)" />
-  </svg>
+<div class="ink-splash-wrapper">
+  <div class="ink-splash-bg top-[35%] right-[-12%] w-[600px] h-[600px] text-inkPurple/15" style="animation-delay: -4s;">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
+      <path d="M38.1,-52.3C48.8,-42.6,56.5,-30.1,60.8,-16.1C65.1,-2.1,66,13.4,60.2,26.7C54.4,40,41.9,51.1,27.7,57.8C13.5,64.5,-2.4,66.8,-18.2,63.5C-34,60.2,-49.7,51.3,-58.3,37.8C-66.9,24.3,-68.4,6.2,-65.2,-10.4C-62,-27,-54.1,-42.1,-42.2,-52.1C-30.3,-62.1,-15.1,-67,0.3,-67.4C15.7,-67.8,27.4,-62,38.1,-52.3Z" transform="translate(100 100)" />
+    </svg>
+  </div>
+  <div class="ink-splash-bg top-[65%] left-[-8%] w-[550px] h-[550px] text-inkPink/15" style="animation-delay: -7s;">
+    <svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg" class="w-full h-full fill-current">
+      <path d="M47.7,-63.2C61.2,-54.3,71.1,-39.8,74.9,-23.7C78.7,-7.6,76.4,10.1,69.1,25.8C61.8,41.5,49.5,55.2,34.4,63.1C19.3,71,1.4,73.1,-15.8,70.2C-33,67.3,-49.5,59.4,-60.1,46.1C-70.7,32.8,-75.4,14.1,-73.4,-3.5C-71.4,-21.1,-62.7,-37.6,-49.8,-46.8C-36.9,-56,-18.5,-57.9,-0.6,-57.1C17.3,-56.3,34.2,-72.1,47.7,-63.2Z" transform="translate(100 100)" />
+    </svg>
+  </div>
 </div>
 
 <!-- Header -->
 <header class="fixed top-0 left-0 w-full z-50 bg-white/45 backdrop-blur-2xl border-b border-black/10 shadow-sm">
-  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative">
-    <a href="index.html" class="flex items-center z-10" aria-label="yourPRstrategist Home">
-      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" width="280" height="40" class="h-24 md:h-10 w-auto max-w-[280px] md:max-w-none object-contain" />
+  <div class="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8 h-16 flex items-center justify-between relative w-full">
+    <a href="index.html" class="flex items-center z-10 min-w-0" aria-label="yourPRstrategist Home">
+      <img src="YPRS_long-BLACK.svg" alt="yourPRstrategist Logo" width="280" height="40" class="h-12 md:h-10 w-auto max-w-[200px] md:max-w-none object-contain" />
     </a>
 
     <nav class="hidden md:flex items-center space-x-7 text-sm font-medium text-slate-800">
@@ -212,11 +350,11 @@ body {
       <a href="#events" class="hover:text-cyan-600 transition-colors">Events</a>
     </nav>
 
-    <div class="flex items-center gap-2 z-10">
+    <div class="flex items-center gap-2 z-10 flex-shrink-0">
       <button id="mobile-menu-btn" class="md:hidden p-2 rounded-md text-slate-800 hover:bg-black/5" aria-label="Open menu">
         <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" class="w-6 h-6"><line x1="4" x2="20" y1="12" y2="12"/><line x1="4" x2="20" y1="6" y2="6"/><line x1="4" x2="20" y1="18" y2="18"/></svg>
       </button>
-      <a href="#contact" class="bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap">
+      <a href="#contact" class="hidden md:inline-flex bg-slate-900 text-white font-medium px-3 py-1.5 text-xs sm:px-5 sm:py-2.5 sm:text-sm rounded-full hover:bg-cyan-600 whitespace-nowrap">
         Pitch<span class="hidden sm:inline"> Your Purpose</span>
       </a>
     </div>
@@ -786,7 +924,7 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('modal').classList.add('hidden');
   }
 
-  // Canvas WebGL Shader Engine (kept identical to original)
+  // Canvas WebGL Shader Engine (lighter on mobile, desktop unchanged)
   try {
     const canvas = document.getElementById('ink-canvas');
     if (!canvas) return;
@@ -818,6 +956,7 @@ document.addEventListener('DOMContentLoaded', () => {
       uniform vec2 u_resolution;
       uniform vec2 u_mouse;
       uniform float u_time;
+      uniform float u_intensity;
       uniform vec3 u_color1;
       uniform vec3 u_color2;
       uniform vec3 u_color3;
@@ -878,15 +1017,15 @@ document.addEventListener('DOMContentLoaded', () => {
           fbm(st + 1.8 * q + vec2(0.3, 0.1) - mouseRipple)
         );
         float inkDensity = fbm(st + 2.2 * r);
-        vec3 waterBase = vec3(0.985, 0.985, 0.995);
+        vec3 waterBase = vec3(0.972, 0.972, 0.982);
         float t1 = smoothstep(-0.2, 0.5, inkDensity);
         float t2 = smoothstep(0.1, 0.7, r.x);
         float t3 = smoothstep(0.0, 0.8, r.y);
         vec3 inkMix = mix(u_color1, u_color2, t1);
         inkMix = mix(inkMix, u_color3, t2);
         inkMix = mix(inkMix, u_color4, t3 * 0.6);
-        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.35;
-        inkAlpha = clamp(inkAlpha, 0.0, 0.62);
+        float inkAlpha = smoothstep(-0.4, 0.6, inkDensity) * 0.34 + mouseRipple * 0.28;
+        inkAlpha = clamp(inkAlpha, 0.0, 0.58) * u_intensity;
         vec3 finalColor = mix(waterBase, inkMix, inkAlpha);
         gl_FragColor = vec4(finalColor, 1.0);
       }
@@ -922,6 +1061,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const resUniform = gl.getUniformLocation(program, "u_resolution");
     const mouseUniform = gl.getUniformLocation(program, "u_mouse");
     const timeUniform = gl.getUniformLocation(program, "u_time");
+    const intensityUniform = gl.getUniformLocation(program, "u_intensity");
     const uColor1Loc = gl.getUniformLocation(program, "u_color1");
     const uColor2Loc = gl.getUniformLocation(program, "u_color2");
     const uColor3Loc = gl.getUniformLocation(program, "u_color3");
@@ -946,12 +1086,14 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 
     function resize() {
-      const isMobile = window.innerWidth < 768;
-      currentDpr = isMobile ? Math.min(window.devicePixelRatio || 1, 1.5) : (window.devicePixelRatio || 1);
-      canvas.width = window.innerWidth * currentDpr;
-      canvas.height = window.innerHeight * currentDpr;
-      gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
-    }
+  const isMobile = window.innerWidth < 768;
+  currentDpr = isMobile ? 1 : Math.min(window.devicePixelRatio || 1, 1.25);
+  const width = document.documentElement.clientWidth || window.innerWidth;
+  const height = document.documentElement.clientHeight || window.innerHeight;
+  canvas.width = width * currentDpr;
+  canvas.height = height * currentDpr;
+  gl.viewport(0, 0, gl.canvas.width, gl.canvas.height);
+}
     window.addEventListener('resize', resize);
     resize();
 
@@ -965,6 +1107,9 @@ document.addEventListener('DOMContentLoaded', () => {
       time *= 0.001;
       mouseX += (targetMouseX - mouseX) * 0.03;
       mouseY += (targetMouseY - mouseY) * 0.03;
+
+      const isMobile = window.innerWidth < 768;
+      const intensity = isMobile ? 0.72 : 1.0;
 
       const progress = getScrollProgress();
       const rawIndex = progress * (journeyPalettes.length - 1);
@@ -984,6 +1129,7 @@ document.addEventListener('DOMContentLoaded', () => {
       gl.uniform2f(resUniform, canvas.width, canvas.height);
       gl.uniform2f(mouseUniform, mouseX * currentDpr, mouseY * currentDpr);
       gl.uniform1f(timeUniform, time);
+      gl.uniform1f(intensityUniform, intensity);
       gl.uniform3fv(uColor1Loc, targetC1);
       gl.uniform3fv(uColor2Loc, pBase.c2);
       gl.uniform3fv(uColor3Loc, pBase.c3);
