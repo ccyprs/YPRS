@@ -377,21 +377,29 @@ footer p {
   }
 }
 
-/* Force hamburger header on phone landscape */
-@media (max-width: 1024px) and (orientation: landscape) {
+/* Strong override: clean hamburger header in phone landscape */
+@media (max-width: 1200px) and (orientation: landscape) {
+  header nav.md\:flex,
   header nav {
     display: none !important;
   }
 
   #mobile-menu-btn {
-    display: block !important;
+    display: flex !important;
   }
 
+  /* Shrink the long logo so it never collides */
+  header img {
+    max-width: 140px !important;
+    height: 2.25rem !important;
+  }
+
+  /* Pitch button: hide by default, show only if space allows */
   header a[href="#contact"] {
     display: none !important;
   }
 
-  @media (min-width: 700px) {
+  @media (min-width: 800px) {
     header a[href="#contact"] {
       display: inline-flex !important;
     }
