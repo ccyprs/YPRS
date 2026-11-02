@@ -376,6 +376,27 @@ footer p {
                 0 4px 12px -2px rgba(0, 102, 204, 0.08);
   }
 }
+
+/* Force hamburger header on phone landscape */
+@media (max-width: 1024px) and (orientation: landscape) {
+  header nav {
+    display: none !important;
+  }
+
+  #mobile-menu-btn {
+    display: block !important;
+  }
+
+  header a[href="#contact"] {
+    display: none !important;
+  }
+
+  @media (min-width: 700px) {
+    header a[href="#contact"] {
+      display: inline-flex !important;
+    }
+  }
+}
 </style>
 </head>
 <body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative">
