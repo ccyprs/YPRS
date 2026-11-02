@@ -67,7 +67,7 @@ html, body {
   overflow-x: hidden;
 }
 html {
-  scrollbar-gutter: stable; /* desktop: prevents layout shift without forcing the bar */
+  scrollbar-gutter: stable;
 }
 body {
   color: #1D1D1F;
@@ -198,9 +198,11 @@ body {
     width: 100% !important;
     max-width: 100vw !important;
     position: static !important;
-    overscroll-behavior-y: none !important;
   }
+
   html {
+    height: 100%;
+    overflow: hidden;
     scrollbar-width: none;
     -ms-overflow-style: none;
   }
@@ -208,6 +210,23 @@ body {
     display: none;
     width: 0;
     height: 0;
+  }
+
+  body {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    overscroll-behavior-y: none !important;
+    position: relative;
+  }
+
+  /* Stabilise fixed backgrounds so they do not resize/jump with the address bar */
+  #ink-canvas,
+  .ink-splash-wrapper {
+    height: 100lvh !important;
+    max-height: 100lvh !important;
+    transform: translateZ(0);
+    -webkit-transform: translateZ(0);
   }
 
   #ink-canvas {
@@ -305,8 +324,16 @@ body {
     border-color: rgba(0, 102, 204, 0.4) !important;
     box-shadow: 0 4px 12px -2px rgba(0, 102, 204, 0.15) !important;
   }
+
+  footer {
+    position: relative;
+    z-index: 10;
+  }
 }
 
+/* ======================================================= */
+/* DESKTOP-ONLY INTERACTION & GLASS COATING LAYER          */
+/* ======================================================= */
 @media (min-width: 768px) {
   section.pt-6 .flex.flex-wrap > div,
   section.pt-6 .grid > div {
@@ -332,7 +359,6 @@ body {
   }
 }
 </style>
-
 </head>
 <body class="font-sans antialiased selection:bg-inkBlue/20 selection:text-inkBlue relative">
 <canvas id="ink-canvas"></canvas>
