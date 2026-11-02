@@ -429,6 +429,31 @@ footer p {
     flex: none !important;
     width: 100% !important;
   }
+  
+/* Stop footer jump in phone landscape */
+@media (max-width: 1200px) and (orientation: landscape) {
+  html, body {
+    overscroll-behavior-y: none !important;
+  }
+
+  html {
+    height: 100%;
+    overflow: hidden;
+  }
+
+  body {
+    height: 100%;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    position: relative;
+  }
+
+  /* Keep fixed backgrounds stable when the address bar hides */
+  #ink-canvas,
+  .ink-splash-wrapper {
+    height: 100lvh !important;
+    max-height: 100lvh !important;
+  }
 }
 </style>
 </head>
@@ -966,19 +991,21 @@ mobileMenu.querySelectorAll('a').forEach(link => {
           const elementPosition = target.getBoundingClientRect().top;
           const offsetPosition = elementPosition + window.pageYOffset - headerOffset;
 
-          // Use body when portrait mobile, window otherwise (landscape / desktop)
-          const isPortraitMobile = window.innerWidth < 768;
-          if (isPortraitMobile) {
-            document.body.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          } else {
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
+          // Always scroll body on phones (portrait or landscape)
+const isPhone = (window.innerWidth < 1200 && window.matchMedia('(orientation: landscape)').matches)
+  || window.innerWidth < 768;
+
+if (isPhone) {
+  document.body.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth'
+  });
+} else {
+  window.scrollTo({
+    top: offsetPosition,
+    behavior: 'smooth'
+  });
+}
         }, 100);
       }
     } else {
