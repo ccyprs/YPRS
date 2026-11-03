@@ -970,54 +970,67 @@ footer p {
 document.addEventListener('DOMContentLoaded', () => {
   const menuBtn = document.getElementById('mobile-menu-btn');
   const mobileMenu = document.getElementById('mobile-menu');
+
+  // Shared scroll helper that works when body is the scroller
+  function scrollToHash(href) {
+    const target = document.querySelector(href);
+    if (!target) return;
+
+    const headerOffset = (href === '#mandate') ? 96 : 56;
+    const scrollTop = document.body.scrollTop || document.documentElement.scrollTop || 0;
+    const elementPosition = target.getBoundingClientRect().top;
+    const offsetPosition = elementPosition + scrollTop - headerOffset;
+
+    const isPhone = (window.innerWidth < 1200 && window.matchMedia('(orientation: landscape)').matches)
+      || window.innerWidth < 768;
+
+    if (isPhone) {
+      document.body.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    } else {
+      window.scrollTo({
+        top: offsetPosition,
+        behavior: 'smooth'
+      });
+    }
+  }
+
   if (menuBtn && mobileMenu) {
     menuBtn.addEventListener('click', () => {
       mobileMenu.classList.toggle('hidden');
       mobileMenu.classList.toggle('flex');
     });
-mobileMenu.querySelectorAll('a').forEach(link => {
-  link.addEventListener('click', (e) => {
-    const href = link.getAttribute('href');
-    if (href && href.startsWith('#')) {
-      e.preventDefault();
-      const target = document.querySelector(href);
-      if (target) {
-        // Close menu
-        mobileMenu.classList.add('hidden');
-        mobileMenu.classList.remove('flex');
 
-        setTimeout(() => {
-          const headerOffset = (href === '#mandate') ? 96 : 56;
-
-          // Correct scroll position when body is the scroller
-          const scrollTop = document.body.scrollTop || document.documentElement.scrollTop || 0;
-          const elementPosition = target.getBoundingClientRect().top;
-          const offsetPosition = elementPosition + scrollTop - headerOffset;
-
-          // Always scroll body on phones (portrait or landscape)
-          const isPhone = (window.innerWidth < 1200 && window.matchMedia('(orientation: landscape)').matches)
-            || window.innerWidth < 768;
-
-          if (isPhone) {
-            document.body.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          } else {
-            window.scrollTo({
-              top: offsetPosition,
-              behavior: 'smooth'
-            });
-          }
-        }, 100);
-      }
-    } else {
-      mobileMenu.classList.add('hidden');
-      mobileMenu.classList.remove('flex');
-    }
-  });
-});
+    mobileMenu.querySelectorAll('a').forEach(link => {
+      link.addEventListener('click', (e) => {
+        const href = link.getAttribute('href');
+        if (href && href.startsWith('#')) {
+          e.preventDefault();
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('flex');
+          setTimeout(() => scrollToHash(href), 100);
+        } else {
+          mobileMenu.classList.add('hidden');
+          mobileMenu.classList.remove('flex');
+        }
+      });
+    });
   }
+
+  // Catch the header "Pitch Your Purpose" button and any other in-page anchors
+  document.querySelectorAll('a[href^="#"]').forEach(link => {
+    // Skip if already handled by the mobile menu listener
+    if (mobileMenu && mobileMenu.contains(link)) return;
+
+    link.addEventListener('click', (e) => {
+      const href = link.getAttribute('href');
+      if (!href || href === '#') return;
+      e.preventDefault();
+      scrollToHash(href);
+    });
+  });
 
   function scrollCarousel(direction) {
     const container = document.getElementById('events-carousel');
